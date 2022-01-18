@@ -8,7 +8,8 @@ find_package(SFML 2.5.1 COMPONENTS graphics audio window system REQUIRED)
 
 # add the executable
 include_directories(${PROJECT_SOURCE_DIR})
-add_executable(2DGame main.cpp MyClass.cpp)
+add_executable(2DGame main.cpp Ball.cpp Paddle.cpp)
 
 # link sfml
 target_link_libraries(2DGame sfml-graphics sfml-audio sfml-window sfml-system)
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})

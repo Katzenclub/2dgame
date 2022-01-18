@@ -1,7 +1,4 @@
 # 2D-Spieleentwicklung für das Projektpraktikum im 5. Semester
-
-
-
          *                  *
              __                *
           ,db'    *     *
@@ -23,8 +20,8 @@
                (__/       ) )
                          (_/
 
-
-## Linux Build
+# Build Guides
+## Linux
 If not already installed please install with the following commands:
 
 ```
@@ -42,17 +39,17 @@ Build and immediatly project with following command:
 ./cmake_build.sh -s
 ```
 
+## Windows
+Clone Repository and select "Release Windows"  
+Download correct version of SFML 2.5.1 from [here](https://www.sfml-dev.org/download/sfml/2.5.1/) and extract it into libs/SFML-2.5.1
 
+## Mac
+Same as Linux?
 
-## Windows Build
-clone and select "Release / Windows"
-
-## Mac Build
-
-## Code Guidelines
-g_variable = global variable (it is in no class)
-m_variable = member variable (it is in a class)
-l_variable = local variable (it is mostly defined in a class and on the fly)
+# Code Guidelines
+g_variable = global variable (it is in no class)  
+m_variable = member variable (it is in a class)  
+l_variable = local variable (it is mostly defined in a class and on the fly)  
 
 x_pvariable = pointer variable
 
@@ -64,6 +61,6 @@ m_pfirstWordSecondWord = member as a pointer with multiple words
 Every class should be encapsulated with
 ```
 namespace gp {
-    Class xxx
+    Class uwu
 }
 ```

@@ -6,7 +6,7 @@ gp::Paddle::Paddle(sf::RenderWindow* prw, bool side, float speed) :
 	m_speed(speed)
 {
 	//inital texture and shape
-	l_texture.loadFromFile("assets\\paddle.png");
+	l_texture.loadFromFile("assets/paddle.png");
 	l_shape.setTexture(&l_texture);
 	l_shape.setSize(sf::Vector2f(l_texture.getSize()));
 	l_shape.setOrigin(sf::Vector2f(l_texture.getSize()) / 2.f);
