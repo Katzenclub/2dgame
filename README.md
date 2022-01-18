@@ -25,7 +25,7 @@
 
 
 ## Linux Build
-If nor already installed please do the following commands:
+If not already installed please install with the following commands:
 
 ```
 sudo apt install cmake
