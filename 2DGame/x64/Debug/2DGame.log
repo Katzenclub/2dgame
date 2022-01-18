@@ -1,5 +1,0 @@
-﻿  main.cpp
-D:\dev\2DGame\2DGame\main.cpp(6,24): warning C4930: "geometry::MeineKlasse meineKlasse(void)": Funktion mit Prototyp wurde nicht aufgerufen (war eine Variablendefinition gemeint?)
-  MyClass.cpp
-  Code wird generiert...
-  2DGame.vcxproj -> D:\dev\2DGame\x64\Debug\2DGame.exe
