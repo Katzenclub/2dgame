@@ -22,3 +22,26 @@
                 _) )    `. \ /
                (__/       ) )
                          (_/
+
+
+## Linux Build
+If not already installed please install with the following commands:
+
+```
+sudo apt install cmake
+sudo apt install libsfml-dev
+```
+
+Build project with following command:
+```
+./cmake_build.sh
+```
+
+Build and immediatly project with following command:
+```
+./cmake_build.sh -s
+```
+
+
+
+## Windows Build
