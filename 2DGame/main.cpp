@@ -1,21 +1,56 @@
-#include <iostream>
-#include "MyClass.h"
+#include "Ball.h"
+#include "Paddle.h"
 
 int main()
 {
-	// Snakecase -> Hallo Welt -> hallo_welt
-	// Camelcase -> Hallo Welt -> halloWelt
-	//				Hallo Welt -> HALLOWELT
+    //inital window
+    sf::RenderWindow l_window(sf::VideoMode(1920, 1080), "Our Game", sf::Style::Default);
+    //l_window.setVerticalSyncEnabled(true);
+    l_window.setFramerateLimit(144);
 
-	geometry::MeineKlasse *l_meine_klasse = new geometry::MeineKlasse();
-	
-	while (true)
-	{
-		l_meine_klasse->update();
-		l_meine_klasse->handle();
-	}
+    //initial game objects
+    gp::Ball l_ball(&l_window, 1024.f);
+    gp::Paddle l_paddle(&l_window, false, 512.f);
+    gp::Paddle l_paddle2(&l_window, true, 512.f);
 
-	delete l_meine_klasse;
+    //inital framerate clock
+    sf::Clock l_clockFramerate;
 
-	std::cout << "Hallowelt" << std::endl;
+    //Our Small Engine / Gameloop
+    while (l_window.isOpen())
+    {
+        //calculate deltatime (its important to decouple game logic from real frametime (because we have different framerates 144 and 60 etc.)
+        float l_deltaTime = l_clockFramerate.getElapsedTime().asSeconds();
+        l_clockFramerate.restart();
+        l_deltaTime = (l_deltaTime > 512) ? 512 : l_deltaTime;
+
+        //poolevents
+        sf::Event event;
+        while (l_window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                l_window.close();
+        }
+
+        //handle
+        l_paddle.handle(l_deltaTime);
+        l_paddle2.handle(l_deltaTime);
+        l_ball.handle(l_deltaTime);
+
+        //update
+        l_paddle.update(l_deltaTime, l_ball);
+        l_paddle2.update(l_deltaTime, l_ball);
+        l_ball.update(l_deltaTime);
+
+        //render
+        l_window.clear();
+        // Draw the sprite
+
+        l_paddle.render();
+        l_paddle2.render();
+        l_ball.render();
+
+        // Update the window
+        l_window.display();
+    }
 }
