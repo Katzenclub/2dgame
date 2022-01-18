@@ -2,7 +2,10 @@ mkdir Release
 cd Release
 cmake ../2DGame
 make
-if [ $1 == "-s" ]
+if [ $# -gt 0 ]
 then
-    ./2DGame
+    if [ $@ == "-s" ]
+    then
+        ./2DGame
+    fi
 fi
