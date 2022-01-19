@@ -40,8 +40,8 @@ Build and immediatly project with following command:
 ```
 
 ## Windows
-Clone Repository and select "Release Windows"  
-Download correct version of SFML 2.5.1 from [here](https://www.sfml-dev.org/download/sfml/2.5.1/) and extract it into libs/SFML-2.5.1
+1. Clone Repository
+2. Select "Release / Windows" and start debugger (it download and setup everything)
 
 ## Mac
 Same as Linux?
