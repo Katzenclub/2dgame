@@ -21,8 +21,8 @@ namespace gp
 	private:
 		sf::RenderWindow* m_prw;
 
-		sf::Texture l_texture;
-		sf::RectangleShape l_shape;
+		sf::Texture m_texture;
+		sf::RectangleShape m_shape;
 
 		bool m_side;
 		
