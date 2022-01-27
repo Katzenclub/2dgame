@@ -442,3 +442,6 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 libs
+
+*.vscode
+*.DS_Store
