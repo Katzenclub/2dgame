@@ -5,8 +5,7 @@ int main()
 {
     //inital window
     sf::RenderWindow l_window(sf::VideoMode(1920, 1080), "Our Game", sf::Style::Default);
-    //l_window.setVerticalSyncEnabled(true);
-    l_window.setFramerateLimit(144);
+    l_window.setVerticalSyncEnabled(true);
 
     //initial game objects
     gp::Ball l_ball(&l_window, 1024.f);
@@ -16,13 +15,14 @@ int main()
     //inital framerate clock
     sf::Clock l_clockFramerate;
 
-    //Our Small Engine / Gameloop
+    //Our small engine / gameloop
     while (l_window.isOpen())
     {
         //calculate deltatime (its important to decouple game logic from real frametime (because we have different framerates 144 and 60 etc.)
         float l_deltaTime = l_clockFramerate.getElapsedTime().asSeconds();
         l_clockFramerate.restart();
-        l_deltaTime = (l_deltaTime > 512) ? 512 : l_deltaTime;
+        //This line looks random but it is important to avoid problems like: your pc lacks one time hard and because that the deltaTime would be so high that everything looks wrong in the next frame.
+        l_deltaTime = (l_deltaTime > 512) ? 512 : l_deltaTime;  
 
         //poolevents
         sf::Event event;

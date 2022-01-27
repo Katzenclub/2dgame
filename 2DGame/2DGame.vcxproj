@@ -160,14 +160,29 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Windows|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\libs\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\libs\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openal32.lib;sfml-audio.lib;sfml-graphics.lib;sfml-main.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>
+      <Command>@echo on
+
+echo "Check Libs"
+
+if not exist "$(SolutionDir)libs" mkdir "$(SolutionDir)libs"
+
+if not exist "$(SolutionDir)libs\tmp" mkdir "$(SolutionDir)libs\tmp"
+
+if exist $(SolutionDir)libs\SFML-2.5.1 (
+  echo "SFML is already existing"
+) else (
+ echo "Download SFML"
+ powershell -Command "Invoke-WebRequest https://www.sfml-dev.org/files/SFML-2.5.1-windows-vc15-64-bit.zip -Outfile $(SolutionDir)libs\tmp\TMP.zip"
+ powershell Expand-Archive $(SolutionDir)libs\tmp\TMP.zip -DestinationPath $(SolutionDir)libs\
+)
+
 xcopy /y "$(SolutionDir)libs\SFML-2.5.1\bin\openal32.dll" "$(SolutionDir)x64\Release Windows\"
 
 xcopy /y "$(SolutionDir)libs\SFML-2.5.1\bin\sfml-audio-2.dll" "$(SolutionDir)x64\Release Windows\"
@@ -191,6 +206,7 @@ xcopy /y "$(SolutionDir)libs\SFML-2.5.1\bin\sfml-window-2.dll" "$(SolutionDir)x6
     <ClInclude Include="Paddle.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.gitignore" />
     <None Include="..\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
