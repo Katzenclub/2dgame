@@ -41,7 +41,7 @@ Build and immediately start game with following command:
 
 ## Windows
 1. Clone Repository
-2. Select "Release / Windows" and start debugger (it downloads and setups everything)
+2. Select "Release / Windows" and start debugger (it downloads and sets up everything)
 
 ## Mac
 Same as Linux?
