@@ -1,0 +1,20 @@
+Rollenverteilung:
+- Abenet: Projektleitung, Entwicklung, Testing
+- Chloe: Entwicklung, Testing
+- Nils: Entwicklung, Testing
+- Hanna: Gestaltung, Entwicklung, Testing
+
+
+Status:
+- Spielidee festgelegt (Terraria-Clone)
+- Entwicklungsumgebungen für alle eingerichtet (Linux, Mac und Windows)
+- Umsetzungsplan erstellt (Programmiersprache, Werkzeuge,...)
+
+
+Risikobetrachtung:
+- 
+
+
+Gemachte Erfahrungen:
+- unterschiedliche Ideen/Wünsche/Erwartungen müssen vereint werden (kann manchmal schwierig sein)
+- Einrichten der Entwicklungsumgebungen bei Mac kompliziert 

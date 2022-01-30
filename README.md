@@ -1,4 +1,4 @@
-# 2D-Spieleentwicklung für das Projektpraktikum im 5. Semester
+# Terraria-Clone
          *                  *
              __                *
           ,db'    *     *
@@ -29,19 +29,19 @@ sudo apt install cmake
 sudo apt install libsfml-dev
 ```
 
-Build project with following command:
+Build game with following command:
 ```
 ./cmake_build.sh
 ```
 
-Build and immediatly project with following command:
+Build and immediately start game with following command:
 ```
 ./cmake_build.sh -s
 ```
 
 ## Windows
 1. Clone Repository
-2. Select "Release / Windows" and start debugger (it download and setup everything)
+2. Select "Release / Windows" and start debugger (it downloads and setups everything)
 
 ## Mac
 Same as Linux?
