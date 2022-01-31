@@ -13,15 +13,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Quelldateien\Framework">
+      <UniqueIdentifier>{c25236ca-04de-4c8c-95c0-f685554b295f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Paddle.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Ball.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\libs\imgui-sfml-master\imgui-SFML.cpp">
@@ -39,17 +36,17 @@
     <ClCompile Include="..\libs\imgui-master\imgui_widgets.cpp">
       <Filter>Externe Implementierungen</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Ball.h">
-      <Filter>Quelldateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Paddle.h">
-      <Filter>Quelldateien</Filter>
-    </ClInclude>
+    <ClCompile Include="Framework.cpp">
+      <Filter>Quelldateien\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
     <None Include="..\.gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework.h">
+      <Filter>Quelldateien\Framework</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
