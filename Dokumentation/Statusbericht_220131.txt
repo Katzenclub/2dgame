@@ -1,14 +1,15 @@
 Rollenverteilung:
-- Abenet: Projektleitung, Entwicklung, Testing
+- Abenet: Projektleitung, Scrum Master, Entwicklung, Testing
 - Chloe: Entwicklung, Testing
-- Nils: Entwicklung, Testing
+- Nils: Entwicklung, Product Owner, Testing
 - Hanna: Gestaltung, Entwicklung, Testing
 
 
 Status:
 - Spielidee festgelegt (Terraria-Clone)
 - Entwicklungsumgebungen für alle eingerichtet (Linux, Mac und Windows)
-- Umsetzungsplan erstellt (Programmiersprache, Werkzeuge,...)
+- Umsetzungsplan erstellt (Programmiersprache C++, Werkzeuge,...)
+- Agiles Board mit Features auf Trello
 
 
 Risikobetrachtung:
