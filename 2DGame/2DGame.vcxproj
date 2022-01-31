@@ -160,11 +160,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Windows|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs\imgui-master;$(SolutionDir)libs\imgui-sfml-master;$(SolutionDir)libs\SFML-2.5.1\include;$(SolutionDir)libs\rapidxml-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\libs\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>openal32.lib;sfml-audio.lib;sfml-graphics.lib;sfml-main.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\libs\SFML-2.5.1\lib;$(SolutionDir)\libs\imgui-master\examples\libs\glfw\lib-vc2010-64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openal32.lib;sfml-audio.lib;sfml-graphics.lib;sfml-main.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>@echo on
@@ -175,6 +175,7 @@ if not exist "$(SolutionDir)libs" mkdir "$(SolutionDir)libs"
 
 if not exist "$(SolutionDir)libs\tmp" mkdir "$(SolutionDir)libs\tmp"
 
+echo "Check SFML"
 if exist $(SolutionDir)libs\SFML-2.5.1 (
   echo "SFML is already existing"
 ) else (
@@ -193,10 +194,47 @@ xcopy /y "$(SolutionDir)libs\SFML-2.5.1\bin\sfml-network-2.dll" "$(SolutionDir)x
 
 xcopy /y "$(SolutionDir)libs\SFML-2.5.1\bin\sfml-system-2.dll" "$(SolutionDir)x64\Release Windows\"
 
-xcopy /y "$(SolutionDir)libs\SFML-2.5.1\bin\sfml-window-2.dll" "$(SolutionDir)x64\Release Windows\"</Command>
+xcopy /y "$(SolutionDir)libs\SFML-2.5.1\bin\sfml-window-2.dll" "$(SolutionDir)x64\Release Windows\"
+
+echo "Check IMGUI"
+if exist $(SolutionDir)libs\imgui-master (
+  echo "SFML is already existing"
+) else (
+ echo "Download IMGUI"
+ powershell -Command "Invoke-WebRequest https://github.com/ocornut/imgui/archive/refs/heads/master.zip -Outfile $(SolutionDir)libs\tmp\TMP.zip"
+ powershell Expand-Archive $(SolutionDir)libs\tmp\TMP.zip -DestinationPath $(SolutionDir)libs\
+)
+
+echo "Check IMGUI SFML"
+if exist $(SolutionDir)libs\imgui-sfml-master (
+  echo "SFML is already existing"
+) else (
+ echo "Download IMGUI SFML"
+ powershell -Command "Invoke-WebRequest https://github.com/eliasdaler/imgui-sfml/archive/refs/heads/master.zip -Outfile $(SolutionDir)libs\tmp\TMP.zip"
+ powershell Expand-Archive $(SolutionDir)libs\tmp\TMP.zip -DestinationPath $(SolutionDir)libs\
+)
+
+echo "Check RapidXML"
+if exist $(SolutionDir)libs\rapidxml-master (
+  echo "SFML is already existing"
+) else (
+ echo "Download RapidXML"
+ powershell -Command "Invoke-WebRequest https://github.com/discord/rapidxml/archive/refs/heads/master.zip -Outfile $(SolutionDir)libs\tmp\TMP.zip"
+ powershell Expand-Archive $(SolutionDir)libs\tmp\TMP.zip -DestinationPath $(SolutionDir)libs\
+)
+
+
+if not exist "$(OutDir)data" mkdir "$(OutDir)data"
+xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
+</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\libs\imgui-master\imgui.cpp" />
+    <ClCompile Include="..\libs\imgui-master\imgui_draw.cpp" />
+    <ClCompile Include="..\libs\imgui-master\imgui_tables.cpp" />
+    <ClCompile Include="..\libs\imgui-master\imgui_widgets.cpp" />
+    <ClCompile Include="..\libs\imgui-sfml-master\imgui-SFML.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Paddle.cpp" />

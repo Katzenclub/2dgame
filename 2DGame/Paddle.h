@@ -17,6 +17,7 @@ namespace gp
 		void handle(float deltaTime);
 		void update(float deltaTime,gp::Ball& ball);
 		void render();
+		void reset();
 
 	private:
 		sf::RenderWindow* m_prw;

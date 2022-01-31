@@ -6,23 +6,14 @@ gp::Paddle::Paddle(sf::RenderWindow* prw, bool side, float speed) :
 	m_speed(speed)
 {
 	//inital texture and shape
-	m_texture.loadFromFile("assets/paddle.png");
+	m_texture.loadFromFile("data/assets/paddle.png");
 	m_shape.setTexture(&m_texture);
 	m_shape.setSize(sf::Vector2f(m_texture.getSize()));
 	m_shape.setOrigin(sf::Vector2f(m_texture.getSize()) / 2.f);
 	m_shape.setOutlineThickness(6.f);
 	m_shape.setOutlineColor(sf::Color::Red);
 
-	if (m_side)
-	{
-		//when side "true" paddle is placed left
-		m_shape.setPosition(sf::Vector2f(200.f, m_prw->getSize().y / 2.f));
-	}
-	else
-	{
-		//when side "true" paddle is placed right
-		m_shape.setPosition(sf::Vector2f(m_prw->getSize().x - 200.f, m_prw->getSize().y / 2.f));
-	}
+	reset();
 }
 
 gp::Paddle::~Paddle()
@@ -135,4 +126,18 @@ void gp::Paddle::update(float deltaTime, gp::Ball& ball)
 void gp::Paddle::render()
 {
 	m_prw->draw(m_shape);
+}
+
+void gp::Paddle::reset()
+{
+	if (m_side)
+	{
+		//when side "true" paddle is placed left
+		m_shape.setPosition(sf::Vector2f(200.f, m_prw->getSize().y / 2.f));
+	}
+	else
+	{
+		//when side "true" paddle is placed right
+		m_shape.setPosition(sf::Vector2f(m_prw->getSize().x - 200.f, m_prw->getSize().y / 2.f));
+	}
 }

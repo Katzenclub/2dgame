@@ -2,6 +2,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+using namespace sf;
+
 namespace gp
 {
 	class Ball
@@ -13,6 +15,7 @@ namespace gp
 		void handle(float deltaTime);
 		void update(float deltaTime);
 		void render();
+		void reset();
 
 		sf::CircleShape m_shape;
 
@@ -24,3 +27,4 @@ namespace gp
 		float m_speed;
 	};
 }
+

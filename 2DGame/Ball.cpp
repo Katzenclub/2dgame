@@ -9,8 +9,7 @@ gp::Ball::Ball(sf::RenderWindow* prw, float speed) :
 	m_shape.setOrigin(sf::Vector2f(m_shape.getRadius(), m_shape.getRadius()));
 	m_shape.setPosition(sf::Vector2f(m_prw->getSize()) / 2.f);
 
-	//set initial flying direction left.
-	m_direction = sf::Vector2f(-1.f, 0.f);
+	reset();
 }
 
 gp::Ball::~Ball()
@@ -35,8 +34,7 @@ void gp::Ball::update(float deltaTime)
 
 	if (m_shape.getPosition().x <= 0.f || m_shape.getPosition().x > m_prw->getSize().x)
 	{
-		m_shape.setPosition(sf::Vector2f(m_prw->getSize()) / 2.f);
-		m_direction = sf::Vector2f(-1.f, 0.f);
+		reset();
 	}
 }
 
@@ -44,4 +42,13 @@ void gp::Ball::update(float deltaTime)
 void gp::Ball::render()
 {
 	m_prw->draw(m_shape);
+}
+
+void gp::Ball::reset()
+{
+	//set position of the ball
+	m_shape.setPosition(sf::Vector2f(m_prw->getSize()) / 2.f);
+
+	//set initial flying direction left.
+	m_direction = sf::Vector2f(-1.f, 0.f);
 }
