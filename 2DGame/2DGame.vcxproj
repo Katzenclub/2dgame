@@ -235,17 +235,15 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClCompile Include="..\libs\imgui-master\imgui_tables.cpp" />
     <ClCompile Include="..\libs\imgui-master\imgui_widgets.cpp" />
     <ClCompile Include="..\libs\imgui-sfml-master\imgui-SFML.cpp" />
-    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Paddle.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Ball.h" />
-    <ClInclude Include="Paddle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

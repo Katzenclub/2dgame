@@ -51,12 +51,12 @@ g_variable = global variable (it is in no class)
 m_variable = member variable (it is in a class)  
 l_variable = local variable (it is mostly defined in a class and on the fly)  
 
-x_pvariable = pointer variable
+x_p_variable = pointer variable
 
 Case: Camelcase
 
 Example:
-m_pfirstWordSecondWord = member as a pointer with multiple words
+m_p_firstWordSecondWord = member as a pointer with multiple words
 
 Every class should be encapsulated with
 ```
