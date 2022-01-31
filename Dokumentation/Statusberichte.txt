@@ -1,8 +1,10 @@
+--------- 31 Januar 2022 ---------
+
 Rollenverteilung:
-- Abenet: Projektleitung, Scrum Master, Entwicklung, Testing
-- Chloe: Entwicklung, Testing
-- Nils: Entwicklung, Product Owner, Testing
-- Hanna: Gestaltung, Entwicklung, Testing
+- Abenet: Scrum Master, Development, Testing
+- Chloe: Development, Testing, "Rechtschreibpolizei"
+- Nils: Development, Product Owner, Testing
+- Hanna: Art Director, Development, Testing
 
 
 Status:
