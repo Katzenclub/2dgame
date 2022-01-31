@@ -39,6 +39,11 @@ Build and immediately start game with following command:
 ./cmake_build.sh -s
 ```
 
+To automatically download and move the needed libraries run the command with -g:
+```
+./cmake_build.sh -g
+```
+
 ## Windows
 1. Clone Repository
 2. Select "Release / Windows" and start debugger (it downloads and sets up everything)
