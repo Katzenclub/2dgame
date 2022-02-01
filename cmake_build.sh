@@ -18,7 +18,7 @@ do
     fi
 done
 
-mkdir Release
+mkdir -p Release
 cd Release
 cmake ../2DGame
 make
