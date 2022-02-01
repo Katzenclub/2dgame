@@ -9,7 +9,8 @@ different game ideas
 - Pokemon-Clone
 - Imperium der Ameisen-Clone
 
-costum engine
+custom engine
+
 C++
 
 ## Tools
