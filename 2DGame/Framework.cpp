@@ -10,6 +10,10 @@ namespace gp
 		ImGui::SFML::Init(*m_p_window);
 
 		m_active = true;
+
+		m_p_viewWorld = new sf::View(sf::FloatRect(0.f, 0.f, 1920.f, 1080.f));
+
+		m_p_Engine = new gp::Engine(m_p_window, m_p_viewWorld);
 	}
 
 	//Step last Deleting
@@ -49,12 +53,16 @@ namespace gp
 		}
 		ImGui::SFML::Update(*m_p_window, m_clockImGui.restart());
 
+		m_p_Engine->handle();
+
 		// handle Stuff
 	}
 
 	void Framework::update(float deltaTime)
 	{
 		// update Stuff
+
+		m_p_Engine->update();
 	}
 
 	void Framework::render()
@@ -63,6 +71,11 @@ namespace gp
 		ImGui::SFML::Render(*m_p_window);
 
 		// render Stuff
+
+		m_p_window->setView(*m_p_viewWorld);
+		m_p_Engine->render();
+
+
 
 		m_p_window->display();
 	}
@@ -75,6 +88,8 @@ namespace gp
 			std::cout << "DEBUG" << std::endl;
 		}
 		ImGui::End();
+
+		m_p_Engine->debug();
 	}
 
 	float Framework::deltaTime()

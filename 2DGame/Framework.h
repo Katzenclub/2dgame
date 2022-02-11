@@ -8,6 +8,8 @@
 
 #include <rapidxml.hpp>
 
+#include "Engine.h"
+
 namespace gp
 {
 	//Step 0 Definition
@@ -31,6 +33,10 @@ namespace gp
 		sf::RenderWindow* m_p_window;
 		sf::Clock m_clockFramerate;
 		sf::Clock m_clockImGui;
+
+		sf::View *m_p_viewWorld;
+
+		gp::Engine *m_p_Engine;
 
 		bool m_debug;
 		bool m_active;

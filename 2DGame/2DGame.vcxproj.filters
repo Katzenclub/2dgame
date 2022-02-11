@@ -16,6 +16,12 @@
     <Filter Include="Quelldateien\Framework">
       <UniqueIdentifier>{c25236ca-04de-4c8c-95c0-f685554b295f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\World">
+      <UniqueIdentifier>{d4e98d7d-70c1-4871-b057-068e5700d7ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Rendering">
+      <UniqueIdentifier>{505a4384-f584-4fde-97b3-baad46a1fd3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -39,6 +45,18 @@
     <ClCompile Include="Framework.cpp">
       <Filter>Quelldateien\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Quelldateien\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerRenderer.cpp">
+      <Filter>Quelldateien\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerWorld.cpp">
+      <Filter>Quelldateien\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
@@ -47,6 +65,24 @@
   <ItemGroup>
     <ClInclude Include="Framework.h">
       <Filter>Quelldateien\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.h">
+      <Filter>Quelldateien\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerRenderer.h">
+      <Filter>Quelldateien\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerWorld.h">
+      <Filter>Quelldateien\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise.h">
+      <Filter>Quelldateien\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldConstants.h">
+      <Filter>Quelldateien\World</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
