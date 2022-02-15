@@ -57,6 +57,12 @@
     <ClCompile Include="ManagerWorld.cpp">
       <Filter>Quelldateien\World</Filter>
     </ClCompile>
+    <ClCompile Include="Loader.cpp">
+      <Filter>Quelldateien\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Quelldateien\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
@@ -82,6 +88,12 @@
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
     <ClInclude Include="WorldConstants.h">
+      <Filter>Quelldateien\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Loader.h">
+      <Filter>Quelldateien\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
   </ItemGroup>

@@ -27,7 +27,7 @@ namespace gp
 
 			sf::Vector2i m_ID;
 
-			void generateLayer(int pattern, int minDepth, int maxDepth,float size);
+			void generateLayer(int pattern, int minDepth, int maxDepth,float size, float sensitivity, int blockID);
 			void initialiseChunk(int value);
 		};
 

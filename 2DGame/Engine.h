@@ -1,7 +1,11 @@
 #pragma once
 
+#include "Loader.h"
 #include "ManagerWorld.h"
 #include "ManagerRenderer.h"
+
+#include <imgui.h>
+#include <imgui-SFML.h>
 
 namespace gp
 {
@@ -12,9 +16,9 @@ namespace gp
 		~Engine();
 
 		void handle();
-		void update();
+		void update(float deltaTime);
 		void render();
-		void debug();
+		void debug(float deltaTime);
 
 	private:
 
@@ -23,11 +27,15 @@ namespace gp
 
 		gp::world::ManagerWorld* m_p_world;
 		gp::system::ManagerRenderer* m_p_ManagerRenderer;
+		gp::system::Loader* m_p_Loader;
 
 		sf::Vector2f m_positionDebug;
-		float m_speedDebug = 1.5f;
-		float m_speedZoomDebug = 0.05f;
+		float m_speedDebug = 1200.f;
+		float m_speedZoomDebug = 5.f;
 		float m_zoom = 1.f;
+
+		sf::RectangleShape m_debugAtlas;
+		bool m_showAtlas = false;
 	};
 
 	

@@ -26,9 +26,10 @@ namespace gp
 		void handle();
 		void update(float deltaTime);
 		void render();
-		void debug();
+		void debug(float deltaTime);
 
 		float deltaTime();
+		float m_deltaTime;
 
 		sf::RenderWindow* m_p_window;
 		sf::Clock m_clockFramerate;

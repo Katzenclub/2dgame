@@ -18,7 +18,9 @@ namespace gp
 
 		void Chunk::generate()
 		{
-			generateLayer(gp::world::turbulence, 0, 128, 16.f);
+			generateLayer(gp::world::turbulence, 0, 32, 16.f, 0.5f, 1);
+			generateLayer(gp::world::turbulence, 0, 64, 32.f, 0.5f, 2);
+			generateLayer(gp::world::turbulence, 0, 128, 64.f, 0.8f, 1);
 		}
 		
 		void Chunk::initialiseChunk(int value)
@@ -32,7 +34,7 @@ namespace gp
 			}
 		}
 
-		void Chunk::generateLayer(int pattern, int minDepth, int maxDepth, float size)
+		void Chunk::generateLayer(int pattern, int minDepth, int maxDepth, float size,float sensitivity, int blockID)
 		{
 			for (int y = 0; y < g_CHUNK_SIZE; y++)
 			{
@@ -47,13 +49,9 @@ namespace gp
 							l_block = gp::turbulence(x, y, size); //Now its normalised between 0.f and 1.f.
 						}
 
-						if (l_block <= 0.5f)
+						if (l_block > sensitivity)
 						{
-							m_data[x][y] = 0;
-						}
-						else
-						{
-							m_data[x][y] = l_block*16.f;
+							m_data[x][y] = blockID;
 						}
 					}
 					

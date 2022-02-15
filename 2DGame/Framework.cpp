@@ -7,6 +7,7 @@ namespace gp
 		m_debug(debug)	//is equal to -> m_debug = debug;
 	{
 		m_p_window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Our Custom-Engine", sf::Style::Default);
+		m_p_window->setVerticalSyncEnabled(true);
 		ImGui::SFML::Init(*m_p_window);
 
 		m_active = true;
@@ -29,11 +30,12 @@ namespace gp
 		while (m_active)
 		{
 			handle();
+			m_deltaTime = deltaTime();
 			if (m_debug)
 			{
-				debug();
+				debug(m_deltaTime);
 			}
-			update(deltaTime());
+			update(m_deltaTime);
 			render();
 		}
 	}
@@ -62,13 +64,13 @@ namespace gp
 	{
 		// update Stuff
 
-		m_p_Engine->update();
+		m_p_Engine->update(deltaTime);
 	}
 
 	void Framework::render()
 	{
 		m_p_window->clear(sf::Color(137, 207, 240));
-		ImGui::SFML::Render(*m_p_window);
+		
 
 		// render Stuff
 
@@ -76,20 +78,24 @@ namespace gp
 		m_p_Engine->render();
 
 
-
+		ImGui::SFML::Render(*m_p_window);
 		m_p_window->display();
 	}
 
-	void Framework::debug()
+	void Framework::debug(float deltaTime)
 	{
 		ImGui::Begin("Engine Interface");
-		if (ImGui::Button("Reset"))
-		{
-			std::cout << "DEBUG" << std::endl;
-		}
-		ImGui::End();
+		ImGui::Text("Framerate: %0.f", (1.f / m_deltaTime) + 0.5f);
 
-		m_p_Engine->debug();
+		//if (ImGui::Button("Reset"))
+		//{
+		//	std::cout << "DEBUG" << std::endl;
+		//}
+		
+
+		m_p_Engine->debug(deltaTime);
+		
+		ImGui::End();
 	}
 
 	float Framework::deltaTime()
