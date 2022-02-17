@@ -443,6 +443,6 @@ CTestTestfile.cmake
 _deps
 libs
 
-*.vscode
 *.DS_Store
 imgui.ini
+build
