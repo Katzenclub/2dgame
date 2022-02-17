@@ -10,7 +10,9 @@ namespace gp
 		m_debugAtlas.setTexture(&m_p_Loader->m_textureAtlas);
 		m_debugAtlas.setSize(sf::Vector2f(m_p_Loader->m_textureAtlas.getSize()));
 
-		m_p_world = new gp::world::ManagerWorld();
+		m_positionDebug = sf::Vector2f((g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) / 2, g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE * 0.2f);
+
+		m_p_world = new gp::world::ManagerWorld(m_p_view);
 		m_p_ManagerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_world,m_p_Loader);
 	}
 
@@ -24,6 +26,7 @@ namespace gp
 
 	void Engine::update(float deltaTime)
 	{
+		m_p_world->update(m_positionDebug);
 	}
 
 	void Engine::render()
@@ -68,6 +71,11 @@ namespace gp
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 		{
 			m_zoom = m_zoom - m_speedZoomDebug * deltaTime;
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		{
+			m_zoom = 1.f;
 		}
 
 		m_p_view->setCenter(m_positionDebug);

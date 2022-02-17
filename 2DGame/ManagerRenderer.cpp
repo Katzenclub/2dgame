@@ -23,18 +23,28 @@ namespace gp
 
 		void ManagerRenderer::renderChunks()
 		{
+			for (auto it : m_p_world->m_listChunks)
+			{
+				renderChunk(it);
+			}
+		}
+
+		void ManagerRenderer::renderChunk(gp::world::Chunk* chunk)
+		{
 			for (int y = 0; y < g_CHUNK_SIZE; y++)
 			{
 				for (int x = 0; x < g_CHUNK_SIZE; x++)
 				{
-					int l_index = (y * g_CHUNK_SIZE + x) * 4; 
+					int l_index = (y * g_CHUNK_SIZE + x) * 4;
 
-					(*m_p_VertexArray)[l_index + 0].position = sf::Vector2f(0 + x * g_CHUNK_TEXTURE_SIZE, 0 + y * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 1].position = sf::Vector2f((1 * g_CHUNK_TEXTURE_SIZE) + x * g_CHUNK_TEXTURE_SIZE, 0 + y * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 2].position = sf::Vector2f((1 * g_CHUNK_TEXTURE_SIZE) + x * g_CHUNK_TEXTURE_SIZE, (1 * g_CHUNK_TEXTURE_SIZE) + y * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 3].position = sf::Vector2f(0 + x * g_CHUNK_TEXTURE_SIZE, (1 * g_CHUNK_TEXTURE_SIZE) + y * g_CHUNK_TEXTURE_SIZE);
+					sf::Vector2f l_positionOffset = sf::Vector2f(chunk->m_ID * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
 
-					int l_BlockID = m_p_world->m_p_chunk->m_data[x][y];
+					(*m_p_VertexArray)[l_index + 0].position = l_positionOffset + sf::Vector2f(0 + x * g_CHUNK_TEXTURE_SIZE, 0 + y * g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 1].position = l_positionOffset + sf::Vector2f((1 * g_CHUNK_TEXTURE_SIZE) + x * g_CHUNK_TEXTURE_SIZE, 0 + y * g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 2].position = l_positionOffset + sf::Vector2f((1 * g_CHUNK_TEXTURE_SIZE) + x * g_CHUNK_TEXTURE_SIZE, (1 * g_CHUNK_TEXTURE_SIZE) + y * g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 3].position = l_positionOffset + sf::Vector2f(0 + x * g_CHUNK_TEXTURE_SIZE, (1 * g_CHUNK_TEXTURE_SIZE) + y * g_CHUNK_TEXTURE_SIZE);
+
+					int l_BlockID = chunk->m_data[x][y];
 					sf::Vector2f l_texPos = sf::Vector2f(l_BlockID / g_ATLAS_BLOCK_SIZE, l_BlockID % g_ATLAS_BLOCK_SIZE);
 
 					(*m_p_VertexArray)[l_index + 0].texCoords = sf::Vector2f(1.f + l_texPos.x * g_CHUNK_TEXTURE_SIZE, 1.f + l_texPos.y * g_CHUNK_TEXTURE_SIZE);

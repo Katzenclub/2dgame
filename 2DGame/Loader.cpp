@@ -8,7 +8,7 @@ namespace gp
 		{
 			m_listBlocks.push_back(new gp::world::Block("Air", "data/assets/blocks/Air.png", { }));
 			m_listBlocks.push_back(new gp::world::Block("Wood", "data/assets/blocks/Wood.png", { {"InflictBurning", 5}, {"InflictDrowning", 10} }));
-			m_listBlocks.push_back(new gp::world::Block("Stone", "data/assets/blocks/Stone.png", { {"InflictBurning", 5}, {"InflictDrowning", 10} }));
+			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt.png", { {"InflictBurning", 5}, {"InflictDrowning", 10} }));
 
 			m_textureAtlas = createTextureAtlas(m_listBlocks);
 		}

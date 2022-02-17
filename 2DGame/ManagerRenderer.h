@@ -24,7 +24,8 @@ namespace gp
 			gp::world::ManagerWorld* m_p_world;
 			gp::system::Loader* m_p_loader;
 			
-			void renderChunks();			
+			void renderChunks();	
+			void renderChunk(gp::world::Chunk *chunk);
 		};
 	}
 }
