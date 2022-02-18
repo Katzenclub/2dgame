@@ -13,7 +13,7 @@ namespace gp
 		m_positionDebug = sf::Vector2f((g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) / 2, g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE * 0.2f);
 
 		m_p_world = new gp::world::ManagerWorld(m_p_view);
-		m_p_ManagerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_world,m_p_Loader);
+		m_p_ManagerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_world, m_p_Loader, m_p_view);
 	}
 
 	Engine::~Engine()
@@ -31,7 +31,7 @@ namespace gp
 
 	void Engine::render()
 	{
-		m_p_ManagerRenderer->render();
+		m_p_ManagerRenderer->render(m_positionDebug);
 
 		if (m_showAtlas)
 		{
