@@ -26,7 +26,6 @@ namespace gp
 
 	void Engine::update(float deltaTime)
 	{
-		m_p_world->update(m_positionDebug);
 	}
 
 	void Engine::render()
