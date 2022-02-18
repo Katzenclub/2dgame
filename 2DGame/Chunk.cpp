@@ -10,7 +10,7 @@ namespace gp
 
 			if (generateNew)
 			{
-				GenerateNoise(123456);
+				GenerateNoise(seed);
 				generate();
 			}
 		}

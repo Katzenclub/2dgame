@@ -20,7 +20,7 @@ namespace gp
 		public:
 			Chunk(sf::Vector2i ID, bool generateNew = true);
 			~Chunk();
-			int m_data[g_CHUNK_SIZE][g_CHUNK_SIZE];
+			uint16_t m_data[g_CHUNK_SIZE][g_CHUNK_SIZE]; // ~65000 max value
 			sf::Vector2i m_ID;
 
 			void load(std::ifstream& ifs);
@@ -29,6 +29,8 @@ namespace gp
 			void generate();
 			void generateLayer(int pattern, int minDepth, int maxDepth,float size, float sensitivity, int blockID);
 			void initialiseChunk(int value);
+
+			int seed = time(0);
 		};
 
 
