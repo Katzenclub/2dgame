@@ -39,7 +39,7 @@ Build and immediately start game with following command:
 ./cmake_build.sh -s
 ```
 
-To automatically download and move the needed libraries run the command with -g:
+To forcefully redownload and move the needed libraries run the command with -g:
 ```
 ./cmake_build.sh -g
 ```

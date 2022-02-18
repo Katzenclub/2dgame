@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 set (CMAKE_CXX_STANDARD 11)
 
+set(CMAKE_CXX_FLAGS "-Ofast")
+set(CMAKE_C_FLAGS "-Ofast")
+
 # set the project name
 project(2DGame)
 
@@ -13,12 +16,12 @@ set(IMGUI_SFML ${IMGUI_SFML_DIR}/imgui-SFML.cpp)
 set(RAPIDXML_DIR ../libs/rapidxml-1.13/)
 set(RAPIDXML ${RAPIDXML_DIR}/rapidxml.hpp ${RAPIDXML_DIR}/rapidxml_utils.hpp ${RAPIDXML_DIR}/rapidxml_print.hpp ${RAPIDXML_DIR}/rapidxml_iterators.hpp)
 
-#Note: We do not recommend using GLOB to collect a list of source files from your source tree. 
-#If no CMakeLists.txt file changes when a source is added or removed then the generated build 
-#system cannot know when to ask CMake to regenerate. The CONFIGURE_DEPENDS flag may not work 
-#reliably on all generators, or if a new generator is added in the future that cannot support 
-#it, projects using it will be stuck. Even if CONFIGURE_DEPENDS works reliably, there is still
-#a cost to perform the check on every rebuild.
+# Note: We do not recommend using GLOB to collect a list of source files from your source tree. 
+# If no CMakeLists.txt file changes when a source is added or removed then the generated build 
+# system cannot know when to ask CMake to regenerate. The CONFIGURE_DEPENDS flag may not work 
+# reliably on all generators, or if a new generator is added in the future that cannot support 
+# it, projects using it will be stuck. Even if CONFIGURE_DEPENDS works reliably, there is still
+# a cost to perform the check on every rebuild.
 file(GLOB_RECURSE 2DGame_SRC
      "*.h"
      "*.cpp"
