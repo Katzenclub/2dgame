@@ -4,12 +4,15 @@ namespace gp
 {
 	namespace world
 	{
-		Chunk::Chunk(sf::Vector2i ID) :
-			m_ID(ID)
+		Chunk::Chunk(sf::Vector2i ID, bool generateNew) : m_ID(ID)
 		{
 			initialiseChunk(0);
-			GenerateNoise(123456);
-			generate();
+
+			if (generateNew)
+			{
+				GenerateNoise(123456);
+				generate();
+			}
 		}
 
 		Chunk::~Chunk()
@@ -24,7 +27,7 @@ namespace gp
 
 			generateLayer(gp::world::turbulence, 0, 128 + 64, 64.f, 0.75f, 1);
 		}
-		
+
 		void Chunk::initialiseChunk(int value)
 		{
 			for (int y = 0; y < g_CHUNK_SIZE; y++)
@@ -36,7 +39,7 @@ namespace gp
 			}
 		}
 
-		void Chunk::generateLayer(int pattern, int minDepth, int maxDepth, float size,float sensitivity, int blockID)
+		void Chunk::generateLayer(int pattern, int minDepth, int maxDepth, float size, float sensitivity, int blockID)
 		{
 			for (int y = 0; y < g_CHUNK_SIZE; y++)
 			{
@@ -48,7 +51,7 @@ namespace gp
 
 						if (gp::world::Pattern::turbulence == pattern)
 						{
-							l_block = gp::turbulence(m_ID.x * g_CHUNK_SIZE + x, m_ID.y * g_CHUNK_SIZE + y, size); //Now its normalised between 0.f and 1.f.
+							l_block = gp::turbulence(m_ID.x * g_CHUNK_SIZE + x, m_ID.y * g_CHUNK_SIZE + y, size); // Now its normalised between 0.f and 1.f.
 						}
 
 						if (l_block > sensitivity)
@@ -56,9 +59,20 @@ namespace gp
 							m_data[x][y] = blockID;
 						}
 					}
-					
 				}
 			}
+		}
+
+		void Chunk::load(std::ifstream &ifs)
+		{
+			std::streamsize size = sizeof(m_data);
+			ifs.read((char *)&m_data[0][0], size);
+		}
+
+		void Chunk::save(std::ofstream &ofs)
+		{
+			std::streamsize size = sizeof(m_data);
+			ofs.write((char *)&m_data[0][0], size);
 		}
 	}
 }

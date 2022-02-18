@@ -1,13 +1,14 @@
 #include "ManagerRenderer.h"
-
+#include <iostream>
 namespace gp
 {
 	namespace system
 	{
-		ManagerRenderer::ManagerRenderer(sf::RenderWindow* rw, gp::world::ManagerWorld* world, gp::system::Loader* loader) :
+		ManagerRenderer::ManagerRenderer(sf::RenderWindow* rw, gp::world::ManagerWorld* world, gp::system::Loader* loader, sf::View *view) :
 			m_p_rw(rw),
 			m_p_world(world),
-			m_p_loader(loader)
+			m_p_loader(loader),
+			m_p_view(view)
 		{
 			m_p_VertexArray = new sf::VertexArray(sf::PrimitiveType::Quads, g_CHUNK_SIZE * g_CHUNK_SIZE * 4);
 		}
@@ -16,16 +17,27 @@ namespace gp
 		{
 		}
 
-		void ManagerRenderer::render()
+		void ManagerRenderer::render(sf::Vector2f pos)
 		{
-			renderChunks();
+			renderChunks(pos);
 		}
 
-		void ManagerRenderer::renderChunks()
+		void ManagerRenderer::renderChunks(sf::Vector2f pos)
 		{
+			int l_visibleChunkXIndex = pos.x / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
+			int l_visibleChunkYIndex = pos.y / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
+
+			float l_amountVisibleChunksX =  (m_p_view->getSize().x / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) + 1) / 2 + 0.5;
+			float l_amountVisibleChunksY =  (m_p_view->getSize().y / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) + 1) / 2 + 0.5;
+
 			for (auto it : m_p_world->m_listChunks)
 			{
-				renderChunk(it);
+				
+				if (it->m_ID.x > l_visibleChunkXIndex - l_amountVisibleChunksX && it->m_ID.x < l_visibleChunkXIndex + l_amountVisibleChunksX &&
+				    it->m_ID.y > l_visibleChunkYIndex - l_amountVisibleChunksY && it->m_ID.y < l_visibleChunkYIndex + l_amountVisibleChunksY)
+				{
+					renderChunk(it);
+				}
 			}
 		}
 
