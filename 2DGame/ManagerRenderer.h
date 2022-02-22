@@ -4,6 +4,7 @@
 #include "Loader.h"
 
 #include "ManagerWorld.h"
+#include "ObjectManager.h"
 
 
 namespace gp
@@ -13,7 +14,7 @@ namespace gp
 		class ManagerRenderer
 		{
 		public:
-			ManagerRenderer(sf::RenderWindow* rw, gp::world::ManagerWorld* world,gp::system::Loader* loader, sf::View *view);
+			ManagerRenderer(sf::RenderWindow* rw, gp::world::ManagerWorld* world, gp::object::ManagerObject *managerObject, gp::system::Loader* loader, sf::View *view);
 			~ManagerRenderer();
 
 			void render(sf::Vector2f pos);
@@ -22,11 +23,14 @@ namespace gp
 			sf::RenderWindow* m_p_rw;
 			sf::VertexArray* m_p_VertexArray;
 			gp::world::ManagerWorld* m_p_world;
+			gp::object::ManagerObject* m_p_objects;
 			gp::system::Loader* m_p_loader;
 			sf::View* m_p_view;
+			sf::VertexArray* m_p_VertexArrayObjects;
 			
 			void renderChunks(sf::Vector2f pos);	
 			void renderChunk(gp::world::Chunk *chunk);
+			void renderObjects();
 		};
 	}
 }

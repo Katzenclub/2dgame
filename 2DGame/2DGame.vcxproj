@@ -243,6 +243,9 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ManagerRenderer.cpp" />
     <ClCompile Include="ManagerWorld.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectAsset.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
@@ -257,6 +260,9 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClInclude Include="ManagerRenderer.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="ManagerWorld.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectAsset.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="WorldConstants.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

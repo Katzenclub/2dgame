@@ -22,6 +22,12 @@
     <Filter Include="Quelldateien\Rendering">
       <UniqueIdentifier>{505a4384-f584-4fde-97b3-baad46a1fd3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Object">
+      <UniqueIdentifier>{09c46c7e-b96a-41be-a08c-012408d09c7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Util">
+      <UniqueIdentifier>{d176ab4f-ea42-49d5-a0a9-84045808900d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -57,11 +63,20 @@
     <ClCompile Include="ManagerWorld.cpp">
       <Filter>Quelldateien\World</Filter>
     </ClCompile>
-    <ClCompile Include="Loader.cpp">
-      <Filter>Quelldateien\World</Filter>
-    </ClCompile>
     <ClCompile Include="Block.cpp">
       <Filter>Quelldateien\World</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Quelldateien\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Loader.cpp">
+      <Filter>Quelldateien\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Quelldateien\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectAsset.cpp">
+      <Filter>Quelldateien\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,11 +105,20 @@
     <ClInclude Include="WorldConstants.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
-    <ClInclude Include="Loader.h">
-      <Filter>Quelldateien\World</Filter>
-    </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>Quelldateien\World</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Quelldateien\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Loader.h">
+      <Filter>Quelldateien\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Quelldateien\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectAsset.h">
+      <Filter>Quelldateien\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

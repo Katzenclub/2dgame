@@ -2,6 +2,7 @@
 
 #include "Loader.h"
 #include "ManagerWorld.h"
+#include "ObjectManager.h"
 #include "ManagerRenderer.h"
 
 #include <imgui.h>
@@ -26,6 +27,7 @@ namespace gp
 		sf::View* m_p_view;
 
 		gp::world::ManagerWorld* m_p_world;
+		gp::object::ManagerObject* m_p_managerObject;
 		gp::system::ManagerRenderer* m_p_ManagerRenderer;
 		gp::system::Loader* m_p_Loader;
 

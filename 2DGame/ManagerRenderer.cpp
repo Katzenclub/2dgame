@@ -4,13 +4,15 @@ namespace gp
 {
 	namespace system
 	{
-		ManagerRenderer::ManagerRenderer(sf::RenderWindow* rw, gp::world::ManagerWorld* world, gp::system::Loader* loader, sf::View *view) :
+		ManagerRenderer::ManagerRenderer(sf::RenderWindow* rw, gp::world::ManagerWorld* world, gp::object::ManagerObject* managerObject, gp::system::Loader* loader, sf::View *view) :
 			m_p_rw(rw),
 			m_p_world(world),
+			m_p_objects(managerObject),
 			m_p_loader(loader),
 			m_p_view(view)
 		{
 			m_p_VertexArray = new sf::VertexArray(sf::PrimitiveType::Quads, g_CHUNK_SIZE * g_CHUNK_SIZE * 4);
+			m_p_VertexArrayObjects = new sf::VertexArray(sf::PrimitiveType::Quads, 0);
 		}
 
 		ManagerRenderer::~ManagerRenderer()
@@ -20,6 +22,8 @@ namespace gp
 		void ManagerRenderer::render(sf::Vector2f pos)
 		{
 			renderChunks(pos);
+			renderObjects();
+			//RENDER OBJECTS
 		}
 
 		void ManagerRenderer::renderChunks(sf::Vector2f pos)
@@ -71,6 +75,39 @@ namespace gp
 			l_states.texture = &m_p_loader->m_textureAtlas;
 
 			m_p_rw->draw(*m_p_VertexArray, l_states);
+		}
+
+		void ManagerRenderer::renderObjects()
+		{
+			m_p_VertexArrayObjects->resize(m_p_objects->m_listObjects.size() * 4);
+			for (size_t i = 0; i < m_p_objects->m_listObjects.size(); i++)
+			{
+				auto l_it = m_p_objects->m_listObjects[i];
+
+				//if (m_p_view->getCenter().x - m_p_view->getSize().x / 2.f < l_it->m_position.x && m_p_view->getCenter().x + m_p_view->getSize().x / 2.f >= l_it->m_position.x && //
+				//	m_p_view->getCenter().y - m_p_view->getSize().y / 2.f < l_it->m_position.y && m_p_view->getCenter().y + m_p_view->getSize().y / 2.f >= l_it->m_position.y)   //
+				//{
+					//std::cout << "Render" << std::endl;
+					int l_index = i * 4;
+
+					(*m_p_VertexArrayObjects)[l_index + 0].position = l_it->m_position + sf::Vector2f(-l_it->m_size.x, -l_it->m_size.y);
+					(*m_p_VertexArrayObjects)[l_index + 1].position = l_it->m_position + sf::Vector2f(l_it->m_size.x, -l_it->m_size.y);
+					(*m_p_VertexArrayObjects)[l_index + 2].position = l_it->m_position + sf::Vector2f(l_it->m_size.x, l_it->m_size.y);
+					(*m_p_VertexArrayObjects)[l_index + 3].position = l_it->m_position + sf::Vector2f(-l_it->m_size.x, l_it->m_size.y);
+
+					auto l_objectAsset = m_p_loader->m_listObjectAssets[l_it->m_objectAssetID];
+
+					(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0, 0);
+					(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(l_objectAsset->m_SizeTexture.x, 0);
+					(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(l_objectAsset->m_SizeTexture.x, l_objectAsset->m_SizeTexture.y);
+					(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0, l_objectAsset->m_SizeTexture.y);
+				//}
+			}
+
+			sf::RenderStates l_states;
+			l_states.texture = &m_p_loader->m_objectsAtlas;
+
+			m_p_rw->draw(*m_p_VertexArrayObjects, l_states);
 		}
 	}
 }
