@@ -87,7 +87,7 @@ namespace gp
 			m_p_managerObject->create(l_positionWorld, sf::Vector2f(512, 512), 0);
 		}
 
-		ImGui::Text("Objects Count: %d", m_p_managerObject->m_listObjects.size());
+		ImGui::Text("Objects Count: %ld", m_p_managerObject->m_listObjects.size());
 
 		m_p_view->setCenter(m_positionDebug);
 		m_p_view->setSize(sf::Vector2f(m_p_rw->getSize()) * m_zoom);
