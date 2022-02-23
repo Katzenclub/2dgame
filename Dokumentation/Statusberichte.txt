@@ -30,7 +30,7 @@ Status 24.02.2022:
 - Die Welt kann erstellt, bearbeitet (sowohl Zugriff auf Blöcke der einzelen Chunks, als auch das plazieren von Blöcken ist möglich) und geladen werden.
 - Der Player existiert und ist grundlegend voll funktionsfähig.
 - Der Renderer ist darauf optimiert, dass für alle Objekte ein Grafikkartencall und für jeden Chunk jeweils auch ein Grafikkartencall benötigt wird (sehr gute performance garantiert)
-- Die Grundlegende Standalone Engine für unseren Terrariaclon ist bis auf den Collisionmanager weitgehend fertig.
+- Die Grundlegende Standalone Engine ist vollständig für unseren Terrariaclon ist bis auf den Collisionmanager weitgehend fertig. Außerdem ist sie Plattformunabhängig.
 
 Risikobetrachtung 24.02.2022:
 - Wir sind aktuell optimal im Zeitplan.
