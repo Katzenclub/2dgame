@@ -54,11 +54,11 @@ namespace gp
 		ImGui::Text("Objects Count: %ld", m_p_managerObject->m_listObjects.size());
 
 		sf::Vector2i l_chunkPos = m_p_managerWorld->convertToChunkPos(m_p_managerPlayer->m_p_objectPlayer->m_position);
-		ImGui::Text("Chunkposition: x: %ld y: %ld", l_chunkPos.x,l_chunkPos.y);
+		ImGui::Text("Chunkposition: x: %d y: %d", l_chunkPos.x,l_chunkPos.y);
 		sf::Vector2i l_blockPos = m_p_managerWorld->convertToBlockPos(m_p_managerPlayer->m_p_objectPlayer->m_position);
-		ImGui::Text("Blockposition: x: %ld y: %ld", l_blockPos.x,l_blockPos.y);
+		ImGui::Text("Blockposition: x: %d y: %d", l_blockPos.x,l_blockPos.y);
 		ImGui::Text("Select Block: MMB");
-		ImGui::Text("SelectedBlock: %ld", m_p_managerPlayer->m_selectedBlock);
+		ImGui::Text("SelectedBlock: %d", m_p_managerPlayer->m_selectedBlock);
 		ImGui::Text("Place Selected Block: LMB");
 		ImGui::Text("Spawn Objects: RMB");
 		if (ImGui::Button("Kill All"))
