@@ -4,7 +4,7 @@
 #include "Loader.h"
 
 #include "ManagerWorld.h"
-#include "ObjectManager.h"
+#include "ManagerObject.h"
 
 
 namespace gp

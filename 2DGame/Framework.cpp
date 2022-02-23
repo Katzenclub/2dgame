@@ -28,9 +28,9 @@ namespace gp
 	void Framework::run()
 	{
 		while (m_active)
-		{
-			handle();
+		{		
 			m_deltaTime = deltaTime();
+			handle(m_deltaTime);
 			if (m_debug)
 			{
 				debug(m_deltaTime);
@@ -40,7 +40,7 @@ namespace gp
 		}
 	}
 
-	void Framework::handle()
+	void Framework::handle(float deltaTime)
 	{
 		sf::Event event;
 		while (m_p_window->pollEvent(event))
@@ -55,7 +55,7 @@ namespace gp
 		}
 		ImGui::SFML::Update(*m_p_window, m_clockImGui.restart());
 
-		m_p_Engine->handle();
+		m_p_Engine->handle(deltaTime);
 
 		// handle Stuff
 	}

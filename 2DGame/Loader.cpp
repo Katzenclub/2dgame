@@ -14,6 +14,7 @@ namespace gp
 
 
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Player", "data/assets/objects/Marcel.png"));
+			m_listObjectAssets.push_back(new gp::object::ObjectAsset("NPC Mr Telekom", "data/assets/objects/MrTelekom.png"));
 
 			m_objectsAtlas = createTextureAtlas(m_listObjectAssets);
 		}

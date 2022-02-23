@@ -241,11 +241,13 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ManagerCollision.cpp" />
     <ClCompile Include="ManagerRenderer.cpp" />
     <ClCompile Include="ManagerWorld.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectAsset.cpp" />
-    <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="ManagerObject.cpp" />
+    <ClCompile Include="ManagerPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
@@ -257,12 +259,15 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Loader.h" />
+    <ClInclude Include="ManagerCollision.h" />
     <ClInclude Include="ManagerRenderer.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="ManagerWorld.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectAsset.h" />
-    <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="ManagerObject.h" />
+    <ClInclude Include="ManagerPlayer.h" />
     <ClInclude Include="WorldConstants.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

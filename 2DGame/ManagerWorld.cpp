@@ -78,5 +78,43 @@ namespace gp
 			}
 			ifs.close();
 		}
+
+		sf::Vector2i ManagerWorld::convertToBlockPos(sf::Vector2f worldPos)
+		{
+			return sf::Vector2i(
+				int((worldPos.x / g_CHUNK_TEXTURE_SIZE)) % g_CHUNK_SIZE, 
+				int((worldPos.y / g_CHUNK_TEXTURE_SIZE)) % g_CHUNK_SIZE
+			);
+		}
+
+		sf::Vector2i ManagerWorld::convertToChunkPos(sf::Vector2f worldPos)
+		{
+			return sf::Vector2i(
+				worldPos.x / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE), 
+				worldPos.y / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE)
+			);
+		}
+
+		uint16_t ManagerWorld::getBlockByChunkBlockID(sf::Vector2i chunkPos, sf::Vector2i blockPos)
+		{
+			for (auto it : m_listChunks)
+			{
+				if (it->m_ID == chunkPos)
+				{
+					return it->m_data[blockPos.x][blockPos.y];
+				}
+			}
+			return 0;
+		}
+		void ManagerWorld::setBlockByChunkBlockID(uint16_t blockID,sf::Vector2i chunkPos, sf::Vector2i blockPos)
+		{
+			for (auto it : m_listChunks)
+			{
+				if (it->m_ID == chunkPos)
+				{
+					it->m_data[blockPos.x][blockPos.y] = blockID;
+				}
+			}
+		}
 	}
 }

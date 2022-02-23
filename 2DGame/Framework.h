@@ -23,7 +23,7 @@ namespace gp
 
 	private:
 
-		void handle();
+		void handle(float deltaTime);
 		void update(float deltaTime);
 		void render();
 		void debug(float deltaTime);

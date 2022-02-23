@@ -28,6 +28,9 @@
     <Filter Include="Quelldateien\Util">
       <UniqueIdentifier>{d176ab4f-ea42-49d5-a0a9-84045808900d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Collision">
+      <UniqueIdentifier>{8abd5f3b-6218-486c-b02e-5b0d4eb73022}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -66,7 +69,7 @@
     <ClCompile Include="Block.cpp">
       <Filter>Quelldateien\World</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectManager.cpp">
+    <ClCompile Include="ManagerObject.cpp">
       <Filter>Quelldateien\Object</Filter>
     </ClCompile>
     <ClCompile Include="Loader.cpp">
@@ -77,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="ObjectAsset.cpp">
       <Filter>Quelldateien\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerPlayer.cpp">
+      <Filter>Quelldateien\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerCollision.cpp">
+      <Filter>Quelldateien\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +117,7 @@
     <ClInclude Include="Block.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectManager.h">
+    <ClInclude Include="ManagerObject.h">
       <Filter>Quelldateien\Object</Filter>
     </ClInclude>
     <ClInclude Include="Loader.h">
@@ -119,6 +128,15 @@
     </ClInclude>
     <ClInclude Include="ObjectAsset.h">
       <Filter>Quelldateien\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerPlayer.h">
+      <Filter>Quelldateien\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerCollision.h">
+      <Filter>Quelldateien\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Quelldateien\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

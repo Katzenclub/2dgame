@@ -10,31 +10,34 @@ namespace gp
 		m_debugAtlas.setTexture(&m_p_Loader->m_textureAtlas);
 		m_debugAtlas.setSize(sf::Vector2f(m_p_Loader->m_textureAtlas.getSize()));
 
-		m_positionDebug = sf::Vector2f((g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) / 2, g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE * 0.2f);
+		sf::Vector2f m_positionSpawn = sf::Vector2f((g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) / 2, g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE * 0.2f);
 
-		m_p_world = new gp::world::ManagerWorld(m_p_view);
+		m_p_managerWorld = new gp::world::ManagerWorld(m_p_view);
 		m_p_managerObject = new gp::object::ManagerObject(m_p_Loader);
-		m_p_ManagerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_world, m_p_managerObject, m_p_Loader, m_p_view);
-
-		m_p_managerObject->create(m_positionDebug,sf::Vector2f(512,512), 0);
+		m_p_managerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_managerWorld, m_p_managerObject, m_p_Loader, m_p_view);
+		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, sf::Vector2f(64.f, 64.f), 0,gp::object::player),m_p_managerWorld,m_p_view,m_p_rw);
+		m_p_managerCollision = new gp::system::ManagerCollision(m_p_managerWorld,m_p_managerObject);
 	}
 
 	Engine::~Engine()
 	{
 	}
 
-	void Engine::handle()
+	void Engine::handle(float deltaTime)
 	{
+		m_p_managerPlayer->handle(deltaTime);
 	}
 
 	void Engine::update(float deltaTime)
 	{
+		m_p_managerPlayer->update(deltaTime);
 		m_p_managerObject->update(deltaTime);
+		m_p_managerCollision->update(deltaTime);
 	}
 
 	void Engine::render()
 	{
-		m_p_ManagerRenderer->render(m_positionDebug);
+		m_p_managerRenderer->render(m_p_managerPlayer->m_p_objectPlayer->m_position);
 
 		if (m_showAtlas)
 		{
@@ -46,50 +49,29 @@ namespace gp
 	{
 		ImGui::Checkbox("Show Atlas", &m_showAtlas);
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		{
-			m_positionDebug.x = m_positionDebug.x - m_speedDebug * m_zoom * deltaTime;
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{
-			m_positionDebug.x = m_positionDebug.x + m_speedDebug * m_zoom * deltaTime;
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		{
-			m_positionDebug.y = m_positionDebug.y - m_speedDebug * m_zoom * deltaTime;
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		{
-			m_positionDebug.y = m_positionDebug.y + m_speedDebug * m_zoom * deltaTime;
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-		{
-			m_zoom = m_zoom + m_speedZoomDebug * deltaTime;
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-		{
-			m_zoom = m_zoom - m_speedZoomDebug * deltaTime;
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-		{
-			m_zoom = 1.f;
-		}
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition());
-			m_p_managerObject->create(l_positionWorld, sf::Vector2f(512, 512), 0);
-		}
+		
 
 		ImGui::Text("Objects Count: %d", m_p_managerObject->m_listObjects.size());
 
-		m_p_view->setCenter(m_positionDebug);
-		m_p_view->setSize(sf::Vector2f(m_p_rw->getSize()) * m_zoom);
+		ImGui::Text("Chunkposition: %d", m_p_managerWorld->convertToChunkPos( m_p_managerPlayer->m_p_objectPlayer->m_position));
+		ImGui::Text("Blockposition: %d", m_p_managerWorld->convertToBlockPos( m_p_managerPlayer->m_p_objectPlayer->m_position));
+		ImGui::Text("Select Block: MMB");
+		ImGui::Text("SelectedBlock: %d", m_p_managerPlayer->m_selectedBlock);
+		ImGui::Text("Place Selected Block: LMB");
+		ImGui::Text("Spawn Objects: RMB");
+		if (ImGui::Button("Kill All"))
+		{
+			m_p_managerObject->killAll();
+		}
+		
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		{
+			sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
+			for (int i = 0; i < 10; i++)
+			{
+				srand(m_p_managerObject->m_clock.getElapsedTime().asMicroseconds() + i * 32);
+				m_p_managerObject->create(l_positionWorld, sf::Vector2f(128.f, 128.f), rand() % m_p_Loader->m_listObjectAssets.size(), gp::object::oType::npc)->m_speed = rand() % 500;
+			}
+		}
 	}
 }
