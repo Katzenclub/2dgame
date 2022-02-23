@@ -17,7 +17,9 @@ namespace gp
 			~ManagerWorld();
 
 			std::vector<gp::world::Chunk*> m_listChunks;
-			void load(std::string path);
+
+			void load(std::string path = "world.uwu");
+			void save(std::string path = "world.uwu");
 
 			sf::Vector2i convertToBlockPos(sf::Vector2f worldPos);
 			sf::Vector2i convertToChunkPos(sf::Vector2f worldPos);
@@ -26,8 +28,7 @@ namespace gp
 			void setBlockByChunkBlockID(uint16_t blockID, sf::Vector2i chunkPos, sf::Vector2i blockPos);
 
 		private:
-			void save(std::string path);
-			void create(std::string path);
+			void create(std::string path = "world.uwu");
 		};
 	}
 }

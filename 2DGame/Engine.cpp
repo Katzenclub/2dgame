@@ -65,6 +65,11 @@ namespace gp
 		{
 			m_p_managerObject->killAll();
 		}
+
+		if (ImGui::Button("Save World"))
+		{
+			m_p_managerWorld->save();
+		}
 		
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
