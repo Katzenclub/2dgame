@@ -49,7 +49,11 @@ To forcefully redownload and move the needed libraries run the command with -g:
 2. Select "Release / Windows" and start debugger (it downloads and sets up everything)
 
 ## Mac
-Same as Linux?
+Install Xcode Command Line Tools
+```
+xcode-select --install
+```
+then follow build guide for Linux, but skip installing dependencies
 
 # Code Guidelines
 g_variable = global variable (it is in no class)  
@@ -68,4 +72,24 @@ Every class should be encapsulated with
 namespace gp {
     Class uwu
 }
+```
+
+# Debugging and Developing with VS Code (Linux and Mac OS only)
+
+## Install LLDB Debugger 
+Linux:
+```
+sudo apt install lldb
+```
+Mac OS, in a Terminal enter:
+```
+lldb
+```
+
+## Install needed VS Code Extensions
+```
+code --install-extension ms-vscode.cpptools 
+code --install-extension ms-vscode.cpptools-themes
+code --install-extension twxs.cmake 
+code --install-extension ms-vscode.cmake-tools
 ```
