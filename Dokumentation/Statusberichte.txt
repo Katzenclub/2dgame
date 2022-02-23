@@ -21,3 +21,22 @@ Risikobetrachtung:
 Gemachte Erfahrungen:
 - unterschiedliche Ideen/Wünsche/Erwartungen müssen vereint werden (kann manchmal schwierig sein)
 - Einrichten der Entwicklungsumgebungen bei Mac kompliziert 
+
+
+Status 24.02.2022:
+- Das laden von Objecten und Blöcken ist möglich.
+- Das erstellen von Objecten mit verschiedenen KI-Typen ist möglich (Player, NPC, Enemy), alle werden generalisiert über den Objectmanager abgearbeitet.
+- Die Welt kann mit unterschiedlichen varianten des "Perlin Noise" generiert werden und das potenziell unendlich (wir haben aber die Welt künstlich beschränkt, obwohl unser Speichermanagement darauf optimiert ist, unendlich große Welten verarbeiten zu können, ohne Performanceeinbußen)
+- Die Welt kann erstellt, bearbeitet (sowohl Zugriff auf Blöcke der einzelen Chunks, als auch das plazieren von Blöcken ist möglich) und geladen werden.
+- Der Player existiert und ist grundlegend voll funktionsfähig.
+- Der Renderer ist darauf optimiert, dass für alle Objekte ein Grafikkartencall und für jeden Chunk jeweils auch ein Grafikkartencall benötigt wird (sehr gute performance garantiert)
+- Die Grundlegende Standalone Engine für unseren Terrariaclon ist bis auf den Collisionmanager weitgehend fertig.
+
+Risikobetrachtung 24.02.2022:
+- Wir sind aktuell optimal im Zeitplan.
+- Aufgrund unseres Team knowledges und der funktionierenden Arbeitsteilung (Architektur, Programmierung, Softwareengineering, Design, Bürokratie) ist der einzige Risikofaktor, der den Abschluss aktuell gefährden könnte, die Zeitverfügberkeit.
+
+Gemachte Erfahrungen 24.02.2022:
+- Terminmanagement "schwierig".
+- Arbeitsteilung funktioniert gut
+
