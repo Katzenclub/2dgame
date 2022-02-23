@@ -83,7 +83,7 @@ namespace gp
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition());
+			sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
 			m_p_managerObject->create(l_positionWorld, sf::Vector2f(512, 512), 0);
 		}
 
