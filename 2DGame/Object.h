@@ -28,13 +28,16 @@ namespace gp
 			unsigned int m_oType;
 			float m_speed = 0.f;
 			sf::Vector2f m_direction;
+			
+			//Technical Stuff
+			sf::Vector2i m_blockPosCur;unsigned int m_ID;
 		private:
 
 			
 
 			
 			
-			unsigned int m_ID;
+			
 			
 		};
 

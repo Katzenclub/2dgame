@@ -4,8 +4,9 @@ namespace gp
 {
 	namespace object
 	{
-		ManagerObject::ManagerObject(gp::system::Loader* loader) :
-			m_p_loader(loader)
+		ManagerObject::ManagerObject(gp::system::Loader* loader,gp::world::ManagerWorld *MW) :
+			m_p_loader(loader),
+			m_pMW(MW)
 		{
 		}
 
@@ -31,7 +32,7 @@ namespace gp
 					if (it->m_speed == 0.f)
 					{
 						srand(m_clock.getElapsedTime().asMicroseconds() + l_rand);
-						it->m_direction = gp::utility::getDirectionNormalised(float(rand() % 360));
+						it->m_direction = gp::util::getDirectionNormalised(float(rand() % 360));
 						it->m_speed = 500.f;
 					}
 
@@ -43,6 +44,8 @@ namespace gp
 					}
 				}
 			}
+
+			updateObjectBlockPositions();
 
 			cleanup();
 		}
@@ -61,9 +64,32 @@ namespace gp
 			{
 				if ((*it)->m_HP <= 0.f && (*it)->m_oType != gp::object::oType::player)
 				{
+					m_pMW->removeFromContainer((*it)->m_blockPosCur, (*it));
 					delete (*it);
 					it = m_listObjects.erase(it);
 					it--;
+				}
+			}
+		}
+
+		void ManagerObject::updateObjectBlockPositions()
+		{
+			for (auto it : m_listObjects)
+			{
+				sf::Vector2i l_blockPosNow = m_pMW->convertWorldPosToBlockPos(it->m_position);
+				if (it->m_blockPosCur != l_blockPosNow)
+				{
+					if (it->m_blockPosCur.x >= 0 && it->m_blockPosCur.y >= 0)
+					{
+						m_pMW->removeFromContainer(it->m_blockPosCur, it);
+					}
+					
+					if (l_blockPosNow.x >= 0 && l_blockPosNow.y >= 0)
+					{
+						m_pMW->addToContainer(l_blockPosNow, it);
+					}
+
+					it->m_blockPosCur = l_blockPosNow;
 				}
 			}
 		}

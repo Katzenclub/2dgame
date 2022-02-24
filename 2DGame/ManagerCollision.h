@@ -21,6 +21,8 @@ namespace gp
 
 			void collisionObjectObject(float deltaTime);
 			void collisionWorldObject(float deltaTime);
+
+			
 		};
 	}
 }

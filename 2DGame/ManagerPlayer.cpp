@@ -21,13 +21,13 @@ namespace gp
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Middle))
 			{
 				sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
-				m_selectedBlock = m_p_MW->getBlockByChunkBlockID(m_p_MW->convertToChunkPos(l_positionWorld), m_p_MW->convertToBlockPos(l_positionWorld));
+				m_selectedBlock = m_p_MW->getBlockIDByBlockPos(m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
 			}
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
-				m_p_MW->setBlockByChunkBlockID(m_selectedBlock,m_p_MW->convertToChunkPos(l_positionWorld), m_p_MW->convertToBlockPos(l_positionWorld));
+				m_p_MW->setBlockIDByBlockPos(m_selectedBlock, m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
 			}
 
 			

@@ -268,6 +268,7 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClInclude Include="ObjectAsset.h" />
     <ClInclude Include="ManagerObject.h" />
     <ClInclude Include="ManagerPlayer.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="WorldConstants.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

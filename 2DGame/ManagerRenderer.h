@@ -18,6 +18,8 @@ namespace gp
 			~ManagerRenderer();
 
 			void render(sf::Vector2f pos);
+			
+			bool m_debugShowObjectHeatmap = false;
 
 		private:
 			sf::RenderWindow* m_p_rw;
@@ -31,6 +33,9 @@ namespace gp
 			void renderChunks(sf::Vector2f pos);	
 			void renderChunk(gp::world::Chunk *chunk);
 			void renderObjects();
+			void renderDebug();
+
+			
 		};
 	}
 }

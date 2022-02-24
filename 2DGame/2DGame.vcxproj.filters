@@ -138,5 +138,8 @@
     <ClInclude Include="Math.h">
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Quelldateien\Util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
