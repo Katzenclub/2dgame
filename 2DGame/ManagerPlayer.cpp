@@ -59,7 +59,12 @@ namespace gp
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 			{
+				
 				m_zoom = m_zoom - m_speedZoom * deltaTime;
+				if (m_zoom < 0.1f) 
+				{
+					m_zoom = 0.1f;
+				}
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
