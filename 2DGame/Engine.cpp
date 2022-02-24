@@ -78,7 +78,7 @@ namespace gp
 		ImGui::Text("Mouse Global Block Pos: x: %d y: %d", l_mouseBlockPos.x, l_mouseBlockPos.y);
 		sf::Vector2i l_mouseLocalBlockPos = m_p_managerWorld->convertBlockPosToLocalBlockPos(l_mouseBlockPos);
 		ImGui::Text("Mouse Local  Block Pos: x: %d y: %d", l_mouseLocalBlockPos.x, l_mouseLocalBlockPos.y);
-		ImGui::Text("Mouse Container Size: %d", (m_p_managerWorld->getContainer(l_mouseBlockPos)) ? m_p_managerWorld->getContainer(l_mouseBlockPos)->size() : 0);
+		ImGui::Text("Mouse Container Size: %ld", (m_p_managerWorld->getContainer(l_mouseBlockPos)) ? m_p_managerWorld->getContainer(l_mouseBlockPos)->size() : 0);
 		if (m_p_managerWorld->getContainer(l_mouseBlockPos))
 		{
 			ImGui::Text("Container Found");

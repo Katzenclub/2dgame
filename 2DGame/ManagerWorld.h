@@ -23,7 +23,7 @@ namespace gp
 			void save(std::string path = "world.uwu");
 
 			//Use this for every game logic stuff.
-			sf::Vector2i ManagerWorld::convertWorldPosToBlockPos(sf::Vector2f worldPos);
+			sf::Vector2i convertWorldPosToBlockPos(sf::Vector2f worldPos);
 
 			// with this function you don't have to think about the underlying chunks (now you can imagine that you access a array).
 			uint16_t getBlockIDByBlockPos(sf::Vector2i blockPos);
@@ -40,7 +40,7 @@ namespace gp
 			std::vector <gp::object::Object*>* getContainer(sf::Vector2i blockPos);
 
 			//Should not be used for logical stuff, only for technical purposes.
-			sf::Vector2i ManagerWorld::convertBlockPosToChunkPos(sf::Vector2i blockPos);
+			sf::Vector2i convertBlockPosToChunkPos(sf::Vector2i blockPos);
 
 			//Should not be used for logical stuff, only for technical purposes.
 			sf::Vector2i convertBlockPosToLocalBlockPos(sf::Vector2i blockPos);
