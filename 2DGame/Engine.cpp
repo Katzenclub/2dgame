@@ -77,7 +77,7 @@ namespace gp
 			for (int i = 0; i < 10; i++)
 			{
 				srand(m_p_managerObject->m_clock.getElapsedTime().asMicroseconds() + i * 32);
-				m_p_managerObject->create(l_positionWorld, sf::Vector2f(128.f, 128.f), rand() % m_p_Loader->m_listObjectAssets.size(), gp::object::oType::npc)->m_speed = rand() % 500;
+				m_p_managerObject->create(l_positionWorld, sf::Vector2f(64.f, 64.f), rand() % (m_p_Loader->m_listObjectAssets.size()-1)+1, gp::object::oType::npc)->m_speed = rand() % 500;
 			}
 		}
 	}
