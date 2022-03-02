@@ -27,8 +27,8 @@ namespace gp
 
 			void load(std::ifstream& ifs);
 			void save(std::ofstream& ofs);
-		private:
 			void generate();
+		private:
 			void generateLayer(int pattern, int minDepth, int maxDepth,float size, float sensitivity, int blockID);
 			void initialiseChunk(int value);
 

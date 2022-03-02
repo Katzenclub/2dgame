@@ -31,7 +31,7 @@ namespace gp
 					for (int x = -l_size.x; x < l_size.x; x++)
 					{
 						sf::Vector2i l_curBlockPos = l_pos + sf::Vector2i(x, y);
-						auto l_object = m_p_MW->getContainer(l_curBlockPos); // <- This function is a performance killer, "x³ * all chunks" that should replaced any time
+						auto l_object = m_p_MW->getContainer(l_curBlockPos);
 						if (l_object)
 						{
 							for (auto its : *l_object) 
@@ -43,8 +43,8 @@ namespace gp
 									if (l_distance < l_radius)
 									{
 										auto l_direction = gp::util::getDirectionNormalised(its->m_position, it->m_position);
-										isnan(l_direction.x) ? l_direction.x = 0.1 : l_direction.x = l_direction.x;
-										isnan(l_direction.y) ? l_direction.y = -0.1 : l_direction.y = l_direction.y;
+										std::isnan(l_direction.x) ? l_direction.x = 0.1 : l_direction.x = l_direction.x;
+										std::isnan(l_direction.y) ? l_direction.y = -0.1 : l_direction.y = l_direction.y;
 										float l_push = (l_distance - l_radius) * 0.5f;
 
 										its->m_position = its->m_position + l_direction * l_push;

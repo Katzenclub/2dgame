@@ -17,7 +17,7 @@ namespace gp
 			ManagerWorld(sf::View* view);
 			~ManagerWorld();
 
-			std::vector<gp::world::Chunk*> m_listChunks;
+			gp::world::Chunk *m_listChunks[g_WORLD_SIZE_X][g_WORLD_SIZE_Y];
 
 			void load(std::string path = "world.uwu");
 			void save(std::string path = "world.uwu");
@@ -45,6 +45,9 @@ namespace gp
 			//Should not be used for logical stuff, only for technical purposes.
 			sf::Vector2i convertBlockPosToLocalBlockPos(sf::Vector2i blockPos);
 
+			static bool isInvalidChunkPos(sf::Vector2i chunkPos) {
+				return (chunkPos.x < 0 || chunkPos.x >= g_WORLD_SIZE_X || chunkPos.y < 0 || chunkPos.y >= g_WORLD_SIZE_Y);
+			}
 		private:
 			void create(std::string path = "world.uwu");
 		};

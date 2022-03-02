@@ -29,19 +29,35 @@ namespace gp
 
 		void ManagerRenderer::renderChunks(sf::Vector2f pos)
 		{
-			int l_visibleChunkXIndex = pos.x / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
-			int l_visibleChunkYIndex = pos.y / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
+			float l_amountVisibleChunksX = m_p_view->getSize().x / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
+			float l_amountVisibleChunksY = m_p_view->getSize().y / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
 
-			float l_amountVisibleChunksX = (m_p_view->getSize().x / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) + 1) / 2 + 0.5;
-			float l_amountVisibleChunksY = (m_p_view->getSize().y / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) + 1) / 2 + 0.5;
+			int l_PlayerChunkX = pos.x / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
+			int l_PlayerChunkY = pos.y / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
 
-			for (auto it : m_p_world->m_listChunks)
-			{
+			int startX = l_PlayerChunkX - l_amountVisibleChunksX / 2;
+			int startY = l_PlayerChunkY - l_amountVisibleChunksY / 2;
 
-				if (it->m_ID.x > l_visibleChunkXIndex - l_amountVisibleChunksX && it->m_ID.x < l_visibleChunkXIndex + l_amountVisibleChunksX &&
-					it->m_ID.y > l_visibleChunkYIndex - l_amountVisibleChunksY && it->m_ID.y < l_visibleChunkYIndex + l_amountVisibleChunksY)
-				{
-					renderChunk(it);
+			if (startX < 0) {
+				startX = 0;
+			}
+			if (startY < 0) {
+				startY = 0;
+			}
+
+			int endX = l_PlayerChunkX + l_amountVisibleChunksX / 2 + 2;
+			int endY = l_PlayerChunkY + l_amountVisibleChunksY / 2 + 2;
+
+			if (endX > g_WORLD_SIZE_X) {
+				endX = g_WORLD_SIZE_X;
+			}
+			if (endY > g_WORLD_SIZE_Y) {
+				endY = g_WORLD_SIZE_Y;
+			}
+
+			for (int x = startX; x < endX; x++) {
+				for (int y = startY; y < endY; y++) {
+					renderChunk(m_p_world->m_listChunks[x][y]);
 				}
 			}
 		}
@@ -135,11 +151,11 @@ namespace gp
 						{
 							if (l_size < 8)
 							{
-								l_array[l_index + i].color = sf::Color(0, 0, 255, 64 * l_size);
+								l_array[l_index + i].color = sf::Color(0, 0, 255, 32 * l_size);
 							}
 							else
 							{
-								l_array[l_index + i].color = sf::Color(0, 0, 255, 64 * 7);
+								l_array[l_index + i].color = sf::Color(0, 0, 255, 32 * 7);
 							}
 
 						}

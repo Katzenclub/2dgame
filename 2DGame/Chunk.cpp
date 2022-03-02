@@ -10,7 +10,6 @@ namespace gp
 
 			if (generateNew)
 			{
-				GenerateNoise(seed);
 				generate();
 			}
 		}
@@ -21,6 +20,8 @@ namespace gp
 
 		void Chunk::generate()
 		{
+			initialiseChunk(0);
+			GenerateNoise(seed);
 			generateLayer(gp::world::turbulence, 256 - 32, 1280, 16.f, 0.5f, 1);
 			generateLayer(gp::world::turbulence, 256 - 32, 1280, 32.f, 0.5f, 2);
 			generateLayer(gp::world::turbulence, 256 - 32, 1280, 64.f, 0.8f, 1);

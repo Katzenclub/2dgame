@@ -47,21 +47,29 @@ namespace gp
 
 	void Engine::debug(float deltaTime)
 	{
-		ImGui::Checkbox("Show Atlas", &m_showAtlas);
-
-		
-
 		ImGui::Text("Objects Count: %ld", m_p_managerObject->m_listObjects.size());
-		ImGui::Text("Chunks Count: %ld", m_p_managerWorld->m_listChunks.size());
+
+		ImGui::Text(" ");
+
+		ImGui::Checkbox("Show Atlas", &m_showAtlas);
+		ImGui::Checkbox("Show Object Heatmap", &m_p_managerRenderer->m_debugShowObjectHeatmap);
+		
+		ImGui::Text(" ");
 
 		sf::Vector2i l_chunkPos = m_p_managerWorld->convertBlockPosToChunkPos(m_p_managerPlayer->m_p_objectPlayer->m_blockPosCur);
 		ImGui::Text("Player Chunk Pos: x: %d y: %d", l_chunkPos.x,l_chunkPos.y);
 		sf::Vector2i l_blockPos = m_p_managerPlayer->m_p_objectPlayer->m_blockPosCur;
 		ImGui::Text("Player Block Pos: x: %d y: %d", l_blockPos.x,l_blockPos.y);
+
+		ImGui::Text(" ");
+
 		ImGui::Text("Select Block: MMB");
 		ImGui::Text("SelectedBlock: %d", m_p_managerPlayer->m_selectedBlock);
 		ImGui::Text("Place Selected Block: LMB");
 		ImGui::Text("Spawn Objects: RMB");
+
+		ImGui::Text(" ");
+
 		if (ImGui::Button("Kill All"))
 		{
 			m_p_managerObject->killAll();
@@ -71,20 +79,22 @@ namespace gp
 		{
 			m_p_managerWorld->save();
 		}
+
+		ImGui::Text(" ");
+
 		sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
 		sf::Vector2i l_mouseBlockPos = m_p_managerWorld->convertWorldPosToBlockPos(l_positionWorld);
 		sf::Vector2i l_mouseChunkPos = m_p_managerWorld->convertBlockPosToChunkPos(l_mouseBlockPos);
 		ImGui::Text("Mouse Chunk Pos: x: %d y: %d", l_mouseChunkPos.x, l_mouseChunkPos.y);
-		ImGui::Text("Mouse Global Block Pos: x: %d y: %d", l_mouseBlockPos.x, l_mouseBlockPos.y);
 		sf::Vector2i l_mouseLocalBlockPos = m_p_managerWorld->convertBlockPosToLocalBlockPos(l_mouseBlockPos);
 		ImGui::Text("Mouse Local  Block Pos: x: %d y: %d", l_mouseLocalBlockPos.x, l_mouseLocalBlockPos.y);
-		ImGui::Text("Mouse Container Size: %ld", (m_p_managerWorld->getContainer(l_mouseBlockPos)) ? m_p_managerWorld->getContainer(l_mouseBlockPos)->size() : 0);
+		ImGui::Text("Mouse Container Size: %ld\n", (m_p_managerWorld->getContainer(l_mouseBlockPos)) ? m_p_managerWorld->getContainer(l_mouseBlockPos)->size() : 0);
 		if (m_p_managerWorld->getContainer(l_mouseBlockPos))
 		{
 			ImGui::Text("Container Found");
 		}
 
-		ImGui::Checkbox("Show Object Heatmap: %d", &m_p_managerRenderer->m_debugShowObjectHeatmap);
+		ImGui::Text(" ");
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
