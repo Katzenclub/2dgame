@@ -19,7 +19,7 @@ namespace gp
 		class Chunk
 		{
 		public:
-			Chunk(sf::Vector2i ID, bool generateNew = true);
+			Chunk(sf::Vector2i ID);
 			~Chunk();
 			uint16_t m_data[g_CHUNK_SIZE][g_CHUNK_SIZE]; // ~65000 max value
 			std::vector<gp::object::Object*> m_objects[g_CHUNK_SIZE][g_CHUNK_SIZE];

@@ -4,14 +4,9 @@ namespace gp
 {
 	namespace world
 	{
-		Chunk::Chunk(sf::Vector2i ID, bool generateNew) : m_ID(ID)
+		Chunk::Chunk(sf::Vector2i ID) : m_ID(ID)
 		{
 			initialiseChunk(0);
-
-			if (generateNew)
-			{
-				generate();
-			}
 		}
 
 		Chunk::~Chunk()

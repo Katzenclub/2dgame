@@ -11,7 +11,7 @@ namespace gp
 			{
 				for (int y = 0; y < g_WORLD_SIZE_Y; y++)
 				{
-					auto l_chunk = new gp::world::Chunk(sf::Vector2i(x, y), false);
+					auto l_chunk = new gp::world::Chunk(sf::Vector2i(x, y));
 					m_listChunks[x][y] = l_chunk;
 				}
 			}
