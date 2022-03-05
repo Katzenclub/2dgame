@@ -8,7 +8,7 @@
 
 #include <rapidxml.hpp>
 
-#include "Engine.h"
+#include "../Engine.h"
 
 namespace gp
 {

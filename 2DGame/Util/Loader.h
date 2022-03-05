@@ -1,11 +1,11 @@
 #pragma once
 
 #include <string>
-#include "WorldConstants.h"
+#include "../World/WorldConstants.h"
 
 #include "GuillotineBinPack.h"
-#include "Block.h"
-#include "ObjectAsset.h"
+#include "../World/Block.h"
+#include "../Object/ObjectAsset.h"
 
 namespace gp
 {

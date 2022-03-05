@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "ObjectAsset.h"
-#include "Block.h"
+#include "../Object/ObjectAsset.h"
+#include "../World/Block.h"
 
 namespace gp
 {

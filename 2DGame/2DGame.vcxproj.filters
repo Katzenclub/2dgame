@@ -51,41 +51,44 @@
     <ClCompile Include="..\libs\imgui-master\imgui_widgets.cpp">
       <Filter>Externe Implementierungen</Filter>
     </ClCompile>
-    <ClCompile Include="Framework.cpp">
+    <ClCompile Include="Framework\Framework.cpp">
       <Filter>Quelldateien\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Chunk.cpp">
+    <ClCompile Include="World\Chunk.cpp">
       <Filter>Quelldateien\World</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerRenderer.cpp">
+    <ClCompile Include="Rendering\ManagerRenderer.cpp">
       <Filter>Quelldateien\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerWorld.cpp">
+    <ClCompile Include="World\ManagerWorld.cpp">
       <Filter>Quelldateien\World</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
+    <ClCompile Include="World\Block.cpp">
       <Filter>Quelldateien\World</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerObject.cpp">
+    <ClCompile Include="Object\ManagerObject.cpp">
       <Filter>Quelldateien\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Loader.cpp">
+    <ClCompile Include="Util\Loader.cpp">
       <Filter>Quelldateien\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="Object\Object.cpp">
       <Filter>Quelldateien\Object</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectAsset.cpp">
+    <ClCompile Include="Object\ObjectAsset.cpp">
       <Filter>Quelldateien\Object</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerPlayer.cpp">
+    <ClCompile Include="Object\ManagerPlayer.cpp">
       <Filter>Quelldateien\Object</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerCollision.cpp">
+    <ClCompile Include="Collision\ManagerCollision.cpp">
       <Filter>Quelldateien\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\GuillotineBinPack.cpp">
+      <Filter>Quelldateien\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,52 +96,55 @@
     <None Include="..\.gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Framework.h">
+    <ClInclude Include="Framework\Framework.h">
       <Filter>Quelldateien\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Chunk.h">
+    <ClInclude Include="World\Chunk.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Quelldateien</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerRenderer.h">
+    <ClInclude Include="Rendering\ManagerRenderer.h">
       <Filter>Quelldateien\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerWorld.h">
+    <ClInclude Include="World\ManagerWorld.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
-    <ClInclude Include="Noise.h">
+    <ClInclude Include="World\Noise.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
-    <ClInclude Include="WorldConstants.h">
+    <ClInclude Include="World\WorldConstants.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
-    <ClInclude Include="Block.h">
+    <ClInclude Include="World\Block.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerObject.h">
+    <ClInclude Include="Object\ManagerObject.h">
       <Filter>Quelldateien\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Loader.h">
+    <ClInclude Include="Util\Loader.h">
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
+    <ClInclude Include="Object\Object.h">
       <Filter>Quelldateien\Object</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectAsset.h">
+    <ClInclude Include="Object\ObjectAsset.h">
       <Filter>Quelldateien\Object</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerPlayer.h">
+    <ClInclude Include="Object\ManagerPlayer.h">
       <Filter>Quelldateien\Object</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerCollision.h">
+    <ClInclude Include="Collision\ManagerCollision.h">
       <Filter>Quelldateien\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Math.h">
+    <ClInclude Include="Util\Math.h">
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
+    <ClInclude Include="Util\Utils.h">
+      <Filter>Quelldateien\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\GuillotineBinPack.h">
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "Loader.h"
+#include "../Util/Loader.h"
 
-#include "ManagerWorld.h"
-#include "ManagerObject.h"
+#include "../World/ManagerWorld.h"
+#include "../Object/ManagerObject.h"
 
 
 namespace gp
