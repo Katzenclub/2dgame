@@ -3,6 +3,7 @@
 #include <string>
 #include "WorldConstants.h"
 
+#include "GuillotineBinPack.h"
 #include "Block.h"
 #include "ObjectAsset.h"
 

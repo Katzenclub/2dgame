@@ -51,6 +51,9 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "optional": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "chrono": "cpp",
+        "set": "cpp",
+        "ratio": "cpp"
     }
 }

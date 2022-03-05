@@ -71,19 +71,21 @@ namespace gp
 					int l_index = (y * g_CHUNK_SIZE + x) * 4;
 
 					sf::Vector2f l_positionOffset = sf::Vector2f(chunk->m_ID * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
+					l_positionOffset += sf::Vector2f(x * g_CHUNK_TEXTURE_SIZE, y * g_CHUNK_TEXTURE_SIZE);
 
-					(*m_p_VertexArray)[l_index + 0].position = l_positionOffset + sf::Vector2f(0 + x * g_CHUNK_TEXTURE_SIZE, 0 + y * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 1].position = l_positionOffset + sf::Vector2f((1 * g_CHUNK_TEXTURE_SIZE) + x * g_CHUNK_TEXTURE_SIZE, 0 + y * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 2].position = l_positionOffset + sf::Vector2f((1 * g_CHUNK_TEXTURE_SIZE) + x * g_CHUNK_TEXTURE_SIZE, (1 * g_CHUNK_TEXTURE_SIZE) + y * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 3].position = l_positionOffset + sf::Vector2f(0 + x * g_CHUNK_TEXTURE_SIZE, (1 * g_CHUNK_TEXTURE_SIZE) + y * g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 0].position = l_positionOffset;
+					(*m_p_VertexArray)[l_index + 1].position = l_positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
+					(*m_p_VertexArray)[l_index + 2].position = l_positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 3].position = l_positionOffset + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
 
 					int l_BlockID = chunk->m_data[x][y];
-					sf::Vector2f l_texPos = sf::Vector2f(l_BlockID / g_ATLAS_BLOCK_SIZE, l_BlockID % g_ATLAS_BLOCK_SIZE);
+					
+					sf::Vector2f l_texPos = sf::Vector2f((l_BlockID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (l_BlockID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
 
-					(*m_p_VertexArray)[l_index + 0].texCoords = sf::Vector2f(1.f + l_texPos.x * g_CHUNK_TEXTURE_SIZE, 1.f + l_texPos.y * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 1].texCoords = sf::Vector2f((1 * g_CHUNK_TEXTURE_SIZE) + l_texPos.x * g_CHUNK_TEXTURE_SIZE - 1.f, 1.f + l_texPos.y * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 2].texCoords = sf::Vector2f((1 * g_CHUNK_TEXTURE_SIZE) + l_texPos.x * g_CHUNK_TEXTURE_SIZE - 1.f, (1 * g_CHUNK_TEXTURE_SIZE) + l_texPos.y * g_CHUNK_TEXTURE_SIZE - 1.f);
-					(*m_p_VertexArray)[l_index + 3].texCoords = sf::Vector2f(1.f + l_texPos.x * g_CHUNK_TEXTURE_SIZE, (1 * g_CHUNK_TEXTURE_SIZE) + l_texPos.y * g_CHUNK_TEXTURE_SIZE - 1.f);
+					(*m_p_VertexArray)[l_index + 0].texCoords = l_texPos;
+					(*m_p_VertexArray)[l_index + 1].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
+					(*m_p_VertexArray)[l_index + 2].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 3].texCoords = l_texPos + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
 				}
 			}
 			sf::RenderStates l_states;
@@ -97,7 +99,7 @@ namespace gp
 			m_p_VertexArrayObjects->resize(m_p_objects->m_listObjects.size() * 4);
 			for (size_t i = 0; i < m_p_objects->m_listObjects.size(); i++)
 			{
-				auto l_it = m_p_objects->m_listObjects[i];
+				auto l_object = m_p_objects->m_listObjects[i];
 
 				//if (m_p_view->getCenter().x - m_p_view->getSize().x / 2.f < l_it->m_position.x && m_p_view->getCenter().x + m_p_view->getSize().x / 2.f >= l_it->m_position.x && //
 				//	m_p_view->getCenter().y - m_p_view->getSize().y / 2.f < l_it->m_position.y && m_p_view->getCenter().y + m_p_view->getSize().y / 2.f >= l_it->m_position.y)   //
@@ -105,14 +107,14 @@ namespace gp
 					//std::cout << "Render" << std::endl;
 				int l_index = i * 4;
 
-				(*m_p_VertexArrayObjects)[l_index + 0].position = l_it->m_position + sf::Vector2f(-l_it->m_size.x, -l_it->m_size.y);
-				(*m_p_VertexArrayObjects)[l_index + 1].position = l_it->m_position + sf::Vector2f(l_it->m_size.x, -l_it->m_size.y);
-				(*m_p_VertexArrayObjects)[l_index + 2].position = l_it->m_position + sf::Vector2f(l_it->m_size.x, l_it->m_size.y);
-				(*m_p_VertexArrayObjects)[l_index + 3].position = l_it->m_position + sf::Vector2f(-l_it->m_size.x, l_it->m_size.y);
-
-				auto l_objectAsset = m_p_loader->m_listObjectAssets[l_it->m_objectAssetID];
-
-				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0, 0);
+				(*m_p_VertexArrayObjects)[l_index + 0].position = l_object->m_position;
+				(*m_p_VertexArrayObjects)[l_index + 1].position = l_object->m_position + sf::Vector2f(l_object->m_size.x, 0);
+				(*m_p_VertexArrayObjects)[l_index + 2].position = l_object->m_position + sf::Vector2f(l_object->m_size.x, l_object->m_size.y);
+				(*m_p_VertexArrayObjects)[l_index + 3].position = l_object->m_position + sf::Vector2f(0, l_object->m_size.y);
+				
+				auto l_objectAsset = m_p_loader->m_listObjectAssets[l_object->m_objectAssetID];
+				
+				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_objectAsset->m_PositionTexture;
 				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(l_objectAsset->m_SizeTexture.x, 0);
 				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(l_objectAsset->m_SizeTexture.x, l_objectAsset->m_SizeTexture.y);
 				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0, l_objectAsset->m_SizeTexture.y);
