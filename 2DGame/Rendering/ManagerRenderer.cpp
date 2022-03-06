@@ -107,7 +107,7 @@ namespace gp
 					int l_BlockID = chunk->m_data[x][y];
 					if (x != 0){
 						int l_BlockIDLeftSide = chunk->m_data[(x-1)][y];
-						if (l_BlockIDLeftSide < l_BlockID) {
+						if (l_BlockIDLeftSide > l_BlockID) {
 							sf::Vector2f l_positionOffset = sf::Vector2f(chunk->m_ID * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
 							l_positionOffset += sf::Vector2f((x-1) * g_CHUNK_TEXTURE_SIZE, y * g_CHUNK_TEXTURE_SIZE);
 

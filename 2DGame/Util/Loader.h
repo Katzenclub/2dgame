@@ -5,6 +5,7 @@
 
 #include "GuillotineBinPack.h"
 #include "../World/Block.h"
+#include "../World/Border.h"
 #include "../Object/ObjectAsset.h"
 
 namespace gp
@@ -25,10 +26,11 @@ namespace gp
 		private:
 
 			sf::Texture createTextureAtlas(const std::vector<gp::world::Block*>& list);
+			sf::Texture createTextureAtlas(const std::vector<gp::world::Border*>& list);
 			sf::Texture createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list);
 
 			std::vector<gp::world::Block*> m_listBlocks;
-			std::vector<gp::world::Block*> m_listBorders;
+			std::vector<gp::world::Border*> m_listBorders;
 			
 		};
 
