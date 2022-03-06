@@ -107,7 +107,7 @@ namespace gp
 					int l_BlockID = chunk->m_data[x][y];
 					if (x != 0){
 						int l_BlockIDLeftSide = chunk->m_data[(x-1)][y];
-						//if (l_BlockIDLeftSide < l_BlockID) {
+						if (l_BlockIDLeftSide < l_BlockID) {
 							sf::Vector2f l_positionOffset = sf::Vector2f(chunk->m_ID * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
 							l_positionOffset += sf::Vector2f((x-1) * g_CHUNK_TEXTURE_SIZE, y * g_CHUNK_TEXTURE_SIZE);
 
@@ -122,7 +122,7 @@ namespace gp
 							(*m_p_VertexArrayBorders)[l_index + 1].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
 							(*m_p_VertexArrayBorders)[l_index + 2].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
 							(*m_p_VertexArrayBorders)[l_index + 3].texCoords = l_texPos + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
-						//}
+						}
 					}
 				}
 			}
