@@ -12,6 +12,7 @@ namespace gp
 			m_p_view(view)
 		{
 			m_p_VertexArray = new sf::VertexArray(sf::PrimitiveType::Quads, g_CHUNK_SIZE * g_CHUNK_SIZE * 4);
+			m_p_VertexArrayBorders = new sf::VertexArray(sf::PrimitiveType::Quads, g_CHUNK_SIZE * g_CHUNK_SIZE * 4);
 			m_p_VertexArrayObjects = new sf::VertexArray(sf::PrimitiveType::Quads, 0);
 		}
 
@@ -58,6 +59,7 @@ namespace gp
 			for (int x = startX; x < endX; x++) {
 				for (int y = startY; y < endY; y++) {
 					renderChunk(m_p_world->m_listChunks[x][y]);
+					renderBorders(m_p_world->m_listChunks[x][y]);
 				}
 			}
 		}
@@ -92,6 +94,42 @@ namespace gp
 			l_states.texture = &m_p_loader->m_textureAtlas;
 
 			m_p_rw->draw(*m_p_VertexArray, l_states);
+		}
+
+		void ManagerRenderer::renderBorders(gp::world::Chunk* chunk)
+		{
+			for (int y = 0; y < g_CHUNK_SIZE; y++)
+			{
+				for (int x = 0; x < g_CHUNK_SIZE; x++)
+				{
+					int l_index = (y * g_CHUNK_SIZE + x) * 4;
+
+					int l_BlockID = chunk->m_data[x][y];
+					if (x != 0){
+						int l_BlockIDLeftSide = chunk->m_data[(x-1)][y];
+						//if (l_BlockIDLeftSide < l_BlockID) {
+							sf::Vector2f l_positionOffset = sf::Vector2f(chunk->m_ID * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
+							l_positionOffset += sf::Vector2f((x-1) * g_CHUNK_TEXTURE_SIZE, y * g_CHUNK_TEXTURE_SIZE);
+
+							(*m_p_VertexArrayBorders)[l_index + 0].position = l_positionOffset;
+							(*m_p_VertexArrayBorders)[l_index + 1].position = l_positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
+							(*m_p_VertexArrayBorders)[l_index + 2].position = l_positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
+							(*m_p_VertexArrayBorders)[l_index + 3].position = l_positionOffset + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
+
+							sf::Vector2f l_texPos = sf::Vector2f(( ((l_BlockID-1)*2) / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, ( ((l_BlockID-1)*2) % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
+
+							(*m_p_VertexArrayBorders)[l_index + 0].texCoords = l_texPos;
+							(*m_p_VertexArrayBorders)[l_index + 1].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
+							(*m_p_VertexArrayBorders)[l_index + 2].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
+							(*m_p_VertexArrayBorders)[l_index + 3].texCoords = l_texPos + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
+						//}
+					}
+				}
+			}
+			sf::RenderStates l_states;
+			l_states.texture = &m_p_loader->m_borderAtlas;
+
+			m_p_rw->draw(*m_p_VertexArrayBorders, l_states);
 		}
 
 		void ManagerRenderer::renderObjects()

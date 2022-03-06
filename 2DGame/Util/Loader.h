@@ -18,6 +18,7 @@ namespace gp
 			~Loader();
 			
 			sf::Texture m_textureAtlas;
+			sf::Texture m_borderAtlas;
 			sf::Texture m_objectsAtlas;
 			std::vector<gp::object::ObjectAsset*> m_listObjectAssets;
 
@@ -27,6 +28,7 @@ namespace gp
 			sf::Texture createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list);
 
 			std::vector<gp::world::Block*> m_listBlocks;
+			std::vector<gp::world::Block*> m_listBorders;
 			
 		};
 
