@@ -21,7 +21,7 @@
                          (_/
 
 # Build Guides
-## Linux
+## Debian
 If not already installed please install with the following commands:
 
 ```
@@ -74,10 +74,10 @@ namespace gp {
 }
 ```
 
-# Debugging and Developing with VS Code (Linux and Mac OS only)
+# Debugging and Developing with VS Code (Debian and Mac OS only)
 
 ## Install LLDB Debugger 
-Linux:
+Debian:
 ```
 sudo apt install lldb
 ```
@@ -92,4 +92,29 @@ code --install-extension ms-vscode.cpptools
 code --install-extension ms-vscode.cpptools-themes
 code --install-extension twxs.cmake 
 code --install-extension ms-vscode.cmake-tools
+```
+
+# Generating Doxygen Documentation
+
+## Installing Doxygen and dependencies
+### Debian 
+Since the version on the Debian repository is too old it needs to be compiled manually 
+```
+sudo apt install flex bison graphviz
+git clone https://github.com/doxygen/doxygen.git
+cd doxygen
+mkdir build
+cd build
+cmake -G "Unix Makefiles" ..
+make
+sudo make install
+```
+### Windows
+Download doxygen version 1.9.3 from [here](https://www.doxygen.nl/files/doxygen-1.9.3-setup.exe)  
+Download graphviz from [here](https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/3.0.0/windows_10_cmake_Release_graphviz-install-3.0.0-win64.exe) 
+
+## Generating the Documentation
+```
+cd Dokumentation/Doxygen
+doxygen
 ```

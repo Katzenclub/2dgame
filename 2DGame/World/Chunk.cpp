@@ -4,6 +4,11 @@ namespace gp
 {
 	namespace world
 	{
+		/**
+		 * @brief Construct a new Chunk object
+		 * 
+		 * @param ID Vector representing x and y ID of the chunk
+		 */
 		Chunk::Chunk(sf::Vector2i ID) : m_ID(ID)
 		{
 			initialiseChunk(0);
@@ -13,6 +18,10 @@ namespace gp
 		{
 		}
 
+		/**
+		 * @brief Generate contents of the Chunk
+		 * 
+		 */
 		void Chunk::generate()
 		{
 			initialiseChunk(0);
@@ -22,6 +31,11 @@ namespace gp
 			generateLayer(gp::world::turbulence, 256, 512, 32, 0.5f, 1, 128); /* Generate Stone */
 		}
 
+		/**
+		 * @brief Fill the Chunks array with a int value
+		 * 
+		 * @param value The value to fill it with
+		 */
 		void Chunk::initialiseChunk(int value)
 		{
 			for (int y = 0; y < g_CHUNK_SIZE; y++)
@@ -72,12 +86,22 @@ namespace gp
 			}
 		}
 
+		/**
+		 * @brief Load data from a file into the chunks array
+		 * 
+		 * @param ifs Input file stream of the file to load from
+		 */
 		void Chunk::load(std::ifstream &ifs)
 		{
 			std::streamsize size = sizeof(m_data);
 			ifs.read((char *)&m_data[0][0], size);
 		}
 
+		/**
+		 * @brief Save data to a file from the chunks array
+		 * 
+		 * @param ofs Output file stream of the file to save to
+		 */
 		void Chunk::save(std::ofstream &ofs)
 		{
 			std::streamsize size = sizeof(m_data);
