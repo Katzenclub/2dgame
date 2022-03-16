@@ -7,15 +7,13 @@ namespace gp
 		m_p_view(view)
 	{
 		m_p_Loader = new gp::system::Loader();
-		m_debugAtlas.setTexture(&m_p_Loader->m_textureAtlas);
-		m_debugAtlas.setSize(sf::Vector2f(m_p_Loader->m_textureAtlas.getSize()));
 
 		sf::Vector2f m_positionSpawn = sf::Vector2f((g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) / 2, g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE * 0.2f);
 
 		m_p_managerWorld = new gp::world::ManagerWorld(m_p_view);
 		m_p_managerObject = new gp::object::ManagerObject(m_p_Loader,m_p_managerWorld);
 		m_p_managerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_managerWorld, m_p_managerObject, m_p_Loader, m_p_view);
-		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, sf::Vector2f(64.f, 64.f), 0,gp::object::player),m_p_managerWorld,m_p_view,m_p_rw);
+		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, 1.f, 0,gp::object::player),m_p_managerWorld,m_p_view,m_p_rw);
 		m_p_managerCollision = new gp::system::ManagerCollision(m_p_managerWorld,m_p_managerObject);
 	}
 
@@ -30,19 +28,15 @@ namespace gp
 
 	void Engine::update(float deltaTime)
 	{
-		m_p_managerPlayer->update(deltaTime);
+		
 		m_p_managerObject->update(deltaTime);
 		m_p_managerCollision->update(deltaTime);
+		m_p_managerPlayer->update(deltaTime);
 	}
 
 	void Engine::render()
 	{
 		m_p_managerRenderer->render(m_p_managerPlayer->m_p_objectPlayer->m_position);
-
-		if (m_showAtlas)
-		{
-			m_p_rw->draw(m_debugAtlas);
-		}
 	}
 
 	void Engine::debug(float deltaTime)
@@ -51,7 +45,26 @@ namespace gp
 
 		ImGui::Text(" ");
 
-		ImGui::Checkbox("Show Atlas", &m_showAtlas);
+		static int page = 0;
+		std::vector<std::string> l_taps = { "Block Atlas","Object Atlas" };
+		ImGui::BeginGroup();
+		for (int i = 0; i < l_taps.size(); i++)
+		{
+			if (ImGui::Button(l_taps[i].c_str(), ImVec2(512 / l_taps.size(), 25)))
+				page = i;
+			ImGui::SameLine();
+		}
+		ImGui::EndGroup();
+		ImGui::BeginChild("InnerRegion", ImVec2(0, 512), true, ImGuiWindowFlags_AlwaysHorizontalScrollbar);
+		if (page == 0) {
+			ImGui::Image(m_p_Loader->m_textureAtlas);
+		}
+		else if (page == 1) {
+			ImGui::Image(m_p_Loader->m_objectsAtlas);
+		}	
+		ImGui::EndChild();
+
+
 		ImGui::Checkbox("Show Object Heatmap", &m_p_managerRenderer->m_debugShowObjectHeatmap);
 		
 		ImGui::Text(" ");
@@ -102,7 +115,7 @@ namespace gp
 			for (int i = 0; i < 1; i++)
 			{
 				srand(m_p_managerObject->m_clock.getElapsedTime().asMicroseconds() + i * 32);
-				m_p_managerObject->create(l_positionWorld, sf::Vector2f(64.f, 64.f), rand() % (m_p_Loader->m_listObjectAssets.size()-1)+1, gp::object::oType::npc)->m_speed = rand() % 500;
+				m_p_managerObject->create(l_positionWorld, 1.f, rand() % (m_p_Loader->m_listObjectAssets.size()-1)+1, gp::object::oType::npc)->m_speed = rand() % 500;
 			}
 		}
 	}

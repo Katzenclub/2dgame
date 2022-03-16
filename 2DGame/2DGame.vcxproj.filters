@@ -87,6 +87,9 @@
     <ClCompile Include="ManagerCollision.cpp">
       <Filter>Quelldateien\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Atlas.cpp">
+      <Filter>Quelldateien\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
@@ -139,6 +142,9 @@
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
+      <Filter>Quelldateien\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Atlas.h">
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
   </ItemGroup>

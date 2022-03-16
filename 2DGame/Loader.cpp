@@ -36,8 +36,8 @@ namespace gp
 				l_shape.setTexture(&it->m_texture);
 				l_shape.setSize(sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE));
 				l_shape.setPosition(sf::Vector2f(
-					(it->m_ID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE,
-					(it->m_ID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE) );
+					(it->m_ID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE,
+					(it->m_ID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE) );
 
 				l_RT.draw(l_shape);
 
@@ -50,28 +50,7 @@ namespace gp
 
 		sf::Texture Loader::createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list)
 		{
-			sf::RenderTexture l_RT;
-			l_RT.create(g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE, g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE);
-			l_RT.clear(sf::Color(0, 0, 0, 0));
-
-			for (auto it : list)
-			{
-				sf::RectangleShape l_shape;
-				l_shape.setTexture(&it->m_texture);
-				it->m_SizeTexture = sf::Vector2f(g_CHUNK_TEXTURE_SIZE * 2, g_CHUNK_TEXTURE_SIZE * 2);
-				l_shape.setSize(it->m_SizeTexture);
-				it->m_PositionTexture = sf::Vector2f(
-					(it->m_ID / g_ATLAS_BLOCK_SIZE) * (g_CHUNK_TEXTURE_SIZE *2),
-					(it->m_ID % g_ATLAS_BLOCK_SIZE) * (g_CHUNK_TEXTURE_SIZE *2));
-				l_shape.setPosition(it->m_PositionTexture);
-				
-				l_RT.draw(l_shape);
-
-			}
-
-			l_RT.display();
-
-			return l_RT.getTexture();
+			return m_Atlas.createAtlas(list);
 		}
 		
 	}

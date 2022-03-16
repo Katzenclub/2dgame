@@ -235,6 +235,7 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClCompile Include="..\libs\imgui-master\imgui_tables.cpp" />
     <ClCompile Include="..\libs\imgui-master\imgui_widgets.cpp" />
     <ClCompile Include="..\libs\imgui-sfml-master\imgui-SFML.cpp" />
+    <ClCompile Include="Atlas.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -254,6 +255,7 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Atlas.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="Engine.h" />

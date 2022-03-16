@@ -6,6 +6,8 @@
 #include "Block.h"
 #include "ObjectAsset.h"
 
+#include "Atlas.h"
+
 namespace gp
 {
 	namespace system
@@ -27,6 +29,8 @@ namespace gp
 
 			std::vector<gp::world::Block*> m_listBlocks;
 			
+
+			gp::util::Atlas m_Atlas;
 		};
 
 		
