@@ -25,9 +25,9 @@ namespace gp
 			{
 				sf::Vector2i l_pos = m_p_MW->convertWorldPosToBlockPos(object->m_position - object->m_size);
 				sf::Vector2i l_size = m_p_MW->convertWorldPosToBlockPos(object->m_size) + sf::Vector2i(2, 2);
-				for (int y = 0; y < l_size.y; y++)
+				for (int y = -l_size.y; y < l_size.y; y++)
 				{
-					for (int x = 0; x < l_size.x; x++)
+					for (int x = -l_size.x; x < l_size.x; x++)
 					{
 						sf::Vector2i l_curBlockPos = l_pos + sf::Vector2i(x, y);
 						auto l_object = m_p_MW->getContainer(l_curBlockPos);
@@ -61,6 +61,33 @@ namespace gp
 
 		void ManagerCollision::collisionWorldObject(float deltaTime)
 		{
+		//	for (auto it : m_p_MO->m_listObjects)
+		//	{
+		//		sf::Vector2i l_pos = m_p_MW->convertWorldPosToBlockPos(it->m_position - it->m_size);
+		//		sf::Vector2i l_size = m_p_MW->convertWorldPosToBlockPos(sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE));
+		//		for (int y = -l_size.y; y < l_size.y; y++)
+		//		{
+		//			for (int x = -l_size.x; x < l_size.x; x++)
+		//			{
+		//				sf::Vector2i l_posCur = sf::Vector2i(l_pos.x + x, l_pos.y + y);
+		//
+		//				if (m_p_MW->getBlockIDByBlockPos(l_posCur) > 0)
+		//				{
+		//					std::cout << "Collidion" << std::endl;
+		//					sf::Vector2f l_posBlockTMP = sf::Vector2f(l_posCur.x + g_CHUNK_TEXTURE_SIZE * 0.5f, l_posCur.y + g_CHUNK_TEXTURE_SIZE * 0.5f);
+		//					collide(it->m_position, l_posBlockTMP, g_CHUNK_TEXTURE_SIZE * 0.5f, g_CHUNK_TEXTURE_SIZE * 0.5f);
+		//				}
+		//			}
+		//		}
+		//	}
 		}
+		//
+		//void ManagerCollision::collide(sf::Vector2f& posObj, const sf::Vector2f& posCollider, const float& radiusObj, const float& radiusCollider)
+		//{
+		//	while (gp::util::getDistance(posObj,posCollider) < radiusObj + radiusCollider)
+		//	{
+		//		posObj - gp::util::getDirectionNormalised(posObj, posCollider);
+		//	}
+		//}
 	}
 }

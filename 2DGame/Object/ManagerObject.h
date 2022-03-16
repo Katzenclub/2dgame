@@ -17,7 +17,7 @@ namespace gp
 			ManagerObject(gp::system::Loader *loader, gp::world::ManagerWorld* MW);
 			~ManagerObject();
 
-			gp::object::Object* create(sf::Vector2f position, sf::Vector2f size, unsigned int assetID, unsigned int oType);
+			gp::object::Object* create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType);
 			void update(float deltaTime);
 			void killAll();
 			void cleanup();

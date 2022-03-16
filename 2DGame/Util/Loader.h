@@ -27,7 +27,6 @@ namespace gp
 			sf::Texture createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list);
 
 			std::vector<gp::world::Block*> m_listBlocks;
-			
 		};
 
 		

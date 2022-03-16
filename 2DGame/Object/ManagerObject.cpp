@@ -14,9 +14,9 @@ namespace gp
 		{
 		}
 
-		gp::object::Object* ManagerObject::create(sf::Vector2f position,sf::Vector2f size, unsigned int assetID, unsigned int oType)
+		gp::object::Object* ManagerObject::create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType)
 		{
-			auto l_object = new gp::object::Object(position, size, assetID, oType);
+			auto l_object = new gp::object::Object(position, m_p_loader->m_listObjectAssets[assetID]->m_SizeTexture * scale, assetID, oType);
 			m_listObjects.push_back(l_object);
 			return l_object;
 		}
