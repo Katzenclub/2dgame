@@ -1,12 +1,11 @@
 #pragma once
 
 #include <string>
-#include "WorldConstants.h"
+#include "../World/WorldConstants.h"
 
-#include "Block.h"
-#include "ObjectAsset.h"
-
-#include "Atlas.h"
+#include "GuillotineBinPack.h"
+#include "../World/Block.h"
+#include "../Object/ObjectAsset.h"
 
 namespace gp
 {
@@ -28,9 +27,6 @@ namespace gp
 			sf::Texture createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list);
 
 			std::vector<gp::world::Block*> m_listBlocks;
-			
-
-			gp::util::Atlas m_Atlas;
 		};
 
 		

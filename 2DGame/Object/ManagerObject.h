@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Math.h"
+#include "../Util/Math.h"
 
-#include "Loader.h"
+#include "../Util/Loader.h"
 #include "Object.h"
 
-#include "ManagerWorld.h"
+#include "../World/ManagerWorld.h"
 
 namespace gp
 {

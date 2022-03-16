@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Object.h"
-#include "ManagerWorld.h"
+#include "../World/ManagerWorld.h"
 
 namespace gp
 {

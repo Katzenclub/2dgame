@@ -4,7 +4,7 @@
 #include <fstream>
 #include "WorldConstants.h"
 #include "Noise.h"
-#include "Object.h"
+#include "../Object/Object.h"
 
 namespace gp
 {

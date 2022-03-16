@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Loader.h"
-#include "ManagerWorld.h"
-#include "ManagerObject.h"
-#include "ManagerRenderer.h"
-#include "ManagerPlayer.h"
-#include "ManagerCollision.h"
+#include "Util/Loader.h"
+#include "World/ManagerWorld.h"
+#include "Object/ManagerObject.h"
+#include "Rendering/ManagerRenderer.h"
+#include "Object/ManagerPlayer.h"
+#include "Collision/ManagerCollision.h"
 
 #include <imgui.h>
 #include <imgui-SFML.h>

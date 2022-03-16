@@ -71,8 +71,6 @@ namespace gp
 			{
 				m_zoom = 1.f;
 			}
-
-			
 		}
 
 		void ManagerPlayer::update(float deltaTime)
