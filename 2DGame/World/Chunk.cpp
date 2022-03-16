@@ -17,11 +17,9 @@ namespace gp
 		{
 			initialiseChunk(0);
 			GenerateNoise(seed);
-			generateLayer(gp::world::turbulence, 256 - 32, 1280, 16.f, 0.5f, 1);
-			generateLayer(gp::world::turbulence, 256 - 32, 1280, 32.f, 0.5f, 2);
-			generateLayer(gp::world::turbulence, 256 - 32, 1280, 64.f, 0.8f, 1);
-
-			generateLayer(gp::world::turbulence, 0, 128 + 64, 64.f, 0.75f, 1);
+			//generateLayer(gp::world::turbulence, 0, 64, 16.f, 0.5f, 1);
+			generateLayer(gp::world::turbulence, 192, 512, 32, 0.375f, 2, 256, 256); /* Generate Dirt */
+			generateLayer(gp::world::turbulence, 256, 512, 32, 0.5f, 1, 128); /* Generate Stone */
 		}
 
 		void Chunk::initialiseChunk(int value)
@@ -35,13 +33,27 @@ namespace gp
 			}
 		}
 
-		void Chunk::generateLayer(int pattern, int minDepth, int maxDepth, float size, float sensitivity, int blockID)
+		/**
+		 * @brief Generate World Layer for the blockID
+		 * 
+		 * @param pattern Pattern for the noise generation
+		 * @param minDepth Min y coordinate of the layer
+		 * @param maxDepth Max y coordinate of the layer
+		 * @param size Smoothness of the generated Noise
+		 * @param sensitivity Sensetivity threshold to determine if place blockID
+		 * @param blockID BlockID the layer should be made out of
+		 * @param fadeSize Smoothness of the Noise for the fading of the top and bottom edges
+		 * @param maxFadeDepth Max height of the fading noise
+		 */
+		void Chunk::generateLayer(int pattern, int minDepth, int maxDepth, float size, float sensitivity, int blockID, int fadeSize, int maxFadeDepth)
 		{
-			for (int y = 0; y < g_CHUNK_SIZE; y++)
+			maxFadeDepth = (maxFadeDepth == 0) ? maxDepth : maxFadeDepth;
+			for (int x = 0; x < g_CHUNK_SIZE; x++)
 			{
-				for (int x = 0; x < g_CHUNK_SIZE; x++)
+				float l_hill = (gp::turbulence1D(m_ID.x * g_CHUNK_SIZE + x, 0, fadeSize, 1) * (maxFadeDepth - minDepth)) + minDepth;
+				for (int y = 0; y < g_CHUNK_SIZE; y++)
 				{
-					if (y + m_ID.y * g_CHUNK_SIZE >= minDepth && y + m_ID.y * g_CHUNK_SIZE < maxDepth)
+					if (y + m_ID.y * g_CHUNK_SIZE >= l_hill && y + m_ID.y * g_CHUNK_SIZE < maxDepth)
 					{
 						float l_block = 0;
 
@@ -55,6 +67,7 @@ namespace gp
 							m_data[x][y] = blockID;
 						}
 					}
+					
 				}
 			}
 		}

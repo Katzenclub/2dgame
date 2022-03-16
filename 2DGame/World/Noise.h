@@ -45,6 +45,19 @@ namespace gp
 		return(0.5 * (value / initialSize));
 	}
 
+	static double turbulence1D(double x, double y, double size, double height1D)
+	{
+		double value = 0.0, initialSize = size;
+
+		while (size >= 1)
+		{
+			value += smoothNoise(x / size, y / size) * size;
+			size /= 2.0;
+		}
+
+		return(height1D * (value / initialSize) -0.5);
+	}
+
 	static void GenerateNoise(int Seed)
 	{
 		srand(Seed);
