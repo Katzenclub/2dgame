@@ -1,13 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include "WorldConstants.h"
 #include "Noise.h"
 #include "../Object/Object.h"
-#define DB_PERLIN_IMPL
-#include "db_perlin.h"
 
 namespace gp
 {
