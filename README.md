@@ -95,7 +95,7 @@ code --install-extension ms-vscode.cmake-tools
 ```
 
 # Generating Doxygen Documentation
-
+### More or less up to date Documentation is hosted [here](https://thecamoc.synology.me:4489/) since compiling manually is not possible on MacOS and is not very fun on Linux 
 ## Installing Doxygen and dependencies
 ### Debian 
 Since the version on the Debian repository is too old it needs to be compiled manually 
