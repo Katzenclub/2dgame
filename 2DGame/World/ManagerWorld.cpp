@@ -17,7 +17,7 @@ namespace gp
 			}
 
 			clock_t start_time = clock();
-			load("world.uwu");
+			create("world.uwu");
 			clock_t end_time = clock();
 			clock_t result = end_time - start_time;
 			printf("World load took %ld clicks (%f seconds).\n", result, ((float)result) / CLOCKS_PER_SEC);

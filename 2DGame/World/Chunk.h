@@ -1,10 +1,13 @@
 #pragma once
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include "WorldConstants.h"
 #include "Noise.h"
 #include "../Object/Object.h"
+#define DB_PERLIN_IMPL
+#include "db_perlin.h"
 
 namespace gp
 {
@@ -29,7 +32,7 @@ namespace gp
 			void save(std::ofstream& ofs);
 			void generate();
 		private:
-			void generateLayer(int pattern, int minDepth, int maxDepth,float size, float sensitivity, int blockID);
+			void generateLayer(int pattern, int minDepth, int maxDepth,float size, float sensitivity, int blockID, int fadeSize, int maxFadeDepth = 0);
 			void initialiseChunk(int value);
 
 			int seed = time(0);
