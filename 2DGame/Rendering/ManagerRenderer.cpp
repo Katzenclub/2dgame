@@ -80,7 +80,7 @@ namespace gp
 
 					int l_BlockID = chunk->m_data[x][y];
 					
-					sf::Vector2f l_texPos = sf::Vector2f((l_BlockID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (l_BlockID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
+					sf::Vector2f l_texPos = sf::Vector2f((l_BlockID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (l_BlockID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
 					(*m_p_VertexArray)[l_index + 0].texCoords = l_texPos;
 					(*m_p_VertexArray)[l_index + 1].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
 					(*m_p_VertexArray)[l_index + 2].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
@@ -100,10 +100,6 @@ namespace gp
 			{
 				auto l_object = m_p_objects->m_listObjects[i];
 
-				//if (m_p_view->getCenter().x - m_p_view->getSize().x / 2.f < l_it->m_position.x && m_p_view->getCenter().x + m_p_view->getSize().x / 2.f >= l_it->m_position.x && //
-				//	m_p_view->getCenter().y - m_p_view->getSize().y / 2.f < l_it->m_position.y && m_p_view->getCenter().y + m_p_view->getSize().y / 2.f >= l_it->m_position.y)   //
-				//{
-					//std::cout << "Render" << std::endl;
 				int l_index = i * 4;
 				auto l_size = sf::Vector2f(l_object->m_size.x * 0.5f, l_object->m_size.y * 0.5f);
 
