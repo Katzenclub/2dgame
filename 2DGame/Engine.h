@@ -35,10 +35,6 @@ namespace gp
 		gp::system::ManagerCollision* m_p_managerCollision;
 		gp::system::Loader* m_p_Loader;
 
-
-
-		sf::RectangleShape m_debugAtlas;
-		bool m_showAtlas = false;
 	};
 
 	

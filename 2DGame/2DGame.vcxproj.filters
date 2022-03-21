@@ -147,5 +147,8 @@
     <ClInclude Include="Util\GuillotineBinPack.h">
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Atlas.h">
+      <Filter>Quelldateien\Util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

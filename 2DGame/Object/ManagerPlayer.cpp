@@ -71,14 +71,12 @@ namespace gp
 			{
 				m_zoom = 1.f;
 			}
-
-			m_p_view->setCenter(m_p_objectPlayer->m_position);
-			m_p_view->setSize(sf::Vector2f(m_p_rw->getSize()) * m_zoom);
 		}
 
 		void ManagerPlayer::update(float deltaTime)
 		{
-
+			m_p_view->setCenter(m_p_objectPlayer->m_position);
+			m_p_view->setSize(sf::Vector2f(m_p_rw->getSize()) * m_zoom);
 		}
 	}
 }

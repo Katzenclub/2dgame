@@ -29,7 +29,7 @@ namespace gp
 			void save(std::ofstream& ofs);
 			void generate();
 		private:
-			void generateLayer(int pattern, int minDepth, int maxDepth,float size, float sensitivity, int blockID);
+			void generateLayer(int pattern, int minDepth, int maxDepth,float size, float sensitivity, int blockID, int fadeSize, int maxFadeDepth = 0);
 			void initialiseChunk(int value);
 
 			int seed = time(0);

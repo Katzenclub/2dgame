@@ -82,8 +82,7 @@ namespace gp
 
 					int l_BlockID = chunk->m_data[x][y];
 					
-					sf::Vector2f l_texPos = sf::Vector2f((l_BlockID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (l_BlockID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
-
+					sf::Vector2f l_texPos = sf::Vector2f((l_BlockID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (l_BlockID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
 					(*m_p_VertexArray)[l_index + 0].texCoords = l_texPos;
 					(*m_p_VertexArray)[l_index + 1].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
 					(*m_p_VertexArray)[l_index + 2].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
@@ -178,24 +177,20 @@ namespace gp
 			{
 				auto l_object = m_p_objects->m_listObjects[i];
 
-				//if (m_p_view->getCenter().x - m_p_view->getSize().x / 2.f < l_it->m_position.x && m_p_view->getCenter().x + m_p_view->getSize().x / 2.f >= l_it->m_position.x && //
-				//	m_p_view->getCenter().y - m_p_view->getSize().y / 2.f < l_it->m_position.y && m_p_view->getCenter().y + m_p_view->getSize().y / 2.f >= l_it->m_position.y)   //
-				//{
-					//std::cout << "Render" << std::endl;
 				int l_index = i * 4;
+				auto l_size = sf::Vector2f(l_object->m_size.x * 0.5f, l_object->m_size.y * 0.5f);
 
-				(*m_p_VertexArrayObjects)[l_index + 0].position = l_object->m_position;
-				(*m_p_VertexArrayObjects)[l_index + 1].position = l_object->m_position + sf::Vector2f(l_object->m_size.x, 0);
-				(*m_p_VertexArrayObjects)[l_index + 2].position = l_object->m_position + sf::Vector2f(l_object->m_size.x, l_object->m_size.y);
-				(*m_p_VertexArrayObjects)[l_index + 3].position = l_object->m_position + sf::Vector2f(0, l_object->m_size.y);
-				
+				(*m_p_VertexArrayObjects)[l_index + 0].position = l_object->m_position + sf::Vector2f(-l_size.x, -l_size.y);
+				(*m_p_VertexArrayObjects)[l_index + 1].position = l_object->m_position + sf::Vector2f(l_size.x, -l_size.y);
+				(*m_p_VertexArrayObjects)[l_index + 2].position = l_object->m_position + sf::Vector2f(l_size.x, l_size.y);
+				(*m_p_VertexArrayObjects)[l_index + 3].position = l_object->m_position + sf::Vector2f(-l_size.x, l_size.y);
+
 				auto l_objectAsset = m_p_loader->m_listObjectAssets[l_object->m_objectAssetID];
-				
-				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_objectAsset->m_PositionTexture;
+
+				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0, 0);
 				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(l_objectAsset->m_SizeTexture.x, 0);
 				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(l_objectAsset->m_SizeTexture.x, l_objectAsset->m_SizeTexture.y);
 				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0, l_objectAsset->m_SizeTexture.y);
-				//}
 			}
 
 			sf::RenderStates l_states;
@@ -228,13 +223,15 @@ namespace gp
 						const size_t l_size = m_p_world->getContainer(l_positionOffset) ? m_p_world->getContainer(l_positionOffset)->size() : 0;
 						for (int i = 0; i < 4; i++)
 						{
-							if (l_size < 8)
+							int l_intensity = 4;
+
+							if (l_size < l_intensity)
 							{
-								l_array[l_index + i].color = sf::Color(0, 0, 255, 32 * l_size);
+								l_array[l_index + i].color = sf::Color(0, 0, 255, ((256 / l_intensity) - 1) * l_size);
 							}
 							else
 							{
-								l_array[l_index + i].color = sf::Color(0, 0, 255, 32 * 7);
+								l_array[l_index + i].color = sf::Color(0, 0, 255, ((256 / l_intensity) - 1) * l_intensity);
 							}
 
 						}
