@@ -27,7 +27,7 @@ namespace gp
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
-				if (m_p_MW->getContainer(m_p_MW->convertWorldPosToBlockPos(l_positionWorld))->size() == 0)
+				if (m_p_MW->getContainer(m_p_MW->convertWorldPosToBlockPos(l_positionWorld)) && m_p_MW->getContainer(m_p_MW->convertWorldPosToBlockPos(l_positionWorld))->size() == 0 || m_selectedBlock == 0)
 				{
 					m_p_MW->setBlockIDByBlockPos(m_selectedBlock, m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
 				}

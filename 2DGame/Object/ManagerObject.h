@@ -26,7 +26,7 @@ namespace gp
 			void cleanup();
 			void cleanupDebug();
 			void updatePosition();
-			void gravity();
+			void gravity(float deltaTime);
 			
 			std::vector<gp::object::Object*> m_listObjects;
 			sf::Clock m_clock;

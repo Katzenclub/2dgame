@@ -25,7 +25,7 @@ namespace gp
 		{
 			if (m_debugEnableGravity)
 			{
-				gravity();
+				gravity(deltaTime);
 			}
 			
 			int l_rand = 0;
@@ -115,12 +115,12 @@ namespace gp
 				it->m_positionOld = it->m_position;
 			}
 		}
-		void ManagerObject::gravity()
+		void ManagerObject::gravity(float deltaTime)
 		{
 			for (auto it : m_listObjects)
 			{
-				it->m_velocity.y = it->m_velocity.y + g_RELATIVE_GRAVITY;
-				it->m_position = it->m_position + it->m_velocity;
+				it->m_velocity.y = it->m_velocity.y + g_RELATIVE_GRAVITY * deltaTime * 144.f;
+				it->m_position = it->m_position + it->m_velocity * deltaTime * 144.f;
 			}
 		}
 	}

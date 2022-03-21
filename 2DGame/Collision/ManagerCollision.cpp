@@ -54,7 +54,7 @@ namespace gp
 									
 									if (l_direction.y < -0.5f)
 									{
-										object->m_velocity.y = 0;
+										object->m_velocity.y = std::min(compObject->m_velocity.y, object->m_velocity.y);
 									}
 									object->m_position = object->m_position - l_direction * l_push;
 								}
