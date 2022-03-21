@@ -7,13 +7,19 @@ namespace gp
 		Loader::Loader()
 		{
 			m_listBlocks.push_back(new gp::world::Block("Air", "data/assets/blocks/Air.png", { }));
-			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt2.png", { {"InflictBurning", 2}, {"InflictDrowning", 10} }));
+			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt3.png", { {"InflictBurning", 2}, {"InflictDrowning", 10} }));
 			m_listBlocks.push_back(new gp::world::Block("Stone", "data/assets/blocks/Stone.png", { {"InflictBurning", 5}, {"InflictDrowning", 10} }));
 
 			m_textureAtlas = createTextureAtlas(m_listBlocks);
-
-			m_listBorders.push_back(new gp::world::Border("DirtBorderR", "data/assets/blocks/Dirt-BorderR.png"));
-			m_listBorders.push_back(new gp::world::Border("DirtBorderB", "data/assets/blocks/Dirt-BorderB.png"));
+	
+			m_listBorders.push_back(new gp::world::Border("DirtBorderLT", "data/assets/blocks/DirtBorderLT.png"));
+			m_listBorders.push_back(new gp::world::Border("DirtBorderT", "data/assets/blocks/DirtBorderT.png"));
+			m_listBorders.push_back(new gp::world::Border("DirtBorderRT", "data/assets/blocks/DirtBorderRT.png"));
+			m_listBorders.push_back(new gp::world::Border("DirtBorderR", "data/assets/blocks/DirtBorderR.png"));
+			m_listBorders.push_back(new gp::world::Border("DirtBorderRB", "data/assets/blocks/DirtBorderRB.png"));
+			m_listBorders.push_back(new gp::world::Border("DirtBorderB", "data/assets/blocks/DirtBorderB.png"));
+			m_listBorders.push_back(new gp::world::Border("DirtBorderLB", "data/assets/blocks/DirtBorderLB.png"));
+			m_listBorders.push_back(new gp::world::Border("DirtBorderL", "data/assets/blocks/DirtBorderL.png"));
 
 			m_borderAtlas = createTextureAtlas(m_listBorders);
 
