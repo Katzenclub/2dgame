@@ -27,10 +27,12 @@ namespace gp
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
-				m_p_MW->setBlockIDByBlockPos(m_selectedBlock, m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
+				if (m_p_MW->getContainer(m_p_MW->convertWorldPosToBlockPos(l_positionWorld))->size() == 0)
+				{
+					m_p_MW->setBlockIDByBlockPos(m_selectedBlock, m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
+				}
 			}
 
-			
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
@@ -70,7 +72,7 @@ namespace gp
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 			{
 				m_zoom = 1.f;
-			}
+			}		
 		}
 
 		void ManagerPlayer::update(float deltaTime)

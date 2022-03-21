@@ -79,12 +79,13 @@ namespace gp
 					(*m_p_VertexArray)[l_index + 3].position = l_positionOffset + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
 
 					int l_BlockID = chunk->m_data[x][y];
-					
+
 					sf::Vector2f l_texPos = sf::Vector2f((l_BlockID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (l_BlockID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 0].texCoords = l_texPos;
-					(*m_p_VertexArray)[l_index + 1].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
-					(*m_p_VertexArray)[l_index + 2].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 3].texCoords = l_texPos + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
+					// Texture Coordinates					  = UVPosition + Round to avoid flickering + TextureBound
+					(*m_p_VertexArray)[l_index + 0].texCoords = l_texPos + sf::Vector2f(0.5f, 0.5f);
+					(*m_p_VertexArray)[l_index + 1].texCoords = l_texPos + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0.f);
+					(*m_p_VertexArray)[l_index + 2].texCoords = l_texPos + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 3].texCoords = l_texPos + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0.f, g_CHUNK_TEXTURE_SIZE);
 				}
 			}
 			sf::RenderStates l_states;
@@ -110,10 +111,10 @@ namespace gp
 
 				auto l_objectAsset = m_p_loader->m_listObjectAssets[l_object->m_objectAssetID];
 
-				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0, 0);
-				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(l_objectAsset->m_SizeTexture.x, 0);
-				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(l_objectAsset->m_SizeTexture.x, l_objectAsset->m_SizeTexture.y);
-				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0, l_objectAsset->m_SizeTexture.y);
+				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0.5f, 0.5f) + sf::Vector2f(0, 0);
+				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(l_objectAsset->m_SizeTexture.x, 0);
+				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(l_objectAsset->m_SizeTexture.x, l_objectAsset->m_SizeTexture.y);
+				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0, l_objectAsset->m_SizeTexture.y);
 			}
 
 			sf::RenderStates l_states;
@@ -163,6 +164,83 @@ namespace gp
 
 				m_p_rw->draw(l_array);
 			}
+			
+			if (m_debugShowObjectPositions)
+			{
+				//std::cout << "Hallo" << std::endl;
+				sf::CircleShape l_circle;
+				l_circle.setPointCount(5);
+				l_circle.setFillColor(sf::Color::Magenta);
+				l_circle.setOutlineThickness(2.f);
+				l_circle.setOutlineColor(sf::Color::Green);
+				l_circle.setRadius(8.f);
+				l_circle.setOrigin(l_circle.getRadius(), l_circle.getRadius());
+
+				sf::CircleShape l_circleRadius;
+				l_circleRadius.setFillColor(sf::Color::Transparent);
+				l_circleRadius.setOutlineColor(sf::Color::Red);
+				l_circleRadius.setOutlineThickness(1.f);
+
+				size_t l_count = 5;
+				sf::VertexArray l_linestrip(sf::PrimitiveType::LinesStrip, l_count);
+				for (size_t i = 0; i < l_count; i++)
+				{
+					l_linestrip[i].color = sf::Color::Green;
+				}
+
+				for (auto it : m_p_objects->m_listObjects)
+				{
+					if (m_p_view->getCenter().x - m_p_view->getSize().x * 0.5f < it->m_position.x && m_p_view->getCenter().x + m_p_view->getSize().x * 0.5f > it->m_position.x &&
+						m_p_view->getCenter().y - m_p_view->getSize().y * 0.5f < it->m_position.y && m_p_view->getCenter().y + m_p_view->getSize().y * 0.5f > it->m_position.y)
+					{
+						l_circle.setPosition(it->m_position);
+						m_p_rw->draw(l_circle);
+
+						sf::Vector2f l_sizeHalf = it->m_size / 2.f;
+
+						l_circle.setPosition(it->m_position + sf::Vector2f(-l_sizeHalf.x,-l_sizeHalf.y));
+						l_linestrip[0].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, -l_sizeHalf.y);
+						l_linestrip[4].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, -l_sizeHalf.y);
+						m_p_rw->draw(l_circle);
+						
+						l_circle.setPosition(it->m_position + sf::Vector2f(l_sizeHalf.x, -l_sizeHalf.y));
+						l_linestrip[1].position = it->m_position + sf::Vector2f(l_sizeHalf.x, -l_sizeHalf.y);
+						m_p_rw->draw(l_circle);
+
+						l_circle.setPosition(it->m_position + sf::Vector2f(l_sizeHalf.x, l_sizeHalf.y));
+						l_linestrip[2].position = it->m_position + sf::Vector2f(l_sizeHalf.x, l_sizeHalf.y);
+						m_p_rw->draw(l_circle);
+
+						l_circle.setPosition(it->m_position + sf::Vector2f(-l_sizeHalf.x, l_sizeHalf.y));
+						l_linestrip[3].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, l_sizeHalf.y);
+						m_p_rw->draw(l_circle);
+						m_p_rw->draw(l_linestrip);
+
+						l_circleRadius.setPosition(it->m_position);
+						l_circleRadius.setRadius(it->m_size.y * 0.5f);
+						l_circleRadius.setOrigin(l_circleRadius.getRadius(), l_circleRadius.getRadius());
+						m_p_rw->draw(l_circleRadius);
+
+						if (it->m_pushback != sf::Vector2f(0.f, 0.f))
+						{
+							std::cout << it->m_pushback.x << std::endl;
+							l_circle.setPosition(it->m_pushback);
+							m_p_rw->draw(l_circle);
+							
+						}
+
+						for (auto its : it->m_collider)
+						{
+							l_circleRadius.setPosition(its);
+							l_circleRadius.setRadius(g_CHUNK_TEXTURE_SIZE * 0.5f);
+							l_circleRadius.setOrigin(l_circleRadius.getRadius(), l_circleRadius.getRadius());
+							m_p_rw->draw(l_circleRadius);
+							//std::cout << "Hallo" << std::endl;
+						}
+					}
+				}
+			}
+
 		}
 	}
 }

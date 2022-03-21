@@ -7,6 +7,9 @@
 
 #include "../World/ManagerWorld.h"
 
+#define g_GRAVITY 9.81
+#define g_RELATIVE_GRAVITY g_GRAVITY / g_CHUNK_TEXTURE_SIZE
+
 namespace gp
 {
 	namespace object
@@ -21,18 +24,22 @@ namespace gp
 			void update(float deltaTime);
 			void killAll();
 			void cleanup();
-
-			
+			void cleanupDebug();
+			void updatePosition();
+			void gravity();
 			
 			std::vector<gp::object::Object*> m_listObjects;
 			sf::Clock m_clock;
+
+			bool m_debugEnableGravity = false;
+
 		private:
 			gp::world::ManagerWorld* m_pMW;		
 			gp::system::Loader* m_p_loader;
 			
 			//Technical Stuff
 			void updateObjectBlockPositions();
-
+			
 		};
 
 	}

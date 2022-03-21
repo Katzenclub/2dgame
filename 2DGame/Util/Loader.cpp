@@ -11,7 +11,7 @@ namespace gp
 			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt.png", { {"InflictBurning", 2}, {"InflictDrowning", 10} }));
 
 			m_textureAtlas = createTextureAtlas(m_listBlocks);
-
+			m_textureAtlas.setSmooth(true);
 
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Player", "data/assets/objects/Player.png"));
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Slime", "data/assets/objects/Slime.png"));
@@ -19,6 +19,7 @@ namespace gp
 
 			clock_t start_time = clock();
 			m_objectsAtlas = createTextureAtlas(m_listObjectAssets);
+			m_objectsAtlas.setSmooth(true);
 			clock_t end_time = clock();
 			clock_t result = end_time - start_time;
 			printf("Create Object Atlas took %ld clicks (%f seconds).\n", result, ((float)result) / CLOCKS_PER_SEC);
@@ -32,8 +33,9 @@ namespace gp
 		{
 			sf::RenderTexture l_RT;
 			l_RT.create(g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE, g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE);
-			l_RT.clear(sf::Color(0,0,0,0));
-
+			l_RT.clear(sf::Color::Magenta); // to see available texture space on the fly.
+			sf::RenderStates l_renderstates;
+			l_renderstates.blendMode = sf::BlendNone; 
 			for (auto it : list)
 			{
 				sf::RectangleShape l_shape;
@@ -43,12 +45,10 @@ namespace gp
 					(it->m_ID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE,
 					(it->m_ID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE) );
 
-				l_RT.draw(l_shape);
-
+				l_RT.draw(l_shape, l_renderstates);
 			}
-
+			
 			l_RT.display();
-
 			return l_RT.getTexture();
 		}
 
@@ -56,7 +56,9 @@ namespace gp
 		{
 			sf::RenderTexture l_RT;
 			l_RT.create(g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE, g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE);
-			l_RT.clear(sf::Color(0, 0, 0, 0));
+			l_RT.clear(sf::Color::Magenta); // to see available texture space on the fly.
+			sf::RenderStates l_renderstates;
+			l_renderstates.blendMode = sf::BlendNone;
 
 			std::vector<RectInfo> l_rects;
 			for (auto objectAsset : list)
@@ -84,13 +86,12 @@ namespace gp
 				objectAsset->m_PositionTexture = sf::Vector2f(resultRect.x, resultRect.y);
 				l_shape.setPosition(objectAsset->m_PositionTexture);
 				
-				l_RT.draw(l_shape);
+				l_RT.draw(l_shape, l_renderstates);
 			}
 
 			l_RT.display();
 			
 			return l_RT.getTexture();
-		}
-		
+		}	
 	}
 }

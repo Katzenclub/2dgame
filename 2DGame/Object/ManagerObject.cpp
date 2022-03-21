@@ -23,6 +23,11 @@ namespace gp
 
 		void ManagerObject::update(float deltaTime)
 		{
+			if (m_debugEnableGravity)
+			{
+				gravity();
+			}
+			
 			int l_rand = 0;
 			for (auto it : m_listObjects)
 			{
@@ -46,7 +51,7 @@ namespace gp
 			}
 
 			updateObjectBlockPositions();
-
+			cleanupDebug();
 			cleanup();
 		}
 
@@ -72,6 +77,16 @@ namespace gp
 			}
 		}
 
+		void ManagerObject::cleanupDebug()
+		{
+			for (auto it : m_listObjects)
+			{
+				it->m_collider.clear();
+				it->m_pushback = sf::Vector2f(0.f, 0.f);
+			}
+			
+		}
+
 		void ManagerObject::updateObjectBlockPositions()
 		{
 			for (auto it : m_listObjects)
@@ -91,6 +106,21 @@ namespace gp
 
 					it->m_blockPosCur = l_blockPosNow;
 				}
+			}
+		}
+		void ManagerObject::updatePosition()
+		{
+			for (auto it : m_listObjects)
+			{
+				it->m_positionOld = it->m_position;
+			}
+		}
+		void ManagerObject::gravity()
+		{
+			for (auto it : m_listObjects)
+			{
+				it->m_velocity.y = it->m_velocity.y + g_RELATIVE_GRAVITY;
+				it->m_position = it->m_position + it->m_velocity;
 			}
 		}
 	}

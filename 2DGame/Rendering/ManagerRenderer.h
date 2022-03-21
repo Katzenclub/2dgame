@@ -20,6 +20,7 @@ namespace gp
 			void render(sf::Vector2f pos);
 			
 			bool m_debugShowObjectHeatmap = false;
+			bool m_debugShowObjectPositions = false;
 
 		private:
 			sf::RenderWindow* m_p_rw;

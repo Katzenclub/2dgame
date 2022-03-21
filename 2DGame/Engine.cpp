@@ -11,10 +11,10 @@ namespace gp
 		sf::Vector2f m_positionSpawn = sf::Vector2f((g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) / 2, g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE * 0.2f);
 
 		m_p_managerWorld = new gp::world::ManagerWorld(m_p_view);
-		m_p_managerObject = new gp::object::ManagerObject(m_p_Loader,m_p_managerWorld);
+		m_p_managerObject = new gp::object::ManagerObject(m_p_Loader, m_p_managerWorld);
 		m_p_managerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_managerWorld, m_p_managerObject, m_p_Loader, m_p_view);
-		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, 1.f, 0,gp::object::player),m_p_managerWorld,m_p_view,m_p_rw);
-		m_p_managerCollision = new gp::system::ManagerCollision(m_p_managerWorld,m_p_managerObject);
+		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, 1.f, 0, gp::object::player), m_p_managerWorld, m_p_view, m_p_rw);
+		m_p_managerCollision = new gp::system::ManagerCollision(m_p_managerWorld, m_p_managerObject);
 	}
 
 	Engine::~Engine()
@@ -23,12 +23,13 @@ namespace gp
 
 	void Engine::handle(float deltaTime)
 	{
+		m_p_managerObject->updatePosition();
 		m_p_managerPlayer->handle(deltaTime);
 	}
 
 	void Engine::update(float deltaTime)
 	{
-		
+
 		m_p_managerObject->update(deltaTime);
 		m_p_managerCollision->update(deltaTime);
 		m_p_managerPlayer->update(deltaTime);
@@ -61,18 +62,20 @@ namespace gp
 		}
 		else if (page == 1) {
 			ImGui::Image(m_p_Loader->m_objectsAtlas);
-		}	
+		}
 		ImGui::EndChild();
 
 
 		ImGui::Checkbox("Show Object Heatmap", &m_p_managerRenderer->m_debugShowObjectHeatmap);
-		
+		ImGui::Checkbox("Show Object Positions", &m_p_managerRenderer->m_debugShowObjectPositions);
+		ImGui::Checkbox("Enable Gravity", &m_p_managerObject->m_debugEnableGravity);
+
 		ImGui::Text(" ");
 
 		sf::Vector2i l_chunkPos = m_p_managerWorld->convertBlockPosToChunkPos(m_p_managerPlayer->m_p_objectPlayer->m_blockPosCur);
-		ImGui::Text("Player Chunk Pos: x: %d y: %d", l_chunkPos.x,l_chunkPos.y);
+		ImGui::Text("Player Chunk Pos: x: %d y: %d", l_chunkPos.x, l_chunkPos.y);
 		sf::Vector2i l_blockPos = m_p_managerPlayer->m_p_objectPlayer->m_blockPosCur;
-		ImGui::Text("Player Block Pos: x: %d y: %d", l_blockPos.x,l_blockPos.y);
+		ImGui::Text("Player Block Pos: x: %d y: %d", l_blockPos.x, l_blockPos.y);
 
 		ImGui::Text(" ");
 
@@ -112,10 +115,13 @@ namespace gp
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
 			sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
-			for (int i = 0; i < 1; i++)
+			if (m_p_managerWorld->getBlockIDByBlockPos(m_p_managerWorld->convertWorldPosToBlockPos(l_positionWorld)) == 0)
 			{
-				srand(m_p_managerObject->m_clock.getElapsedTime().asMicroseconds() + i * 32);
-				m_p_managerObject->create(l_positionWorld, 1.f, rand() % (m_p_Loader->m_listObjectAssets.size()-1)+1, gp::object::oType::npc)->m_speed = rand() % 500;
+				for (int i = 0; i < 1; i++)
+				{
+					srand(m_p_managerObject->m_clock.getElapsedTime().asMicroseconds() + i * 32);
+					m_p_managerObject->create(l_positionWorld, 1.f, rand() % (m_p_Loader->m_listObjectAssets.size() - 1) + 1, gp::object::oType::npc)->m_speed = rand() % 500;
+				}
 			}
 		}
 	}

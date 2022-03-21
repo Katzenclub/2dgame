@@ -21,8 +21,7 @@ namespace gp
 
 			void collisionObjectObject(float deltaTime);
 			void collisionWorldObject(float deltaTime);
-
-			void collide(sf::Vector2f &posObj, const sf::Vector2f &posCollider, const float &radiusObj, const float &radiusCollider);
+			void checkPositionIterative(gp::object::Object* obj);
 		};
 	}
 }

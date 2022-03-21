@@ -71,7 +71,6 @@ namespace gp
 	{
 		m_p_window->clear(sf::Color(137, 207, 240));
 		
-
 		// render Stuff
 
 		m_p_window->setView(*m_p_viewWorld);
@@ -86,12 +85,6 @@ namespace gp
 	{
 		ImGui::Begin("Engine Interface");
 		ImGui::Text("Framerate: %0.f", (1.f / m_deltaTime) + 0.5f);
-
-		//if (ImGui::Button("Reset"))
-		//{
-		//	std::cout << "DEBUG" << std::endl;
-		//}
-		
 
 		m_p_Engine->debug(deltaTime);
 		
