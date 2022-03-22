@@ -25,7 +25,6 @@ namespace gp
 			ManagerBorder();
 			~ManagerBorder();
 			
-			void init(int maxBlockID);
 			void addBorder(Border* border, BorderType borderType, int blockID);
 			Border* m_listBorders[g_ATLAS_BLOCK_SIZE * g_ATLAS_BLOCK_SIZE][8];
 		private:

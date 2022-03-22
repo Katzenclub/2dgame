@@ -7,22 +7,13 @@ namespace gp
 		Loader::Loader()
 		{
 			m_listBlocks.push_back(new gp::world::Block("Air", "data/assets/blocks/Air.png", {}));
-			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt3.png", {{"InflictBurning", 2}, {"InflictDrowning", 10}}));
+			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt/Dirt.png", {{"InflictBurning", 2}, {"InflictDrowning", 10}}));
 			m_listBlocks.push_back(new gp::world::Block("Stone", "data/assets/blocks/Stone.png", {{"InflictBurning", 5}, {"InflictDrowning", 10}}));
 
 			m_textureAtlas = createTextureAtlas(m_listBlocks);
-			
-			m_managerBorder.init(3);
-			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderLT.png"), gp::world::BorderType::TopLeft, 1);
-			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderT.png"), gp::world::BorderType::Top, 1);
-			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderRT.png"), gp::world::BorderType::TopRight, 1);
-			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderR.png"), gp::world::BorderType::Right, 1);
-			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderRB.png"), gp::world::BorderType::BottomRight, 1);
-			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderB.png"), gp::world::BorderType::Bottom, 1);
-			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderLB.png"), gp::world::BorderType::BottomLeft, 1);
-			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderL.png"), gp::world::BorderType::Left, 1);
 
-			m_borderAtlas = createBorderAtlas(3);
+			addBlock("data/assets/blocks/Dirt", 1);
+			m_borderAtlas = createBorderAtlas();
 
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Player", "data/assets/objects/Player.png"));
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Slime", "data/assets/objects/Slime.png"));
@@ -33,6 +24,7 @@ namespace gp
 			clock_t end_time = clock();
 			clock_t result = end_time - start_time;
 			printf("Create Object Atlas took %ld clicks (%f seconds).\n", result, ((float)result) / CLOCKS_PER_SEC);
+			
 		}
 
 		Loader::~Loader()
@@ -61,19 +53,20 @@ namespace gp
 
 			return l_RT.getTexture();
 		}
-		
-		sf::Texture Loader::createBorderAtlas(int maxBlockID)
+
+		sf::Texture Loader::createBorderAtlas()
 		{
 			sf::RenderTexture l_RT;
 			l_RT.create(g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE, g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE);
 			l_RT.clear(sf::Color(0, 0, 0, 0));
-			for (int blockID = 0; blockID < maxBlockID; blockID++)
+			for (int blockID = 0; blockID < 64; blockID++)
 			{
 				for (int borderType = 0; borderType < 8; borderType++)
 				{
 					sf::RectangleShape l_shape;
 					gp::world::Border *border = m_managerBorder.m_listBorders[blockID][borderType];
-					if (border == NULL) {
+					if (border == NULL)
+					{
 						continue;
 					}
 					l_shape.setTexture(&border->m_texture);
@@ -132,5 +125,25 @@ namespace gp
 			return l_RT.getTexture();
 		}
 
+		void Loader::addBlock(std::string borderFolder, int blockID)
+		{
+			for (auto dir_entry : std::filesystem::directory_iterator(borderFolder))
+			{
+				std::string path = dir_entry.path().string();
+				std::string substring = dir_entry.path().filename().string().substr(0, 1);
+				
+				int borderType = -1;
+				try
+				{
+					borderType = std::stoi(substring);
+				}
+				catch (const std::invalid_argument& ex)
+				{
+					continue;
+				}
+				
+				m_managerBorder.addBorder(new gp::world::Border(path), (gp::world::BorderType) borderType, blockID);
+			}
+		}
 	}
 }

@@ -6,21 +6,17 @@ namespace gp
 	{
 		ManagerBorder::ManagerBorder()
 		{
-		}
-
-		ManagerBorder::~ManagerBorder()
-		{
-		}
-
-		void ManagerBorder::init(int maxBlockID)
-		{
-			for (int blockID = 0; blockID < maxBlockID; blockID++)
+			for (int blockID = 0; blockID < g_ATLAS_BLOCK_SIZE * g_ATLAS_BLOCK_SIZE; blockID++)
 			{
 				for (int borderType = 0; borderType < 8; borderType++)
 				{
 					m_listBorders[blockID][borderType] = NULL;
 				}
 			}
+		}
+
+		ManagerBorder::~ManagerBorder()
+		{
 		}
 
 		void ManagerBorder::addBorder(Border *border, BorderType borderType, int blockID)

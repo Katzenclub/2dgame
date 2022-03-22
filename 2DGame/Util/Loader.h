@@ -1,6 +1,9 @@
 #pragma once
 
 #include <string>
+#include <fstream>
+#include <iostream>
+#include <filesystem>
 #include "../World/WorldConstants.h"
 
 #include "GuillotineBinPack.h"
@@ -28,12 +31,13 @@ namespace gp
 		private:
 
 			sf::Texture createTextureAtlas(const std::vector<gp::world::Block*>& list);
-			sf::Texture createBorderAtlas(int maxBlockID);
+			sf::Texture createBorderAtlas();
 			sf::Texture createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list);
 
 			std::vector<gp::world::Block*> m_listBlocks;
 			std::vector<gp::world::Border*> m_listBorders;
 			
+			void addBlock(std::string borderFolder, int blockID);
 		};
 
 		
