@@ -1,4 +1,6 @@
-# Development of a Terraria-Clone
+# Design Decisions
+
+todo
 
 ## Project identification process
 
