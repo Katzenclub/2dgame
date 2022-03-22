@@ -36,8 +36,7 @@ namespace gp
 			void renderBorders(gp::world::Chunk *chunk);
 			void renderObjects();
 			void renderDebug();
-
-			
+			void fillVertexArrayBorders(sf::Vector2f positionOffset, sf::Vector2f texPos, int index);			
 		};
 	}
 }
