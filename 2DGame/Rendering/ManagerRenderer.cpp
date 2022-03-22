@@ -113,6 +113,10 @@ namespace gp
 
 					int l_BlockID = chunk->m_data[x][y];
 					
+					if (l_BlockID == 0) {
+						continue;
+					}
+
 					int borderType = 0;
 					for (int xOffset = -1; xOffset <= 1; xOffset++)
 					{
@@ -121,7 +125,7 @@ namespace gp
 							int l_comparisonBlockID = m_p_world->getBlockIDByBlockPos((chunk->m_ID * g_CHUNK_SIZE) + sf::Vector2i(x + xOffset, y + yOffset));
 							gp::world::Border *border = m_p_loader->m_managerBorder.m_listBorders[l_BlockID][borderType];
 
-							if ((xOffset == 0 && yOffset == 0) || l_comparisonBlockID == -1 || border == NULL)
+							if (border == NULL || (xOffset == 0 && yOffset == 0) || l_comparisonBlockID == -1)
 							{
 								continue;
 							}
@@ -133,7 +137,7 @@ namespace gp
 								sf::Vector2f l_positionOffset = sf::Vector2f(chunk->m_ID * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
 								l_positionOffset += sf::Vector2f((x + xOffset) * g_CHUNK_TEXTURE_SIZE, (y + yOffset) * g_CHUNK_TEXTURE_SIZE);
 
-								sf::Vector2f l_texPos = sf::Vector2f((((l_BlockID - 1) * 8 + borderID) / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (((l_BlockID - 1) * 8 + borderID) % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
+								sf::Vector2f l_texPos = sf::Vector2f((borderID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (borderID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
 
 								fillVertexArrayBorders(l_positionOffset, l_texPos, l_index);
 							}
