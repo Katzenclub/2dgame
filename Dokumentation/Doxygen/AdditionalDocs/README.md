@@ -118,4 +118,3 @@ Download graphviz from [here](https://gitlab.com/api/v4/projects/4207231/package
 cd Dokumentation/Doxygen
 doxygen
 ```
-![YAY MIKO](aro.webp)
