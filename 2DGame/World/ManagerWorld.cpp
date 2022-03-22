@@ -147,7 +147,7 @@ namespace gp
 
 			if (isInvalidChunkPos(l_chunkPos))
 			{
-				return 0;
+				return -1;
 			}
 
 			sf::Vector2i l_localBlockPos = convertBlockPosToLocalBlockPos(blockPos);

@@ -4,8 +4,7 @@ namespace gp
 {
 	namespace world
 	{
-		Border::Border(std::string name, std::string path) :
-			m_name(name)
+		Border::Border(std::string path)
 		{
 			m_ID = g_borderID; 
 			g_borderID++;

@@ -6,23 +6,23 @@ namespace gp
 	{
 		Loader::Loader()
 		{
-			m_listBlocks.push_back(new gp::world::Block("Air", "data/assets/blocks/Air.png", { }));
-			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt3.png", { {"InflictBurning", 2}, {"InflictDrowning", 10} }));
-			m_listBlocks.push_back(new gp::world::Block("Stone", "data/assets/blocks/Stone.png", { {"InflictBurning", 5}, {"InflictDrowning", 10} }));
+			m_listBlocks.push_back(new gp::world::Block("Air", "data/assets/blocks/Air.png", {}));
+			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt3.png", {{"InflictBurning", 2}, {"InflictDrowning", 10}}));
+			m_listBlocks.push_back(new gp::world::Block("Stone", "data/assets/blocks/Stone.png", {{"InflictBurning", 5}, {"InflictDrowning", 10}}));
 
 			m_textureAtlas = createTextureAtlas(m_listBlocks);
-	
-			m_listBorders.push_back(new gp::world::Border("DirtBorderLT", "data/assets/blocks/DirtBorderLT.png"));
-			m_listBorders.push_back(new gp::world::Border("DirtBorderT", "data/assets/blocks/DirtBorderT.png"));
-			m_listBorders.push_back(new gp::world::Border("DirtBorderRT", "data/assets/blocks/DirtBorderRT.png"));
-			m_listBorders.push_back(new gp::world::Border("DirtBorderR", "data/assets/blocks/DirtBorderR.png"));
-			m_listBorders.push_back(new gp::world::Border("DirtBorderRB", "data/assets/blocks/DirtBorderRB.png"));
-			m_listBorders.push_back(new gp::world::Border("DirtBorderB", "data/assets/blocks/DirtBorderB.png"));
-			m_listBorders.push_back(new gp::world::Border("DirtBorderLB", "data/assets/blocks/DirtBorderLB.png"));
-			m_listBorders.push_back(new gp::world::Border("DirtBorderL", "data/assets/blocks/DirtBorderL.png"));
+			
+			m_managerBorder.init(3);
+			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderLT.png"), gp::world::BorderType::TopLeft, 1);
+			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderT.png"), gp::world::BorderType::Top, 1);
+			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderRT.png"), gp::world::BorderType::TopRight, 1);
+			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderR.png"), gp::world::BorderType::Right, 1);
+			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderRB.png"), gp::world::BorderType::BottomRight, 1);
+			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderB.png"), gp::world::BorderType::Bottom, 1);
+			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderLB.png"), gp::world::BorderType::BottomLeft, 1);
+			m_managerBorder.addBorder(new gp::world::Border("data/assets/blocks/DirtBorderL.png"), gp::world::BorderType::Left, 1);
 
-			m_borderAtlas = createTextureAtlas(m_listBorders);
-
+			m_borderAtlas = createBorderAtlas(3);
 
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Player", "data/assets/objects/Player.png"));
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Slime", "data/assets/objects/Slime.png"));
@@ -39,11 +39,11 @@ namespace gp
 		{
 		}
 
-		sf::Texture Loader::createTextureAtlas(const std::vector<gp::world::Block*>& list)
+		sf::Texture Loader::createTextureAtlas(const std::vector<gp::world::Block *> &list)
 		{
 			sf::RenderTexture l_RT;
 			l_RT.create(g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE, g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE);
-			l_RT.clear(sf::Color(0,0,0,0));
+			l_RT.clear(sf::Color(0, 0, 0, 0));
 
 			for (auto it : list)
 			{
@@ -52,34 +52,38 @@ namespace gp
 				l_shape.setSize(sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE));
 				l_shape.setPosition(sf::Vector2f(
 					(it->m_ID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE,
-					(it->m_ID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE) );
+					(it->m_ID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE));
 
 				l_RT.draw(l_shape);
-
 			}
 
 			l_RT.display();
 
 			return l_RT.getTexture();
 		}
-
-		sf::Texture Loader::createTextureAtlas(const std::vector<gp::world::Border*>& list)
+		
+		sf::Texture Loader::createBorderAtlas(int maxBlockID)
 		{
 			sf::RenderTexture l_RT;
 			l_RT.create(g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE, g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE);
-			l_RT.clear(sf::Color(0,0,0,0));
-
-			for (auto it : list)
+			l_RT.clear(sf::Color(0, 0, 0, 0));
+			for (int blockID = 0; blockID < maxBlockID; blockID++)
 			{
-				sf::RectangleShape l_shape;
-				l_shape.setTexture(&it->m_texture);
-				l_shape.setSize(sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE));
-				l_shape.setPosition(sf::Vector2f(
-					(it->m_ID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE,
-					(it->m_ID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE) );
+				for (int borderType = 0; borderType < 8; borderType++)
+				{
+					sf::RectangleShape l_shape;
+					gp::world::Border *border = m_managerBorder.m_listBorders[blockID][borderType];
+					if (border == NULL) {
+						continue;
+					}
+					l_shape.setTexture(&border->m_texture);
+					l_shape.setSize(sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE));
+					l_shape.setPosition(sf::Vector2f(
+						(border->m_ID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE,
+						(border->m_ID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE));
 
-				l_RT.draw(l_shape);
-
+					l_RT.draw(l_shape);
+				}
 			}
 
 			l_RT.display();
@@ -87,7 +91,7 @@ namespace gp
 			return l_RT.getTexture();
 		}
 
-		sf::Texture Loader::createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list)
+		sf::Texture Loader::createTextureAtlas(const std::vector<gp::object::ObjectAsset *> &list)
 		{
 			sf::RenderTexture l_RT;
 			l_RT.create(g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE, g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE);
@@ -106,8 +110,9 @@ namespace gp
 
 			auto l_gouillotineBinPack = GuillotineBinPack(l_RT.getSize().x, l_RT.getSize().y);
 			auto l_resultRects = l_gouillotineBinPack.Insert(l_rects, false);
-			
-			for (auto resultRect : l_resultRects) {
+
+			for (auto resultRect : l_resultRects)
+			{
 				auto objectAsset = resultRect.objectAsset;
 
 				sf::RectangleShape l_shape;
@@ -118,14 +123,14 @@ namespace gp
 
 				objectAsset->m_PositionTexture = sf::Vector2f(resultRect.x, resultRect.y);
 				l_shape.setPosition(objectAsset->m_PositionTexture);
-				
+
 				l_RT.draw(l_shape);
 			}
 
 			l_RT.display();
-			
+
 			return l_RT.getTexture();
 		}
-		
+
 	}
 }

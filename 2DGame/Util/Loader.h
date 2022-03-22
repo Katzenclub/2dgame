@@ -6,6 +6,7 @@
 #include "GuillotineBinPack.h"
 #include "../World/Block.h"
 #include "../World/Border.h"
+#include "../World/ManagerBorder.h"
 #include "../Object/ObjectAsset.h"
 
 namespace gp
@@ -23,10 +24,11 @@ namespace gp
 			sf::Texture m_objectsAtlas;
 			std::vector<gp::object::ObjectAsset*> m_listObjectAssets;
 
+			gp::world::ManagerBorder m_managerBorder;
 		private:
 
 			sf::Texture createTextureAtlas(const std::vector<gp::world::Block*>& list);
-			sf::Texture createTextureAtlas(const std::vector<gp::world::Border*>& list);
+			sf::Texture createBorderAtlas(int maxBlockID);
 			sf::Texture createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list);
 
 			std::vector<gp::world::Block*> m_listBlocks;

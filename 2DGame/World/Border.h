@@ -13,10 +13,9 @@ namespace gp
 		class Border
 		{
 		public:
-			Border(std::string name, std::string path);
+			Border(std::string path);
 			~Border();
 
-			std::string m_name;
 			sf::Texture m_texture;
 			unsigned int m_ID;
 
