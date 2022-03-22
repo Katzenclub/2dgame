@@ -103,7 +103,7 @@ namespace gp
 		void ManagerRenderer::renderBorders(gp::world::Chunk *chunk)
 		{
 			m_p_VertexArrayBorders->clear();
-			m_p_VertexArrayBorders->resize(g_CHUNK_SIZE * g_CHUNK_SIZE * 4 * 8); // 4=KantenDerRechtecke; 8=AlleBorders
+			//m_p_VertexArrayBorders->resize(g_CHUNK_SIZE * g_CHUNK_SIZE * 4 * 8); // 4=KantenDerRechtecke; 8=AlleBorders
 
 			for (int y = 0; y < g_CHUNK_SIZE; y++)
 			{
@@ -156,6 +156,21 @@ namespace gp
 
 		void ManagerRenderer::fillVertexArrayBorders(sf::Vector2f positionOffset, sf::Vector2f texPos, int index)
 		{
+			
+			m_p_VertexArrayBorders->append(
+				sf::Vertex(positionOffset, texPos)
+			);
+			m_p_VertexArrayBorders->append(
+				sf::Vertex(positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0),                    texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0))
+			);
+			m_p_VertexArrayBorders->append(
+				sf::Vertex(positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE), texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE))
+			);
+			m_p_VertexArrayBorders->append(
+				sf::Vertex(positionOffset + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE),                    texPos + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE))
+			);
+													  
+			/*
 			(*m_p_VertexArrayBorders)[index + 0].position = positionOffset;
 			(*m_p_VertexArrayBorders)[index + 1].position = positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
 			(*m_p_VertexArrayBorders)[index + 2].position = positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
@@ -165,6 +180,7 @@ namespace gp
 			(*m_p_VertexArrayBorders)[index + 1].texCoords = texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
 			(*m_p_VertexArrayBorders)[index + 2].texCoords = texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
 			(*m_p_VertexArrayBorders)[index + 3].texCoords = texPos + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
+			*/
 		}
 
 		void ManagerRenderer::renderObjects()
