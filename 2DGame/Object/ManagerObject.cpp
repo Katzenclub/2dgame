@@ -33,12 +33,12 @@ namespace gp
 					if (it->m_speed == 0.f)
 					{
 						srand(m_clock.getElapsedTime().asMicroseconds() + l_rand);
-						it->m_direction = gp::util::getDirectionNormalised(float(rand() % 360));
-						it->m_speed = 500.f;
+						it->m_direction = gp::util::getDirectionNormalised(float(rand() % 180) - 90.f);
+						it->m_speed = 1500.f;
 					}
 
 					it->m_position = it->m_position + it->m_direction * it->m_speed * deltaTime;
-					it->m_speed = it->m_speed - 250.f * deltaTime;
+					it->m_speed = it->m_speed - 750.f * deltaTime;
 					if (it->m_speed <= 0.f)
 					{
 						it->m_speed = 0;

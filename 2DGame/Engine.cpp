@@ -12,9 +12,10 @@ namespace gp
 
 		m_p_managerWorld = new gp::world::ManagerWorld(m_p_view);
 		m_p_managerObject = new gp::object::ManagerObject(m_p_Loader, m_p_managerWorld);
-		m_p_managerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_managerWorld, m_p_managerObject, m_p_Loader, m_p_view);
-		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, 1.f, 0, gp::object::player), m_p_managerWorld, m_p_view, m_p_rw);
-		m_p_managerCollision = new gp::system::ManagerCollision(m_p_managerWorld, m_p_managerObject);
+		m_p_managerProjectiles = new gp::projectile::ManagerProjectiles(m_p_Loader);
+		m_p_managerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_managerWorld, m_p_managerObject, m_p_managerProjectiles, m_p_Loader, m_p_view);
+		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, 1.f, 0, gp::object::player), m_p_managerWorld,m_p_managerProjectiles, m_p_view, m_p_rw);
+		m_p_managerCollision = new gp::system::ManagerCollision(m_p_managerWorld, m_p_managerObject,m_p_managerProjectiles);
 	}
 
 	Engine::~Engine()
@@ -23,7 +24,6 @@ namespace gp
 
 	void Engine::handle(float deltaTime)
 	{
-		
 		m_p_managerObject->updatePosition();
 		m_p_managerPlayer->handle(deltaTime);
 	}
@@ -32,6 +32,7 @@ namespace gp
 	{
 		m_p_managerObject->update(deltaTime);
 		m_p_managerCollision->update(deltaTime);
+		m_p_managerProjectiles->update(deltaTime);
 		m_p_managerPlayer->update(deltaTime);
 	}
 
@@ -43,11 +44,12 @@ namespace gp
 	void Engine::debug(float deltaTime)
 	{
 		ImGui::Text("Objects Count: %ld", m_p_managerObject->m_listObjects.size());
+		ImGui::Text("Projectile Count: %ld", m_p_managerProjectiles->m_listProjectiles.size());
 
 		ImGui::Text(" ");
 
 		static int page = 0;
-		std::vector<std::string> l_taps = { "Block Atlas","Object Atlas" };
+		std::vector<std::string> l_taps = { "Block Atlas","Object Atlas","Projectile Atlas"};
 		ImGui::BeginGroup();
 		for (int i = 0; i < l_taps.size(); i++)
 		{
@@ -62,6 +64,9 @@ namespace gp
 		}
 		else if (page == 1) {
 			ImGui::Image(m_p_Loader->m_objectsAtlas);
+		}
+		else if (page == 2) {
+			ImGui::Image(m_p_Loader->m_projectileAtlas);
 		}
 		ImGui::EndChild();
 
@@ -87,6 +92,31 @@ namespace gp
 		ImGui::Text("SelectedBlock: %d", m_p_managerPlayer->m_selectedBlock);
 		ImGui::Text("Place Selected Block: LMB");
 		ImGui::Text("Spawn Objects: RMB");
+
+		const char* items[] = { "Pickaxe", "Shoot" };
+		static const char* current_item = "Pickaxe";
+		if (ImGui::BeginCombo("##combo", current_item)) // The second parameter is the label previewed before opening the combo.
+		{
+			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+			{
+				bool is_selected = (current_item == items[n]); // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(items[n], is_selected))
+					current_item = items[n];
+				
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+			}
+
+			if (current_item == "Pickaxe")
+			{
+				m_p_managerPlayer->m_interactionMode = gp::game::interactionMode::pickaxe;
+			}
+			else if (current_item == "Shoot")
+			{
+				m_p_managerPlayer->m_interactionMode = gp::game::interactionMode::shoot;
+			}
+			ImGui::EndCombo();
+		}
 
 		ImGui::Text(" ");
 

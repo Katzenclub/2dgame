@@ -4,8 +4,11 @@ namespace gp
 {
 	namespace system
 	{
-		ManagerCollision::ManagerCollision(gp::world::ManagerWorld* MW, gp::object::ManagerObject* MO) : m_p_MO(MO),
-			m_p_MW(MW)
+		ManagerCollision::ManagerCollision(gp::world::ManagerWorld* MW, gp::object::ManagerObject* MO, gp::projectile::ManagerProjectiles* MP) :
+			m_p_MO(MO),
+			m_p_MW(MW),
+			m_p_MP(MP)
+
 		{
 		}
 
@@ -19,6 +22,7 @@ namespace gp
 			collisionObjectObject(deltaTime);
 			collisionWorldObject(deltaTime);
 			updateObjectBlockPositions();
+			checkProjectiles();
 		}
 
 		void ManagerCollision::updateObjectBlockPositions()
@@ -42,8 +46,6 @@ namespace gp
 				}
 			}
 		}
-
-
 
 		void ManagerCollision::collisionObjectObject(float deltaTime)
 		{
@@ -199,6 +201,40 @@ namespace gp
 		skipy:
 
 			obj->m_position = l_posTMP;
+		}
+
+		void ManagerCollision::checkProjectiles()
+		{
+			for (auto projectile : m_p_MP->m_listProjectiles)
+			{
+				sf::Vector2i l_blockPos = m_p_MW->convertWorldPosToBlockPos(projectile->m_position);
+				if (m_p_MW->getBlockIDByBlockPos(l_blockPos) == 0)
+				{
+					const int l_rad = 1; // This will be changed later.
+					for (int x = -l_rad; x <= l_rad; x++)
+					{
+						for (int y = -l_rad; y <= l_rad; y++)
+						{
+							auto l_container = m_p_MW->getContainer(l_blockPos + sf::Vector2i(x, y));
+							if (l_container)
+							{
+								for (auto object : *l_container)
+								{
+									if (object->m_ID != projectile->m_IDOwner && gp::util::getDistance(object->m_position, projectile->m_position) < object->m_size.y * 0.5f)
+									{
+										object->setImpulse(projectile->m_direction, projectile->m_speed);
+										projectile->m_lifeTimeCur = 0.f;
+									}
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					projectile->m_lifeTimeCur = 0.f;
+				}
+			}
 		}
 	}
 }

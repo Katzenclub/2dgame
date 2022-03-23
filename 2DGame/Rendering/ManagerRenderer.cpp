@@ -4,10 +4,11 @@ namespace gp
 {
 	namespace system
 	{
-		ManagerRenderer::ManagerRenderer(sf::RenderWindow* rw, gp::world::ManagerWorld* world, gp::object::ManagerObject* managerObject, gp::system::Loader* loader, sf::View* view) :
+		ManagerRenderer::ManagerRenderer(sf::RenderWindow* rw, gp::world::ManagerWorld* world, gp::object::ManagerObject* managerObject, gp::projectile::ManagerProjectiles* managerProjectiles, gp::system::Loader* loader, sf::View* view) :
 			m_p_rw(rw),
 			m_p_world(world),
 			m_p_objects(managerObject),
+			m_p_MP(managerProjectiles),
 			m_p_loader(loader),
 			m_p_view(view)
 		{
@@ -23,6 +24,7 @@ namespace gp
 		{
 			renderChunks(pos);
 			renderObjects();
+			renderProjectiles();
 			renderDebug();
 			//RENDER OBJECTS
 		}
@@ -123,6 +125,38 @@ namespace gp
 			m_p_rw->draw(*m_p_VertexArrayObjects, l_states);
 		}
 
+		void ManagerRenderer::renderProjectiles()
+		{
+			size_t l_size = m_p_MP->m_listProjectiles.size();
+			m_p_VertexArrayObjects->resize(l_size * 4);
+			for (size_t i = 0; i < l_size; i++)
+			{
+				auto l_object = m_p_MP->m_listProjectiles[i];
+
+				int l_index = i * 4;
+				auto l_size = sf::Vector2f(l_object->m_size.x * 0.5f, l_object->m_size.y * 0.5f);
+
+				sf::Transform l_transform;
+				l_transform.rotate(gp::util::getDegAngle(l_object->m_direction));
+
+				(*m_p_VertexArrayObjects)[l_index + 0].position = l_object->m_position + l_transform.transformPoint(sf::Vector2f(-l_size.x, -l_size.y));
+				(*m_p_VertexArrayObjects)[l_index + 1].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(l_size.x, -l_size.y));
+				(*m_p_VertexArrayObjects)[l_index + 2].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(l_size.x, l_size.y));
+				(*m_p_VertexArrayObjects)[l_index + 3].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(-l_size.x, l_size.y));
+
+				auto l_source = l_object->m_p_source;
+				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_source->m_PositionTexture + sf::Vector2f(0.5f, 0.5f) + sf::Vector2f(0, 0);
+				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_source->m_PositionTexture + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(l_source->m_SizeTexture.x, 0);
+				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_source->m_PositionTexture + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(l_source->m_SizeTexture.x, l_source->m_SizeTexture.y);
+				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_source->m_PositionTexture + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0, l_source->m_SizeTexture.y);
+			}
+
+			sf::RenderStates l_states;
+			l_states.texture = &m_p_loader->m_projectileAtlas;
+
+			m_p_rw->draw(*m_p_VertexArrayObjects, l_states);
+		}
+
 		void ManagerRenderer::renderDebug()
 		{
 			if (m_debugShowObjectHeatmap)
@@ -167,7 +201,6 @@ namespace gp
 			
 			if (m_debugShowObjectPositions)
 			{
-				//std::cout << "Hallo" << std::endl;
 				sf::CircleShape l_circle;
 				l_circle.setPointCount(5);
 				l_circle.setFillColor(sf::Color::Magenta);
@@ -188,37 +221,11 @@ namespace gp
 					l_linestrip[i].color = sf::Color::Green;
 				}
 
-
-				
-
 				for (auto it : m_p_objects->m_listObjects)
 				{
 					if (m_p_view->getCenter().x - m_p_view->getSize().x * 0.5f < it->m_position.x && m_p_view->getCenter().x + m_p_view->getSize().x * 0.5f > it->m_position.x &&
 						m_p_view->getCenter().y - m_p_view->getSize().y * 0.5f < it->m_position.y && m_p_view->getCenter().y + m_p_view->getSize().y * 0.5f > it->m_position.y)
 					{
-						//l_circle.setPosition(it->m_position);
-						//m_p_rw->draw(l_circle);
-
-						//sf::Vector2f l_sizeHalf = it->m_size / 2.f;
-
-						//l_circle.setPosition(it->m_position + sf::Vector2f(-l_sizeHalf.x,-l_sizeHalf.y));
-						//l_linestrip[0].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, -l_sizeHalf.y);
-						//l_linestrip[4].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, -l_sizeHalf.y);
-						//m_p_rw->draw(l_circle);
-						//
-						//l_circle.setPosition(it->m_position + sf::Vector2f(l_sizeHalf.x, -l_sizeHalf.y));
-						//l_linestrip[1].position = it->m_position + sf::Vector2f(l_sizeHalf.x, -l_sizeHalf.y);
-						//m_p_rw->draw(l_circle);
-						//
-						//l_circle.setPosition(it->m_position + sf::Vector2f(l_sizeHalf.x, l_sizeHalf.y));
-						//l_linestrip[2].position = it->m_position + sf::Vector2f(l_sizeHalf.x, l_sizeHalf.y);
-						//m_p_rw->draw(l_circle);
-						//
-						//
-						//l_linestrip[3].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, l_sizeHalf.y);
-						//
-						////m_p_rw->draw(l_linestrip);
-
 						size_t l_countb = it->m_boundingBoxPoints.size();
 						sf::VertexArray l_linestripb(sf::PrimitiveType::LinesStrip, l_countb + 1);
 						for (size_t i = 0; i < l_countb; i++)

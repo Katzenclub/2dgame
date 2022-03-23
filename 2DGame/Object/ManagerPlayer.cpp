@@ -4,9 +4,10 @@ namespace gp
 {
 	namespace game
 	{
-		ManagerPlayer::ManagerPlayer(gp::object::Object* objectPlayer, gp::world::ManagerWorld* MW, sf::View *view,sf::RenderWindow *rw) :
+		ManagerPlayer::ManagerPlayer(gp::object::Object* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles* MP, sf::View *view,sf::RenderWindow *rw) :
 			m_p_objectPlayer(objectPlayer),
 			m_p_MW(MW),
+			m_p_MP(MP),
 			m_p_view(view),
 			m_p_rw(rw)
 		{
@@ -26,11 +27,19 @@ namespace gp
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
-				sf::Vector2i l_blockPos = m_p_MW->convertWorldPosToBlockPos(l_positionWorld);
-				if ((m_p_MW->getContainer(l_blockPos) && m_p_MW->getContainer(l_blockPos)->size() == 0) || m_selectedBlock == 0)
+				if (m_interactionMode == gp::game::interactionMode::pickaxe)
 				{
-					m_p_MW->setBlockIDByBlockPos(m_selectedBlock, m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
+					sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
+					sf::Vector2i l_blockPos = m_p_MW->convertWorldPosToBlockPos(l_positionWorld);
+					if ((m_p_MW->getContainer(l_blockPos) && m_p_MW->getContainer(l_blockPos)->size() == 0) || m_selectedBlock == 0)
+					{
+						m_p_MW->setBlockIDByBlockPos(m_selectedBlock, m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
+					}
+				}
+				else if(m_interactionMode == gp::game::interactionMode::shoot)
+				{
+					sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
+					m_p_MP->create(m_p_objectPlayer->m_ID,"Default", m_p_objectPlayer->m_position, gp::util::getDirectionNormalised(m_p_objectPlayer->m_position, l_positionWorld));
 				}
 			}
 

@@ -34,5 +34,11 @@ namespace gp
 		{
 			return sqrtf((tar.x - pos.x) * (tar.x - pos.x) + (tar.y - pos.y) * (tar.y - pos.y));
 		}
+
+		//Calculates the DegAngle with the [direction]
+		static inline float getDegAngle(const sf::Vector2f& direction)
+		{
+			return atan2f(direction.y, direction.x) * 57.29577f + 90.f;
+		}
 	}
 }

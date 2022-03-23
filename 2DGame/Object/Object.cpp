@@ -11,6 +11,7 @@ namespace gp
 			m_objectAssetID(assetID),
 			m_oType(oType)
 		{
+			m_ID = gp::object::g_objectID++;
 		}
 
 		Object::~Object()
