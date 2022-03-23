@@ -1,6 +1,10 @@
 # Design Decisions
 
-todo
+Still needs to be added for the Documentation that will be printed as PDF (according to lecture on the 12th January):
+- How to use: compilation, tutorial on how to use game
+- Design Descisions should be Documented (ex. why SFML, why Engine Desing like Engine is Designed, why Perlin Noise, why Render how we Render)
+- Rest is up to us
+- Should be 10-12 Pages (including Images and Stuff)
 
 ## Project identification process
 
@@ -15,8 +19,7 @@ custom engine
 
 C++
 
-## Tools
-
+## Tools 
 trello --> tasks
 
 discord, whatsapp --> communication
