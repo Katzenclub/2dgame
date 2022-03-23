@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "../Util/Math.h"
 
 namespace gp
 {
@@ -39,6 +40,16 @@ namespace gp
 			
 			// This Position should not be used in any case!
 			sf::Vector2f m_positionOld;
+
+			void setImpulse(const sf::Vector2f &directionNormalised, const float &speed);
+			void setImpulse(const float &angle, const float& speed);
+
+			sf::Vector2f m_forceImpulse = sf::Vector2f(0.f,0.f);
+
+			bool m_debugEnableFly = false;
+
+			std::vector<sf::Vector2f> m_boundingBoxPoints;
+
 		private:
 		};
 

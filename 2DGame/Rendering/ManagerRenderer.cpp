@@ -188,33 +188,51 @@ namespace gp
 					l_linestrip[i].color = sf::Color::Green;
 				}
 
+
+				
+
 				for (auto it : m_p_objects->m_listObjects)
 				{
 					if (m_p_view->getCenter().x - m_p_view->getSize().x * 0.5f < it->m_position.x && m_p_view->getCenter().x + m_p_view->getSize().x * 0.5f > it->m_position.x &&
 						m_p_view->getCenter().y - m_p_view->getSize().y * 0.5f < it->m_position.y && m_p_view->getCenter().y + m_p_view->getSize().y * 0.5f > it->m_position.y)
 					{
-						l_circle.setPosition(it->m_position);
-						m_p_rw->draw(l_circle);
+						//l_circle.setPosition(it->m_position);
+						//m_p_rw->draw(l_circle);
 
-						sf::Vector2f l_sizeHalf = it->m_size / 2.f;
+						//sf::Vector2f l_sizeHalf = it->m_size / 2.f;
 
-						l_circle.setPosition(it->m_position + sf::Vector2f(-l_sizeHalf.x,-l_sizeHalf.y));
-						l_linestrip[0].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, -l_sizeHalf.y);
-						l_linestrip[4].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, -l_sizeHalf.y);
-						m_p_rw->draw(l_circle);
-						
-						l_circle.setPosition(it->m_position + sf::Vector2f(l_sizeHalf.x, -l_sizeHalf.y));
-						l_linestrip[1].position = it->m_position + sf::Vector2f(l_sizeHalf.x, -l_sizeHalf.y);
-						m_p_rw->draw(l_circle);
+						//l_circle.setPosition(it->m_position + sf::Vector2f(-l_sizeHalf.x,-l_sizeHalf.y));
+						//l_linestrip[0].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, -l_sizeHalf.y);
+						//l_linestrip[4].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, -l_sizeHalf.y);
+						//m_p_rw->draw(l_circle);
+						//
+						//l_circle.setPosition(it->m_position + sf::Vector2f(l_sizeHalf.x, -l_sizeHalf.y));
+						//l_linestrip[1].position = it->m_position + sf::Vector2f(l_sizeHalf.x, -l_sizeHalf.y);
+						//m_p_rw->draw(l_circle);
+						//
+						//l_circle.setPosition(it->m_position + sf::Vector2f(l_sizeHalf.x, l_sizeHalf.y));
+						//l_linestrip[2].position = it->m_position + sf::Vector2f(l_sizeHalf.x, l_sizeHalf.y);
+						//m_p_rw->draw(l_circle);
+						//
+						//
+						//l_linestrip[3].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, l_sizeHalf.y);
+						//
+						////m_p_rw->draw(l_linestrip);
 
-						l_circle.setPosition(it->m_position + sf::Vector2f(l_sizeHalf.x, l_sizeHalf.y));
-						l_linestrip[2].position = it->m_position + sf::Vector2f(l_sizeHalf.x, l_sizeHalf.y);
-						m_p_rw->draw(l_circle);
-
-						l_circle.setPosition(it->m_position + sf::Vector2f(-l_sizeHalf.x, l_sizeHalf.y));
-						l_linestrip[3].position = it->m_position + sf::Vector2f(-l_sizeHalf.x, l_sizeHalf.y);
-						m_p_rw->draw(l_circle);
-						m_p_rw->draw(l_linestrip);
+						size_t l_countb = it->m_boundingBoxPoints.size();
+						sf::VertexArray l_linestripb(sf::PrimitiveType::LinesStrip, l_countb + 1);
+						for (size_t i = 0; i < l_countb; i++)
+						{
+							l_linestripb[i].color = sf::Color::Red;
+							l_linestripb[i].position = it->m_boundingBoxPoints[i] + it->m_position;
+							
+							l_circle.setPosition(l_linestripb[i].position);
+							l_circle.rotate(5.f);
+							m_p_rw->draw(l_circle);
+						}
+						l_linestripb[l_countb].position = it->m_boundingBoxPoints[0] + it->m_position;
+						l_linestripb[l_countb].color = sf::Color::Red;
+						m_p_rw->draw(l_linestripb);
 
 						l_circleRadius.setPosition(it->m_position);
 						l_circleRadius.setRadius(it->m_size.y * 0.5f);
@@ -223,10 +241,9 @@ namespace gp
 
 						if (it->m_pushback != sf::Vector2f(0.f, 0.f))
 						{
-							std::cout << it->m_pushback.x << std::endl;
+							//std::cout << it->m_pushback.x << std::endl;
 							l_circle.setPosition(it->m_pushback);
-							m_p_rw->draw(l_circle);
-							
+							m_p_rw->draw(l_circle);					
 						}
 
 						for (auto its : it->m_collider)
@@ -240,7 +257,6 @@ namespace gp
 					}
 				}
 			}
-
 		}
 	}
 }

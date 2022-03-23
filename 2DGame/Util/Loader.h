@@ -28,7 +28,5 @@ namespace gp
 
 			std::vector<gp::world::Block*> m_listBlocks;
 		};
-
-		
 	}
 }

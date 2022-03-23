@@ -23,13 +23,13 @@ namespace gp
 
 	void Engine::handle(float deltaTime)
 	{
+		
 		m_p_managerObject->updatePosition();
 		m_p_managerPlayer->handle(deltaTime);
 	}
 
 	void Engine::update(float deltaTime)
 	{
-
 		m_p_managerObject->update(deltaTime);
 		m_p_managerCollision->update(deltaTime);
 		m_p_managerPlayer->update(deltaTime);
@@ -68,7 +68,9 @@ namespace gp
 
 		ImGui::Checkbox("Show Object Heatmap", &m_p_managerRenderer->m_debugShowObjectHeatmap);
 		ImGui::Checkbox("Show Object Positions", &m_p_managerRenderer->m_debugShowObjectPositions);
-		ImGui::Checkbox("Enable Gravity", &m_p_managerObject->m_debugEnableGravity);
+		ImGui::Checkbox("Fly mode", &m_p_managerPlayer->m_p_objectPlayer->m_debugEnableFly);
+		ImGui::InputFloat("Player Speed", &m_p_managerPlayer->m_speed,0.f,0.f,"%.0f");
+		ImGui::InputFloat("Player Jump Height", &m_p_managerPlayer->m_jumpHeight, 0.f, 0.f, "%.0f");
 
 		ImGui::Text(" ");
 
@@ -76,7 +78,9 @@ namespace gp
 		ImGui::Text("Player Chunk Pos: x: %d y: %d", l_chunkPos.x, l_chunkPos.y);
 		sf::Vector2i l_blockPos = m_p_managerPlayer->m_p_objectPlayer->m_blockPosCur;
 		ImGui::Text("Player Block Pos: x: %d y: %d", l_blockPos.x, l_blockPos.y);
-
+		sf::Vector2f l_velocity = m_p_managerPlayer->m_p_objectPlayer->m_velocity;
+		ImGui::Text("Player Velocity Pos: x: %f y: %f", l_velocity.x, l_velocity.y);
+		ImGui::Text("Player Velocity Speed: %f", gp::util::getDistance(m_p_managerPlayer->m_p_objectPlayer->m_velocity, sf::Vector2f(0.f, 0.f)));
 		ImGui::Text(" ");
 
 		ImGui::Text("Select Block: MMB");

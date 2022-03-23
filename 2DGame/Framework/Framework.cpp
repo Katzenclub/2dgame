@@ -29,7 +29,9 @@ namespace gp
 	{
 		while (m_active)
 		{		
-			m_deltaTime = deltaTime();
+			float l_deltaTime = deltaTime();
+			m_deltaTime = l_deltaTime > (1.f / 30.f) ? (1.f / 30.f) : l_deltaTime;
+			m_FPS = (1.f / l_deltaTime) + 0.5f;
 			handle(m_deltaTime);
 			if (m_debug)
 			{
@@ -84,7 +86,7 @@ namespace gp
 	void Framework::debug(float deltaTime)
 	{
 		ImGui::Begin("Engine Interface");
-		ImGui::Text("Framerate: %0.f", (1.f / m_deltaTime) + 0.5f);
+		ImGui::Text("Framerate: %0.f", m_FPS);
 
 		m_p_Engine->debug(deltaTime);
 		
@@ -97,16 +99,6 @@ namespace gp
 		float l_deltaTime = m_clockFramerate.getElapsedTime().asSeconds();
 		m_clockFramerate.restart();
 
-		//This line looks random but it is important to avoid problems like: your pc lacks one time hard and because that the deltaTime would be so high that everything looks wrong in the next frame.
-		return (l_deltaTime > 512) ? 512 : l_deltaTime;
-		//is equal to
-		/*if (l_deltaTime > 512)
-		{
-			l_deltaTime = 512;
-		}
-		else
-		{
-			l_deltaTime = l_deltaTime;
-		}*/
+		return l_deltaTime;
 	}
 }

@@ -15,48 +15,80 @@ namespace gp
 
 		void ManagerCollision::update(float deltaTime)
 		{
+			updateObjectBlockPositions();
 			collisionObjectObject(deltaTime);
 			collisionWorldObject(deltaTime);
+			updateObjectBlockPositions();
 		}
+
+		void ManagerCollision::updateObjectBlockPositions()
+		{
+			for (auto it : m_p_MO->m_listObjects)
+			{
+				sf::Vector2i l_blockPosNow = m_p_MW->convertWorldPosToBlockPos(it->m_position);
+				if (it->m_blockPosCur != l_blockPosNow)
+				{
+					if (it->m_blockPosCur.x >= 0 && it->m_blockPosCur.y >= 0)
+					{
+						m_p_MW->removeFromContainer(it->m_blockPosCur, it);
+					}
+
+					if (l_blockPosNow.x >= 0 && l_blockPosNow.y >= 0)
+					{
+						m_p_MW->addToContainer(l_blockPosNow, it);
+					}
+
+					it->m_blockPosCur = l_blockPosNow;
+				}
+			}
+		}
+
+
 
 		void ManagerCollision::collisionObjectObject(float deltaTime)
 		{
-			for (auto object : m_p_MO->m_listObjects)
+			for (int i = 0; i < 4; i++)
 			{
-				sf::Vector2i l_pos = m_p_MW->convertWorldPosToBlockPos(object->m_position);
-				sf::Vector2i l_size = m_p_MW->convertWorldPosToBlockPos(object->m_size) + sf::Vector2i(1, 1);
-				// Iterate in Range from -radius to +radius around object position.
-				for (int y = -l_size.y; y <= l_size.y; y++)
+				for (auto object : m_p_MO->m_listObjects)
 				{
-					for (int x = -l_size.x; x <= l_size.x; x++)
+					sf::Vector2i l_pos = m_p_MW->convertWorldPosToBlockPos(object->m_position);
+					sf::Vector2i l_size = m_p_MW->convertWorldPosToBlockPos(object->m_size) + sf::Vector2i(1, 1);
+					// Iterate in Range from -radius to +radius around object position.
+					for (int y = -l_size.y; y <= l_size.y; y++)
 					{
-						sf::Vector2i l_curBlockPos = l_pos + sf::Vector2i(x, y);
-						auto l_object = m_p_MW->getContainer(l_curBlockPos);
-						if (!l_object)
+						for (int x = -l_size.x; x <= l_size.x; x++)
 						{
-							continue;
-						}
-
-						for (auto compObject : *l_object)
-						{
-							if (compObject != object)
+							sf::Vector2i l_curBlockPos = l_pos + sf::Vector2i(x, y);
+							auto l_object = m_p_MW->getContainer(l_curBlockPos);
+							if (!l_object)
 							{
-								float l_radius = (object->m_size.y + compObject->m_size.y) * 0.5f;
-								float l_distance = gp::util::getDistance(compObject->m_position, object->m_position);
-								if (l_distance < l_radius)
-								{
-									auto l_direction = gp::util::getDirectionNormalised(compObject->m_position, object->m_position);
-									std::isnan(l_direction.x) ? l_direction.x = 0.1 : l_direction.x = l_direction.x;
-									std::isnan(l_direction.y) ? l_direction.y = -0.1 : l_direction.y = l_direction.y;
-									float l_push = (l_distance - l_radius) * 0.5f;
+								continue;
+							}
 
-									compObject->m_position = compObject->m_position + l_direction * l_push;
-									
-									if (l_direction.y < -0.5f)
+							for (auto compObject : *l_object)
+							{
+								if (compObject != object)
+								{
+									float l_radius = (object->m_size.y + compObject->m_size.y) * 0.5f;
+									float l_distance = gp::util::getDistance(compObject->m_position, object->m_position);
+									if (l_distance < l_radius)
 									{
-										object->m_velocity.y = std::min(compObject->m_velocity.y, object->m_velocity.y);
+										auto l_direction = gp::util::getDirectionNormalised(compObject->m_position, object->m_position);
+										std::isnan(l_direction.x) ? l_direction.x = 0.1f : l_direction.x = l_direction.x;
+										std::isnan(l_direction.y) ? l_direction.y = -0.1f : l_direction.y = l_direction.y;
+										float l_push = (l_distance - l_radius) * 0.5f;
+
+										compObject->m_position = compObject->m_position + l_direction * l_push;
+										//checkPositionIterative(compObject);
+
+										if (l_direction.y < -0.5f)
+										{
+											object->m_velocity.y = std::min(compObject->m_velocity.y, object->m_velocity.y);
+											object->m_forceImpulse = sf::Vector2f(0.f, 0.f);
+										}
+										object->m_position = object->m_position - l_direction * l_push;
+										//checkPositionIterative(object);
 									}
-									object->m_position = object->m_position - l_direction * l_push;
 								}
 							}
 						}
@@ -73,6 +105,18 @@ namespace gp
 			}
 		}
 
+		bool ManagerCollision::isCollide(std::vector<sf::Vector2f> bound, sf::Vector2f checkPosition)
+		{
+			for (auto it : bound)
+			{
+				if (m_p_MW->getBlockIDByBlockPos(m_p_MW->convertWorldPosToBlockPos(checkPosition + it)) != 0)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		void ManagerCollision::checkPositionIterative(gp::object::Object* obj)
 		{
 			sf::Vector2f l_direction = gp::util::getDirectionNormalised(obj->m_positionOld, obj->m_position);
@@ -81,12 +125,11 @@ namespace gp
 			float l_distanceLast = l_distance - float(l_distanceIteration);
 
 			sf::Vector2f l_posTMP = obj->m_positionOld;
-
 			for (size_t i = 0; i < l_distanceIteration; i++)
 			{
 				//CHECK X
 				sf::Vector2f l_checkPosition = sf::Vector2f(l_posTMP.x + l_direction.x, l_posTMP.y);
-				if (m_p_MW->getBlockIDByBlockPos(m_p_MW->convertWorldPosToBlockPos(l_checkPosition)) == 0)
+				if (!isCollide(obj->m_boundingBoxPoints, l_checkPosition))
 				{
 					l_posTMP = l_checkPosition;
 				}
@@ -100,7 +143,7 @@ namespace gp
 			{
 				//CHECK X Last 
 				sf::Vector2f l_checkPosition = sf::Vector2f(l_posTMP.x + l_direction.x * l_distanceLast, l_posTMP.y);
-				if (m_p_MW->getBlockIDByBlockPos(m_p_MW->convertWorldPosToBlockPos(l_checkPosition)) == 0)
+				if (!isCollide(obj->m_boundingBoxPoints, l_checkPosition))
 				{
 					l_posTMP = l_checkPosition;
 				}
@@ -111,7 +154,7 @@ namespace gp
 			{
 				//CHECK Y
 				sf::Vector2f l_checkPosition = sf::Vector2f(l_posTMP.x, l_posTMP.y + l_direction.y);
-				if (m_p_MW->getBlockIDByBlockPos(m_p_MW->convertWorldPosToBlockPos(l_checkPosition)) == 0)
+				if (!isCollide(obj->m_boundingBoxPoints, l_checkPosition))
 				{
 					l_posTMP = l_checkPosition;
 				}
@@ -121,6 +164,11 @@ namespace gp
 					if (obj->m_position.y >= obj->m_positionOld.y)
 					{
 						obj->m_velocity.y = 0;
+						obj->m_forceImpulse = sf::Vector2f(0.f, 0.f);
+					}
+					else if (obj->m_position.y <= obj->m_positionOld.y)
+					{
+						//obj->m_forceImpulse = sf::Vector2f(0.f, 0.f);
 					}
 					goto skipy;
 				}
@@ -130,7 +178,7 @@ namespace gp
 			{
 				//CHECK X Last 
 				sf::Vector2f l_checkPosition = sf::Vector2f(l_posTMP.x, l_posTMP.y + l_direction.y * l_distanceLast);
-				if (m_p_MW->getBlockIDByBlockPos(m_p_MW->convertWorldPosToBlockPos(l_checkPosition)) == 0)
+				if (!isCollide(obj->m_boundingBoxPoints, l_checkPosition))
 				{
 					l_posTMP = l_checkPosition;
 				}
@@ -140,10 +188,13 @@ namespace gp
 					if (obj->m_position.y >= obj->m_positionOld.y)
 					{
 						obj->m_velocity.y = 0;
+						obj->m_forceImpulse = sf::Vector2f(0.f, 0.f);
+					}
+					else if (obj->m_position.y <= obj->m_positionOld.y)
+					{
+						//obj->m_forceImpulse = sf::Vector2f(0.f, 0.f);
 					}
 				}
-
-
 			}
 		skipy:
 

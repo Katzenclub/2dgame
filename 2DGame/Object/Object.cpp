@@ -16,5 +16,22 @@ namespace gp
 		Object::~Object()
 		{
 		}
+
+		void Object::setImpulse(const sf::Vector2f& directionNormalised, const float& speed)
+		{
+			if (m_forceImpulse == sf::Vector2f(0.f, 0.f))
+			{
+				m_forceImpulse = directionNormalised * speed;
+			}
+			//m_velocity = m_velocity + directionNormalised * speed;
+		}
+
+		void Object::setImpulse(const float& angle, const float& speed)
+		{
+			if (m_forceImpulse == sf::Vector2f(0.f, 0.f))
+			{
+				m_forceImpulse = gp::util::getDirectionNormalised(angle) * speed;
+			}
+		}
 	}
 }

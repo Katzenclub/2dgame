@@ -26,20 +26,13 @@ namespace gp
 			void cleanup();
 			void cleanupDebug();
 			void updatePosition();
-			void gravity(float deltaTime);
+			void physics(float deltaTime);
 			
 			std::vector<gp::object::Object*> m_listObjects;
 			sf::Clock m_clock;
-
-			bool m_debugEnableGravity = false;
-
 		private:
 			gp::world::ManagerWorld* m_pMW;		
 			gp::system::Loader* m_p_loader;
-			
-			//Technical Stuff
-			void updateObjectBlockPositions();
-			
 		};
 
 	}

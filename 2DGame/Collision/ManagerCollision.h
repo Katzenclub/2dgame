@@ -22,6 +22,9 @@ namespace gp
 			void collisionObjectObject(float deltaTime);
 			void collisionWorldObject(float deltaTime);
 			void checkPositionIterative(gp::object::Object* obj);
+			void updateObjectBlockPositions();
+
+			bool isCollide(std::vector<sf::Vector2f> bound, sf::Vector2f checkPosition);
 		};
 	}
 }

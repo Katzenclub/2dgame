@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include "SFML/Graphics.hpp"
+
 namespace gp
 {
 	namespace util
@@ -14,5 +17,7 @@ namespace gp
 			}
 			return l_array;
 		}
+		
+			
 	}
 }
