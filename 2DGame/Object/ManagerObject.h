@@ -7,9 +7,6 @@
 
 #include "../World/ManagerWorld.h"
 
-#define g_GRAVITY 9.81
-#define g_RELATIVE_GRAVITY g_GRAVITY / g_CHUNK_TEXTURE_SIZE
-
 namespace gp
 {
 	namespace object

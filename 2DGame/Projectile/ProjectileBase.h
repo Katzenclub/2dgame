@@ -25,8 +25,10 @@ namespace gp
 		private:
 			gp::system::ProjectileSource* m_p_source;
 			sf::Vector2f m_position;
+			sf::Vector2f m_positionOld;
 			sf::Vector2f m_direction;
 			sf::Vector2f m_size;
+			sf::Vector2f m_velocity;
 			float m_speed;
 			float m_lifeTimeCur;
 

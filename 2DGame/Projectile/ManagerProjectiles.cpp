@@ -26,6 +26,8 @@ namespace gp
 
 		void ManagerProjectiles::update(const float& elapsedTime)
 		{
+			physics(elapsedTime);
+
 			for (auto it : m_listProjectiles)
 			{
 				it->update(elapsedTime);
@@ -44,6 +46,23 @@ namespace gp
 					it = m_listProjectiles.erase(it);
 					it--;
 				}
+			}
+		}
+
+		void ManagerProjectiles::updatePosition()
+		{
+			for (auto it : m_listProjectiles)
+			{
+				it->m_positionOld = it->m_position;
+			}
+		}
+
+		void ManagerProjectiles::physics(const float& elapsedTime)
+		{
+			for (auto it : m_listProjectiles)
+			{
+				it->m_velocity.y += g_RELATIVE_GRAVITY * elapsedTime * 144.f;
+				it->m_position.y += it->m_velocity.y * g_RELATIVE_GRAVITY * elapsedTime * 144.f;
 			}
 		}
 	}

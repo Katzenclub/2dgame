@@ -20,6 +20,7 @@ namespace gp
 			void create(unsigned int IDOwner, gp::system::ProjectileSource *source,sf::Vector2f position,sf::Vector2f direction, float scale = 1.f);
 			void create(unsigned int IDOwner, std::string sourceName, sf::Vector2f position, sf::Vector2f direction, float scale = 1.f);
 			void update(const float &elapsedTime);
+			void updatePosition();
 			
 			std::vector<gp::projectile::ProjectileBase*> m_listProjectiles;
 
@@ -27,6 +28,7 @@ namespace gp
 			gp::system::Loader* m_p_loader;
 
 			void cleanup();		
+			void physics(const float &elapsedTime);
 		};
 	}
 }

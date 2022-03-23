@@ -137,8 +137,8 @@ namespace gp
 				auto l_size = sf::Vector2f(l_object->m_size.x * 0.5f, l_object->m_size.y * 0.5f);
 
 				sf::Transform l_transform;
-				l_transform.rotate(gp::util::getDegAngle(l_object->m_direction));
-
+				l_transform.rotate(gp::util::getDegAngle(gp::util::getDirectionNormalised(l_object->m_positionOld, l_object->m_position)));
+				
 				(*m_p_VertexArrayObjects)[l_index + 0].position = l_object->m_position + l_transform.transformPoint(sf::Vector2f(-l_size.x, -l_size.y));
 				(*m_p_VertexArrayObjects)[l_index + 1].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(l_size.x, -l_size.y));
 				(*m_p_VertexArrayObjects)[l_index + 2].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(l_size.x, l_size.y));

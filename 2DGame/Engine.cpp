@@ -25,6 +25,7 @@ namespace gp
 	void Engine::handle(float deltaTime)
 	{
 		m_p_managerObject->updatePosition();
+		m_p_managerProjectiles->updatePosition();
 		m_p_managerPlayer->handle(deltaTime);
 	}
 
