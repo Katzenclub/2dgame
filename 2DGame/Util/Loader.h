@@ -21,8 +21,11 @@ namespace gp
 			sf::Texture m_textureAtlas;
 			sf::Texture m_objectsAtlas;
 			sf::Texture m_projectileAtlas;
+			std::vector<gp::world::Block*> m_listBlocks;
 			std::vector<gp::object::ObjectAsset*> m_listObjectAssets;
 			std::vector<gp::system::ProjectileSource*> m_listProjectiles;
+
+			gp::world::Block* blockArray[0];
 
 			gp::system::ProjectileSource* getProjectileByName(const std::string& name);
 
@@ -31,8 +34,8 @@ namespace gp
 			sf::Texture createTextureAtlas(const std::vector<gp::world::Block*>& list);
 			sf::Texture createTextureAtlas(const std::vector<gp::object::ObjectAsset*>& list);
 			sf::Texture createTextureAtlas(const std::vector<gp::system::ProjectileSource*>& list);
-
-			std::vector<gp::world::Block*> m_listBlocks;
+			sf::Texture createTextureAtlas(std::vector<RectInfo> &list);
+			
 		};
 	}
 }

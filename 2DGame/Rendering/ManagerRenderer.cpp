@@ -80,9 +80,7 @@ namespace gp
 					(*m_p_VertexArray)[l_index + 2].position = l_positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
 					(*m_p_VertexArray)[l_index + 3].position = l_positionOffset + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
 
-					int l_BlockID = chunk->m_data[x][y];
-
-					sf::Vector2f l_texPos = sf::Vector2f((l_BlockID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (l_BlockID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
+					sf::Vector2f l_texPos = m_p_loader->m_listBlocks[chunk->m_data[x][y]]->m_PositionTexture;
 					// Texture Coordinates					  = UVPosition + Round to avoid flickering + TextureBound
 					(*m_p_VertexArray)[l_index + 0].texCoords = l_texPos + sf::Vector2f(0.5f, 0.5f);
 					(*m_p_VertexArray)[l_index + 1].texCoords = l_texPos + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0.f);

@@ -13,7 +13,9 @@ namespace gp
 		int height;
 		int x;
 		int y;
-		gp::object::ObjectAsset* objectAsset;
+		sf::Vector2f* textureSizePointer;
+		sf::Vector2f* texturePositionPointer;
+		sf::Texture* texture;
 	};
 
 	class GuillotineBinPack

@@ -18,10 +18,13 @@ namespace gp
 
 			std::string m_name;
 			sf::Texture m_texture;
-			std::map<std::string, int> m_flags;
 
 			unsigned int m_ID;
 
+			sf::Vector2f m_PositionTexture;
+			sf::Vector2f m_SizeTexture;
+
+			std::map<std::string, int> m_flags;
 		private:
 		};
 
