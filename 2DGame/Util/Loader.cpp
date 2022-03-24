@@ -6,26 +6,25 @@ namespace gp
 	{
 		Loader::Loader()
 		{
+			clock_t start_time = clock();
 			m_listBlocks.push_back(new gp::world::Block("Air", "data/assets/blocks/Air.png", {}));
 			m_listBlocks.push_back(new gp::world::Block("Stone", "data/assets/blocks/Stone.png", {{"InflictBurning", 5}, {"InflictDrowning", 10}}));
 			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt.png", {{"InflictBurning", 2}, {"InflictDrowning", 10}}));
-
 			m_textureAtlas = createTextureAtlas(m_listBlocks);
 			m_textureAtlas.setSmooth(true);
 
 			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png"));
-			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png"));
-			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png"));
-
 			m_projectileAtlas = createTextureAtlas(m_listProjectiles);
 			m_projectileAtlas.setSmooth(true);
 
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Player", "data/assets/objects/Player.png"));
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("Slime", "data/assets/objects/Slime.png"));
 			m_listObjectAssets.push_back(new gp::object::ObjectAsset("SlimeMutant", "data/assets/objects/SlimeMutant.png"));
-
 			m_objectsAtlas = createTextureAtlas(m_listObjectAssets);
 			m_objectsAtlas.setSmooth(true);
+			clock_t end_time = clock();
+			clock_t result = end_time - start_time;
+			printf("Creating Texture Atlases took %ld clicks (%f seconds).\n", result, ((float)result) / CLOCKS_PER_SEC);
 		}
 
 		Loader::~Loader()
@@ -104,14 +103,27 @@ namespace gp
 		}
 
 		sf::Texture Loader::createTextureAtlas(std::vector<RectInfo> &list) {
+			auto l_gouillotineBinPack = GuillotineBinPack(g_MAX_ATLAS_SIZE, g_MAX_ATLAS_SIZE);
+			auto l_resultRects = l_gouillotineBinPack.Insert(list, false);
+			
+			int maxWidth = 0;
+			int maxHeight = 0;
+			for (auto rect : l_resultRects)
+			{
+				if (rect.width + rect.x > maxWidth) {
+					maxWidth = rect.width + rect.x;
+				}
+
+				if (rect.height + rect.y > maxHeight) {
+					maxHeight = rect.height + rect.y;
+				}
+			}
+
 			sf::RenderTexture l_RT;
-			l_RT.create(g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE, g_CHUNK_TEXTURE_SIZE * g_ATLAS_BLOCK_SIZE);
-			l_RT.clear(sf::Color::Magenta); // to see available texture space on the fly.
+			l_RT.create(maxWidth, maxHeight);
+			l_RT.clear(sf::Color::Magenta);
 			sf::RenderStates l_renderstates;
 			l_renderstates.blendMode = sf::BlendNone;
-
-			auto l_gouillotineBinPack = GuillotineBinPack(l_RT.getSize().x, l_RT.getSize().y);
-			auto l_resultRects = l_gouillotineBinPack.Insert(list, false);
 
 			for (auto rect : l_resultRects)
 			{
