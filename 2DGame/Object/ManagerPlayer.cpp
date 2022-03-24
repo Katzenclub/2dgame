@@ -4,9 +4,10 @@ namespace gp
 {
 	namespace game
 	{
-		ManagerPlayer::ManagerPlayer(gp::object::Object* objectPlayer, gp::world::ManagerWorld* MW, sf::View *view,sf::RenderWindow *rw) :
+		ManagerPlayer::ManagerPlayer(gp::object::Object* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles* MP, sf::View *view,sf::RenderWindow *rw) :
 			m_p_objectPlayer(objectPlayer),
 			m_p_MW(MW),
+			m_p_MP(MP),
 			m_p_view(view),
 			m_p_rw(rw)
 		{
@@ -26,32 +27,51 @@ namespace gp
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
-				m_p_MW->setBlockIDByBlockPos(m_selectedBlock, m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
+				if (m_interactionMode == gp::game::interactionMode::pickaxe)
+				{
+					sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
+					sf::Vector2i l_blockPos = m_p_MW->convertWorldPosToBlockPos(l_positionWorld);
+					if ((m_p_MW->getContainer(l_blockPos) && m_p_MW->getContainer(l_blockPos)->size() == 0) || m_selectedBlock == 0)
+					{
+						m_p_MW->setBlockIDByBlockPos(m_selectedBlock, m_p_MW->convertWorldPosToBlockPos(l_positionWorld));
+					}
+				}
+				else if(m_interactionMode == gp::game::interactionMode::shoot)
+				{
+					sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
+					m_p_MP->create(m_p_objectPlayer->m_ID,"Default", m_p_objectPlayer->m_position, gp::util::getDirectionNormalised(m_p_objectPlayer->m_position, l_positionWorld));
+				}
 			}
-
-			
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
-				m_p_objectPlayer->m_position.x = m_p_objectPlayer->m_position.x - m_speed * m_zoom * deltaTime;
+				m_p_objectPlayer->m_position.x = m_p_objectPlayer->m_position.x - m_speed * deltaTime;
 			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
-				m_p_objectPlayer->m_position.x = m_p_objectPlayer->m_position.x + m_speed * m_zoom * deltaTime;
+				m_p_objectPlayer->m_position.x = m_p_objectPlayer->m_position.x + m_speed * deltaTime;
 			}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+			if (!m_p_objectPlayer->m_debugEnableFly)
 			{
-				m_p_objectPlayer->m_position.y = m_p_objectPlayer->m_position.y - m_speed * m_zoom * deltaTime;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+				{
+					m_p_objectPlayer->setImpulse(gp::util::getDirectionNormalised(m_p_objectPlayer->m_position, sf::Vector2f(m_p_objectPlayer->m_position.x, m_p_objectPlayer->m_position.y - 100.f)), m_jumpHeight);
+				}
 			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			else
 			{
-				m_p_objectPlayer->m_position.y = m_p_objectPlayer->m_position.y + m_speed * m_zoom * deltaTime;
-			}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+				{
+					m_p_objectPlayer->m_position.y = m_p_objectPlayer->m_position.y - m_speed * deltaTime;
+				}
 
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+				{
+					m_p_objectPlayer->m_position.y = m_p_objectPlayer->m_position.y + m_speed * deltaTime;
+				}
+			}
+			
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 			{
 				m_zoom = m_zoom + m_speedZoom * deltaTime;
@@ -70,7 +90,7 @@ namespace gp
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 			{
 				m_zoom = 1.f;
-			}
+			}		
 		}
 
 		void ManagerPlayer::update(float deltaTime)

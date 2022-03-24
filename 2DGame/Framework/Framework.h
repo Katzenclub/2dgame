@@ -30,6 +30,7 @@ namespace gp
 
 		float deltaTime();
 		float m_deltaTime;
+		float m_FPS;
 
 		sf::RenderWindow* m_p_window;
 		sf::Clock m_clockFramerate;

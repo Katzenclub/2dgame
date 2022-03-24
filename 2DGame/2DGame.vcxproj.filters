@@ -31,6 +31,9 @@
     <Filter Include="Quelldateien\Collision">
       <UniqueIdentifier>{8abd5f3b-6218-486c-b02e-5b0d4eb73022}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Projectile">
+      <UniqueIdentifier>{a2ac2275-f9ef-45eb-a09f-2f0b76113334}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -90,6 +93,15 @@
     <ClCompile Include="Util\GuillotineBinPack.cpp">
       <Filter>Quelldateien\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile\ManagerProjectiles.cpp">
+      <Filter>Quelldateien\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile\PorjectileBase.cpp">
+      <Filter>Quelldateien\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile\ProjectileSource.cpp">
+      <Filter>Quelldateien\Projectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
@@ -147,8 +159,14 @@
     <ClInclude Include="Util\GuillotineBinPack.h">
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Atlas.h">
-      <Filter>Quelldateien\Util</Filter>
+    <ClInclude Include="Projectile\ManagerProjectiles.h">
+      <Filter>Quelldateien\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile\ProjectileBase.h">
+      <Filter>Quelldateien\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile\ProjectileSource.h">
+      <Filter>Quelldateien\Projectile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -85,7 +85,9 @@ namespace gp
 			resultRect.y = freeRectangles[bestFreeRect].y;
 			resultRect.width = rects[bestRect].width;
 			resultRect.height = rects[bestRect].height;
-			resultRect.objectAsset = rects[bestRect].objectAsset;
+			resultRect.textureSizePointer = rects[bestRect].textureSizePointer;
+			resultRect.texturePositionPointer = rects[bestRect].texturePositionPointer;
+			resultRect.texture = rects[bestRect].texture;
 
 			// Remove the free space we lost in the bin.
 			SplitFreeRectByHeuristic(freeRectangles[bestFreeRect], resultRect);
@@ -99,6 +101,7 @@ namespace gp
 
 			resultRects.push_back(resultRect);
 		}
+		std::copy(resultRects.begin(), resultRects.end(), back_inserter(rects));
 		return resultRects;
 	}
 

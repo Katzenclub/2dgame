@@ -2,6 +2,7 @@
 
 #include "../Object/ManagerObject.h"
 #include "../World/ManagerWorld.h"
+#include "../Projectile/ManagerProjectiles.h"
 
 namespace gp
 {
@@ -10,7 +11,7 @@ namespace gp
 		class ManagerCollision
 		{
 		public:
-			ManagerCollision(gp::world::ManagerWorld* MW, gp::object::ManagerObject* MO);
+			ManagerCollision(gp::world::ManagerWorld* MW, gp::object::ManagerObject* MO, gp::projectile::ManagerProjectiles* MP);
 			~ManagerCollision();
 
 			void update(float deltaTime);
@@ -18,11 +19,15 @@ namespace gp
 		private:
 			gp::world::ManagerWorld* m_p_MW;
 			gp::object::ManagerObject* m_p_MO;
+			gp::projectile::ManagerProjectiles* m_p_MP;
 
 			void collisionObjectObject(float deltaTime);
 			void collisionWorldObject(float deltaTime);
+			void checkPositionIterative(gp::object::Object* obj);
+			void updateObjectBlockPositions();
+			void checkProjectiles();
 
-			void collide(sf::Vector2f &posObj, const sf::Vector2f &posCollider, const float &radiusObj, const float &radiusCollider);
+			bool isCollide(std::vector<sf::Vector2f> bound, sf::Vector2f checkPosition);
 		};
 	}
 }

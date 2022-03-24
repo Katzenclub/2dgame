@@ -235,6 +235,9 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClCompile Include="..\libs\imgui-master\imgui_tables.cpp" />
     <ClCompile Include="..\libs\imgui-master\imgui_widgets.cpp" />
     <ClCompile Include="..\libs\imgui-sfml-master\imgui-SFML.cpp" />
+    <ClCompile Include="Projectile\ManagerProjectiles.cpp" />
+    <ClCompile Include="Projectile\PorjectileBase.cpp" />
+    <ClCompile Include="Projectile\ProjectileSource.cpp" />
     <ClCompile Include="Util\GuillotineBinPack.cpp" />
     <ClCompile Include="World\Block.cpp" />
     <ClCompile Include="World\Chunk.cpp" />
@@ -255,6 +258,9 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Projectile\ManagerProjectiles.h" />
+    <ClInclude Include="Projectile\ProjectileBase.h" />
+    <ClInclude Include="Projectile\ProjectileSource.h" />
     <ClInclude Include="Util\GuillotineBinPack.h" />
     <ClInclude Include="World\Block.h" />
     <ClInclude Include="World\Chunk.h" />

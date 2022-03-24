@@ -4,7 +4,7 @@ namespace gp
 {
 	namespace object
 	{
-		ManagerObject::ManagerObject(gp::system::Loader* loader,gp::world::ManagerWorld *MW) :
+		ManagerObject::ManagerObject(gp::system::Loader* loader, gp::world::ManagerWorld* MW) :
 			m_p_loader(loader),
 			m_pMW(MW)
 		{
@@ -17,6 +17,7 @@ namespace gp
 		gp::object::Object* ManagerObject::create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType)
 		{
 			auto l_object = new gp::object::Object(position, m_p_loader->m_listObjectAssets[assetID]->m_SizeTexture * scale, assetID, oType);
+			l_object->m_boundingBoxPoints = m_p_loader->m_listObjectAssets[assetID]->m_boundingBoxPoints;
 			m_listObjects.push_back(l_object);
 			return l_object;
 		}
@@ -32,12 +33,12 @@ namespace gp
 					if (it->m_speed == 0.f)
 					{
 						srand(m_clock.getElapsedTime().asMicroseconds() + l_rand);
-						it->m_direction = gp::util::getDirectionNormalised(float(rand() % 360));
-						it->m_speed = 500.f;
+						it->m_direction = gp::util::getDirectionNormalised(float(rand() % 180) - 90.f);
+						it->m_speed = 1500.f;
 					}
 
 					it->m_position = it->m_position + it->m_direction * it->m_speed * deltaTime;
-					it->m_speed = it->m_speed - 250.f * deltaTime;
+					it->m_speed = it->m_speed - 750.f * deltaTime;
 					if (it->m_speed <= 0.f)
 					{
 						it->m_speed = 0;
@@ -45,8 +46,9 @@ namespace gp
 				}
 			}
 
-			updateObjectBlockPositions();
+			physics(deltaTime);
 
+			cleanupDebug();
 			cleanup();
 		}
 
@@ -72,24 +74,39 @@ namespace gp
 			}
 		}
 
-		void ManagerObject::updateObjectBlockPositions()
+		void ManagerObject::cleanupDebug()
 		{
 			for (auto it : m_listObjects)
 			{
-				sf::Vector2i l_blockPosNow = m_pMW->convertWorldPosToBlockPos(it->m_position);
-				if (it->m_blockPosCur != l_blockPosNow)
+				it->m_collider.clear();
+				it->m_pushback = sf::Vector2f(0.f, 0.f);
+			}
+
+		}
+
+		void ManagerObject::updatePosition()
+		{
+			for (auto it : m_listObjects)
+			{
+				it->m_positionOld = it->m_position;
+			}
+		}
+
+		void ManagerObject::physics(float deltaTime)
+		{
+			float l_velocityMax = 0.f;
+			for (auto it : m_listObjects)
+			{
+				if (!it->m_debugEnableFly)
 				{
-					if (it->m_blockPosCur.x >= 0 && it->m_blockPosCur.y >= 0)
+					if (it->m_velocity.y > l_velocityMax)
 					{
-						m_pMW->removeFromContainer(it->m_blockPosCur, it);
-					}
-					
-					if (l_blockPosNow.x >= 0 && l_blockPosNow.y >= 0)
-					{
-						m_pMW->addToContainer(l_blockPosNow, it);
+						l_velocityMax = it->m_velocity.y;
 					}
 
-					it->m_blockPosCur = l_blockPosNow;
+					// the 144.f are only a speed that looks good for gravitation.
+					it->m_velocity.y = it->m_velocity.y + g_RELATIVE_GRAVITY * deltaTime * 144.f;
+					it->m_position = it->m_position + it->m_velocity * deltaTime * 144.f + it->m_forceImpulse * deltaTime;
 				}
 			}
 		}
