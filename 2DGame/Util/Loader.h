@@ -25,8 +25,6 @@ namespace gp
 			std::vector<gp::object::ObjectAsset*> m_listObjectAssets;
 			std::vector<gp::system::ProjectileSource*> m_listProjectiles;
 
-			gp::world::Block* blockArray[0];
-
 			gp::system::ProjectileSource* getProjectileByName(const std::string& name);
 
 		private:
