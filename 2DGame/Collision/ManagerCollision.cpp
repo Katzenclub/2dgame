@@ -119,7 +119,7 @@ namespace gp
 			return false;
 		}
 
-		void ManagerCollision::checkPositionIterative(gp::object::Object* obj)
+		void ManagerCollision::checkPositionIterative(gp::object::ObjectBase* obj)
 		{
 			sf::Vector2f l_direction = gp::util::getDirectionNormalised(obj->m_positionOld, obj->m_position);
 			float l_distance = gp::util::getDistance(obj->m_positionOld, obj->m_position);

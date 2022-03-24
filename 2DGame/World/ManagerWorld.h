@@ -32,12 +32,12 @@ namespace gp
 			void setBlockIDByBlockPos(uint16_t blockID, sf::Vector2i blockPos);
 
 			// technical
-			bool removeFromContainer(sf::Vector2i blockPos, gp::object::Object* obj);
+			bool removeFromContainer(sf::Vector2i blockPos, gp::object::ObjectBase* obj);
 
 			// technical
-			bool addToContainer(sf::Vector2i blockPos, gp::object::Object* obj);
+			bool addToContainer(sf::Vector2i blockPos, gp::object::ObjectBase* obj);
 
-			std::vector <gp::object::Object*>* getContainer(sf::Vector2i blockPos);
+			std::vector <gp::object::ObjectBase*>* getContainer(sf::Vector2i blockPos);
 
 			//Should not be used for logical stuff, only for technical purposes.
 			sf::Vector2i convertBlockPosToChunkPos(sf::Vector2i blockPos);

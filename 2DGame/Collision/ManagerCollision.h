@@ -23,7 +23,7 @@ namespace gp
 
 			void collisionObjectObject(float deltaTime);
 			void collisionWorldObject(float deltaTime);
-			void checkPositionIterative(gp::object::Object* obj);
+			void checkPositionIterative(gp::object::ObjectBase* obj);
 			void updateObjectBlockPositions();
 			void checkProjectiles();
 

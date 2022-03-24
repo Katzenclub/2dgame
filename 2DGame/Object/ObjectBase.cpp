@@ -1,24 +1,24 @@
-#include "Object.h"
+#include "ObjectBase.h"
 
 namespace gp
 {
 	namespace object
 	{
-		Object::Object(sf::Vector2f position, sf::Vector2f size, unsigned int assetID, unsigned int oType) :
+		ObjectBase::ObjectBase(gp::object::ObjectSource* source, sf::Vector2f position, sf::Vector2f size, unsigned int assetID, unsigned int oType) :
 			m_position(position),
 			m_positionOld(position),
 			m_size(size),
-			m_objectAssetID(assetID),
+			m_p_source(source),
 			m_oType(oType)
 		{
 			m_ID = gp::object::g_objectID++;
 		}
 
-		Object::~Object()
+		ObjectBase::~ObjectBase()
 		{
 		}
 
-		void Object::setImpulse(const sf::Vector2f& directionNormalised, const float& speed)
+		void ObjectBase::setImpulse(const sf::Vector2f& directionNormalised, const float& speed)
 		{
 			if (m_forceImpulse == sf::Vector2f(0.f, 0.f))
 			{
@@ -27,7 +27,7 @@ namespace gp
 			//m_velocity = m_velocity + directionNormalised * speed;
 		}
 
-		void Object::setImpulse(const float& angle, const float& speed)
+		void ObjectBase::setImpulse(const float& angle, const float& speed)
 		{
 			if (m_forceImpulse == sf::Vector2f(0.f, 0.f))
 			{

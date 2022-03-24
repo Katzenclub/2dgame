@@ -3,7 +3,7 @@
 #include "../Util/Math.h"
 
 #include "../Util/Loader.h"
-#include "Object.h"
+#include "ObjectBase.h"
 
 #include "../World/ManagerWorld.h"
 
@@ -17,7 +17,7 @@ namespace gp
 			ManagerObject(gp::system::Loader *loader, gp::world::ManagerWorld* MW);
 			~ManagerObject();
 
-			gp::object::Object* create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType);
+			gp::object::ObjectBase* create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType);
 			void update(float deltaTime);
 			void killAll();
 			void cleanup();
@@ -25,7 +25,7 @@ namespace gp
 			void updatePosition();
 			void physics(float deltaTime);
 			
-			std::vector<gp::object::Object*> m_listObjects;
+			std::vector<gp::object::ObjectBase*> m_listObjects;
 			sf::Clock m_clock;
 		private:
 			gp::world::ManagerWorld* m_pMW;		

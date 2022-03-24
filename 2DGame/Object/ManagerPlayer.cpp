@@ -4,7 +4,7 @@ namespace gp
 {
 	namespace game
 	{
-		ManagerPlayer::ManagerPlayer(gp::object::Object* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles* MP, sf::View *view,sf::RenderWindow *rw) :
+		ManagerPlayer::ManagerPlayer(gp::object::ObjectBase* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles* MP, sf::View *view,sf::RenderWindow *rw) :
 			m_p_objectPlayer(objectPlayer),
 			m_p_MW(MW),
 			m_p_MP(MP),

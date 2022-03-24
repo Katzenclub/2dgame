@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Object.h"
+#include "ObjectBase.h"
 #include "../World/ManagerWorld.h"
 #include "../Projectile/ManagerProjectiles.h"
 
@@ -17,13 +17,13 @@ namespace gp
 		class ManagerPlayer
 		{
 		public:
-			ManagerPlayer(gp::object::Object* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles *MP, sf::View* view, sf::RenderWindow* rw);
+			ManagerPlayer(gp::object::ObjectBase* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles *MP, sf::View* view, sf::RenderWindow* rw);
 			~ManagerPlayer();
 
 			void handle(float deltaTime);
 			void update(float deltaTime);
 			
-			gp::object::Object* m_p_objectPlayer;
+			gp::object::ObjectBase* m_p_objectPlayer;
 			gp::world::ManagerWorld* m_p_MW;
 
 			uint16_t m_selectedBlock = 0;

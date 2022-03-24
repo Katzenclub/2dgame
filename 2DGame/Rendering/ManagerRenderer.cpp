@@ -109,12 +109,11 @@ namespace gp
 				(*m_p_VertexArrayObjects)[l_index + 2].position = l_object->m_position + sf::Vector2f(l_size.x, l_size.y);
 				(*m_p_VertexArrayObjects)[l_index + 3].position = l_object->m_position + sf::Vector2f(-l_size.x, l_size.y);
 
-				auto l_objectAsset = m_p_loader->m_listObjectAssets[l_object->m_objectAssetID];
-
-				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0.5f, 0.5f) + sf::Vector2f(0, 0);
-				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(l_objectAsset->m_SizeTexture.x, 0);
-				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(l_objectAsset->m_SizeTexture.x, l_objectAsset->m_SizeTexture.y);
-				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_objectAsset->m_PositionTexture + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0, l_objectAsset->m_SizeTexture.y);
+				auto l_p_source = l_object->m_p_source;
+				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(0.5f, 0.5f) + sf::Vector2f(0, 0);
+				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(l_p_source->m_SizeTexture.x, 0);
+				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(l_p_source->m_SizeTexture.x, l_p_source->m_SizeTexture.y);
+				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0, l_p_source->m_SizeTexture.y);
 			}
 
 			sf::RenderStates l_states;
