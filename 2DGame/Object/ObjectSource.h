@@ -1,7 +1,7 @@
 #pragma once
 
 // Own
-#include "..\Util\Source.h"
+#include "../Util/Source.h"
 
 namespace gp
 {
