@@ -10,17 +10,17 @@ namespace gp
 			m_listBlocks.push_back(new gp::world::BlockSource("Air", "data/assets/blocks/Air.png", {}));
 			m_listBlocks.push_back(new gp::world::BlockSource("Stone", "data/assets/blocks/Stone.png", { {"InflictBurning", 5}, {"InflictDrowning", 10} }));
 			m_listBlocks.push_back(new gp::world::BlockSource("Dirt", "data/assets/blocks/Dirt.png", { {"InflictBurning", 2}, {"InflictDrowning", 10} }));
-			m_textureAtlas = createTextureAtlas(m_listBlocks);
+			m_textureAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listBlocks));
 			m_textureAtlas.setSmooth(true);
 
 			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png"));
-			m_projectileAtlas = createTextureAtlas(m_listProjectiles);
+			m_projectileAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listProjectiles));
 			m_projectileAtlas.setSmooth(true);
 
-			m_listObjectAssets.push_back(new gp::object::ObjectSource("Player", "data/assets/objects/Player.png", sf::Vector2f(0.5f,0.95f)));
+			m_listObjectAssets.push_back(new gp::object::ObjectSource("Player", "data/assets/objects/Player.png", sf::Vector2f(0.5f, 0.95f)));
 			m_listObjectAssets.push_back(new gp::object::ObjectSource("Slime", "data/assets/objects/Slime.png"));
 			m_listObjectAssets.push_back(new gp::object::ObjectSource("SlimeMutant", "data/assets/objects/SlimeMutant.png"));
-			m_objectsAtlas = createTextureAtlas(m_listObjectAssets);
+			m_objectsAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listObjectAssets));
 			m_objectsAtlas.setSmooth(true);
 			clock_t end_time = clock();
 			clock_t result = end_time - start_time;
@@ -45,59 +45,21 @@ namespace gp
 			return m_listProjectiles[0];
 		}
 
-		sf::Texture Loader::createTextureAtlas(const std::vector<gp::world::BlockSource*>& list)
+		sf::Texture Loader::createTextureAtlas(const std::vector<gp::system::Source*>& list)
 		{
 			std::vector<RectInfo> l_rects;
 			for (auto source : list)
 			{
 				auto l_rectInfo = RectInfo();
-				l_rectInfo.width = g_CHUNK_TEXTURE_SIZE;
-				l_rectInfo.height = g_CHUNK_TEXTURE_SIZE;
-
+				l_rectInfo.width = source->m_SizeTexture.x;
+				l_rectInfo.height = source->m_SizeTexture.y;
 				l_rectInfo.textureSizePointer = &source->m_SizeTexture;
 				l_rectInfo.texturePositionPointer = &source->m_PositionTexture;
 				l_rectInfo.texture = &source->m_texture;
 
 				l_rects.push_back(l_rectInfo);
 			}
-			return createTextureAtlas(l_rects);
-		}
 
-		sf::Texture Loader::createTextureAtlas(const std::vector<gp::object::ObjectSource*>& list)
-		{
-			std::vector<RectInfo> l_rects;
-			for (auto source : list)
-			{
-				auto l_textureSize = source->m_texture.getSize();
-				auto l_rectInfo = RectInfo();
-				l_rectInfo.width = l_textureSize.x;
-				l_rectInfo.height = l_textureSize.y;
-
-				l_rectInfo.textureSizePointer = &source->m_SizeTexture;
-				l_rectInfo.texturePositionPointer = &source->m_PositionTexture;
-				l_rectInfo.texture = &source->m_texture;
-
-				l_rects.push_back(l_rectInfo);
-			}
-			return createTextureAtlas(l_rects);
-		}
-
-		sf::Texture Loader::createTextureAtlas(const std::vector<gp::system::ProjectileSource*>& list)
-		{
-			std::vector<RectInfo> l_rects;
-			for (auto source : list)
-			{
-				auto l_textureSize = source->m_texture.getSize();
-				auto l_rectInfo = RectInfo();
-				l_rectInfo.width = l_textureSize.x;
-				l_rectInfo.height = l_textureSize.y;
-
-				l_rectInfo.textureSizePointer = &source->m_SizeTexture;
-				l_rectInfo.texturePositionPointer = &source->m_PositionTexture;
-				l_rectInfo.texture = &source->m_texture;
-
-				l_rects.push_back(l_rectInfo);
-			}
 			return createTextureAtlas(l_rects);
 		}
 

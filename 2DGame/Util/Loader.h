@@ -28,11 +28,8 @@ namespace gp
 			gp::system::ProjectileSource* getProjectileByName(const std::string& name);
 
 		private:
-			sf::Texture createTextureAtlas(const std::vector<gp::world::BlockSource*>& list);
-			sf::Texture createTextureAtlas(const std::vector<gp::object::ObjectSource*>& list);
-			sf::Texture createTextureAtlas(const std::vector<gp::system::ProjectileSource*>& list);
+			sf::Texture createTextureAtlas(const std::vector<gp::system::Source*>& list);
 			sf::Texture createTextureAtlas(std::vector<RectInfo> &list);
-					
 		};
 	}
 }
