@@ -11,17 +11,14 @@ namespace gp
 			m_listBlocks.push_back(new gp::world::BlockSource("Stone", "data/assets/blocks/Stone.png", { {"InflictBurning", 5}, {"InflictDrowning", 10} }));
 			m_listBlocks.push_back(new gp::world::BlockSource("Dirt", "data/assets/blocks/Dirt.png", { {"InflictBurning", 2}, {"InflictDrowning", 10} }));
 			m_textureAtlas = createTextureAtlas(m_listBlocks);
-			m_textureAtlas.setSmooth(true);
 
 			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png"));
 			m_projectileAtlas = createTextureAtlas(m_listProjectiles);
-			m_projectileAtlas.setSmooth(true);
 
 			m_listObjectAssets.push_back(new gp::object::ObjectSource("Player", "data/assets/objects/Player.png", sf::Vector2f(0.5f,0.95f)));
 			m_listObjectAssets.push_back(new gp::object::ObjectSource("Slime", "data/assets/objects/Slime.png"));
 			m_listObjectAssets.push_back(new gp::object::ObjectSource("SlimeMutant", "data/assets/objects/SlimeMutant.png"));
 			m_objectsAtlas = createTextureAtlas(m_listObjectAssets);
-			m_objectsAtlas.setSmooth(true);
 			clock_t end_time = clock();
 			clock_t result = end_time - start_time;
 			printf("Creating Texture Atlases took %ld clicks (%f seconds).\n", result, ((float)result) / CLOCKS_PER_SEC);

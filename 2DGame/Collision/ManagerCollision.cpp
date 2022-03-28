@@ -81,6 +81,8 @@ namespace gp
 										float l_push = (l_distance - l_radius) * 0.5f;
 
 										compObject->m_position = compObject->m_position + l_direction * l_push;
+										compObject->m_position.x = roundf(compObject->m_position.x);
+										compObject->m_position.y = roundf(compObject->m_position.y);
 										//checkPositionIterative(compObject);
 
 										if (l_direction.y < -0.5f)
@@ -89,6 +91,8 @@ namespace gp
 											object->m_forceImpulse = sf::Vector2f(0.f, 0.f);
 										}
 										object->m_position = object->m_position - l_direction * l_push;
+										object->m_position.x = roundf(object->m_position.x);
+										object->m_position.y = roundf(object->m_position.y);
 										//checkPositionIterative(object);
 									}
 								}

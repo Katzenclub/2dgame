@@ -34,8 +34,8 @@ namespace gp
 			float l_amountVisibleChunksX = m_p_view->getSize().x / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
 			float l_amountVisibleChunksY = m_p_view->getSize().y / (g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
 
-			int l_PlayerChunkX = pos.x / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
-			int l_PlayerChunkY = pos.y / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
+			int l_PlayerChunkX = roundf(pos.x) / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
+			int l_PlayerChunkY = roundf(pos.y) / g_CHUNK_TEXTURE_SIZE / g_CHUNK_SIZE;
 
 			int startX = l_PlayerChunkX - l_amountVisibleChunksX / 2;
 			int startY = l_PlayerChunkY - l_amountVisibleChunksY / 2;
@@ -82,10 +82,10 @@ namespace gp
 
 					sf::Vector2f l_texPos = m_p_loader->m_listBlocks[chunk->m_data[x][y]]->m_PositionTexture;
 					// Texture Coordinates					  = UVPosition + Round to avoid flickering + TextureBound
-					(*m_p_VertexArray)[l_index + 0].texCoords = l_texPos + sf::Vector2f(0.5f, 0.5f);
-					(*m_p_VertexArray)[l_index + 1].texCoords = l_texPos + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0.f);
-					(*m_p_VertexArray)[l_index + 2].texCoords = l_texPos + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
-					(*m_p_VertexArray)[l_index + 3].texCoords = l_texPos + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0.f, g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 0].texCoords = l_texPos;
+					(*m_p_VertexArray)[l_index + 1].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0.f);
+					(*m_p_VertexArray)[l_index + 2].texCoords = l_texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
+					(*m_p_VertexArray)[l_index + 3].texCoords = l_texPos + sf::Vector2f(0.f, g_CHUNK_TEXTURE_SIZE);
 				}
 			}
 			sf::RenderStates l_states;
@@ -102,7 +102,8 @@ namespace gp
 				auto l_object = m_p_objects->m_listObjects[i];
 
 				int l_index = i * 4;
-				auto l_size = sf::Vector2f(l_object->m_size.x * 0.5f, l_object->m_size.y * 0.5f);
+				auto l_size = roundVector(sf::Vector2f(l_object->m_size.x * 0.5f, l_object->m_size.y * 0.5f));
+				auto l_objectPosition = roundVector(l_object->m_position);
 
 				(*m_p_VertexArrayObjects)[l_index + 0].position = l_object->m_position + sf::Vector2f(-l_size.x, -l_size.y);
 				(*m_p_VertexArrayObjects)[l_index + 1].position = l_object->m_position + sf::Vector2f(l_size.x, -l_size.y);
@@ -110,10 +111,10 @@ namespace gp
 				(*m_p_VertexArrayObjects)[l_index + 3].position = l_object->m_position + sf::Vector2f(-l_size.x, l_size.y);
 
 				auto l_p_source = l_object->m_p_source;
-				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(0.5f, 0.5f) + sf::Vector2f(0, 0);
-				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(l_p_source->m_SizeTexture.x, 0);
-				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(l_p_source->m_SizeTexture.x, l_p_source->m_SizeTexture.y);
-				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0, l_p_source->m_SizeTexture.y);
+				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(0, 0);
+				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(l_p_source->m_SizeTexture.x, 0);
+				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(l_p_source->m_SizeTexture.x, l_p_source->m_SizeTexture.y);
+				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(0, l_p_source->m_SizeTexture.y);
 			}
 
 			sf::RenderStates l_states;
@@ -152,6 +153,10 @@ namespace gp
 			l_states.texture = &m_p_loader->m_projectileAtlas;
 
 			m_p_rw->draw(*m_p_VertexArrayObjects, l_states);
+		}
+
+		sf::Vector2f ManagerRenderer::roundVector(sf::Vector2f origin) {
+			return sf::Vector2f(roundf(origin.x), roundf(origin.y));
 		}
 
 		void ManagerRenderer::renderDebug()

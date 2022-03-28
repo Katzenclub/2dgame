@@ -38,7 +38,7 @@ namespace gp
 			void renderProjectiles();
 			void renderDebug();
 
-			
+			sf::Vector2f roundVector(sf::Vector2f origin);			
 		};
 	}
 }

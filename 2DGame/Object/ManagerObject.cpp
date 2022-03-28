@@ -45,6 +45,8 @@ namespace gp
 						it->m_speed = 0;
 					}
 				}
+				it->m_position.x = roundf(it->m_position.x);
+				it->m_position.y = roundf(it->m_position.y);
 			}
 
 			physics(deltaTime);
