@@ -15,7 +15,5 @@ namespace gp
 		Source::~Source()
 		{
 		}
-		
-		
 	}
 }
