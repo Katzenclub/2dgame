@@ -8,9 +8,9 @@ namespace gp
 		{
 			clock_t start_time = clock();
       
-			m_listBlocks.push_back(new gp::world::Block("Air", "data/assets/blocks/Air.png", {}));
-			m_listBlocks.push_back(new gp::world::Block("Dirt", "data/assets/blocks/Dirt/Dirt.png", {{"InflictBurning", 2}, {"InflictDrowning", 10}}));
-			m_listBlocks.push_back(new gp::world::Block("Stone", "data/assets/blocks/Stone.png", {{"InflictBurning", 5}, {"InflictDrowning", 10}}));
+			m_listBlocks.push_back(new gp::world::BlockSource("Air", "data/assets/blocks/Air.png", {}));
+			m_listBlocks.push_back(new gp::world::BlockSource("Dirt", "data/assets/blocks/Dirt/Dirt.png", {{"InflictBurning", 2}, {"InflictDrowning", 10}}));
+			m_listBlocks.push_back(new gp::world::BlockSource("Stone", "data/assets/blocks/Stone.png", {{"InflictBurning", 5}, {"InflictDrowning", 10}}));
 			m_textureAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listBlocks));
 
 

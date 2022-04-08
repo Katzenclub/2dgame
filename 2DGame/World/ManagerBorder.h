@@ -2,7 +2,6 @@
 
 #include "WorldConstants.h"
 #include "Border.h"
-#include "Block.h"
 
 namespace gp
 {
