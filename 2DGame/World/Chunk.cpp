@@ -27,8 +27,8 @@ namespace gp
 			initialiseChunk(0);
 			GenerateNoise(seed);
 			//generateLayer(gp::world::turbulence, 0, 64, 16.f, 0.5f, 1);
-			generateLayer(gp::world::turbulence, 192, 512, 32, 0.375f, 2, 256, 256); /* Generate Dirt */
-			generateLayer(gp::world::turbulence, 256, 512, 32, 0.5f, 1, 128); /* Generate Stone */
+			generateLayer(gp::world::turbulence, 192, 512, 32, 0.375f, 1, 256, 256); /* Generate Dirt */
+			generateLayer(gp::world::turbulence, 256, 512, 32, 0.5f, 2, 128); /* Generate Stone */
 		}
 
 		/**
