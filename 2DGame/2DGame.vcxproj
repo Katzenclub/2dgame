@@ -239,7 +239,8 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClCompile Include="Projectile\PorjectileBase.cpp" />
     <ClCompile Include="Projectile\ProjectileSource.cpp" />
     <ClCompile Include="Util\GuillotineBinPack.cpp" />
-    <ClCompile Include="World\Block.cpp" />
+    <ClCompile Include="Util\Source.cpp" />
+    <ClCompile Include="World\BlockSource.cpp" />
     <ClCompile Include="World\Chunk.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
@@ -248,8 +249,8 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClCompile Include="Collision\ManagerCollision.cpp" />
     <ClCompile Include="Rendering\ManagerRenderer.cpp" />
     <ClCompile Include="World\ManagerWorld.cpp" />
-    <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="Object\ObjectAsset.cpp" />
+    <ClCompile Include="Object\ObjectBase.cpp" />
+    <ClCompile Include="Object\ObjectSource.cpp" />
     <ClCompile Include="Object\ManagerObject.cpp" />
     <ClCompile Include="Object\ManagerPlayer.cpp" />
   </ItemGroup>
@@ -262,7 +263,8 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClInclude Include="Projectile\ProjectileBase.h" />
     <ClInclude Include="Projectile\ProjectileSource.h" />
     <ClInclude Include="Util\GuillotineBinPack.h" />
-    <ClInclude Include="World\Block.h" />
+    <ClInclude Include="Util\Source.h" />
+    <ClInclude Include="World\BlockSource.h" />
     <ClInclude Include="World\Chunk.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Framework\Framework.h" />
@@ -272,8 +274,8 @@ xcopy /s /d /y "$(ProjectDir)data" "$(OutDir)data"
     <ClInclude Include="Util\Math.h" />
     <ClInclude Include="World\Noise.h" />
     <ClInclude Include="World\ManagerWorld.h" />
-    <ClInclude Include="Object\Object.h" />
-    <ClInclude Include="Object\ObjectAsset.h" />
+    <ClInclude Include="Object\ObjectBase.h" />
+    <ClInclude Include="Object\ObjectSource.h" />
     <ClInclude Include="Object\ManagerObject.h" />
     <ClInclude Include="Object\ManagerPlayer.h" />
     <ClInclude Include="Util\Utils.h" />

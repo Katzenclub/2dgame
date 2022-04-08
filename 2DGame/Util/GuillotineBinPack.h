@@ -2,8 +2,7 @@
 
 #include <vector>
 
-#include "../Object/ObjectAsset.h"
-#include "../World/Block.h"
+#include "SFML/Graphics.hpp"
 
 namespace gp
 {

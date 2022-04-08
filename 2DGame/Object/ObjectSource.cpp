@@ -1,23 +1,20 @@
-#include "ObjectAsset.h"
+#include "ObjectSource.h"
 
 namespace gp
 {
 	namespace object
 	{
-		ObjectAsset::ObjectAsset(std::string name, std::string path) :
-			m_name(name)			
+		ObjectSource::ObjectSource(std::string name, std::string path, sf::Vector2f relativeBoundingBoxSize) :
+			gp::system::Source(name, path)			
 		{
-			m_ID = g_objectAssetID;
-			g_objectAssetID++;
-			m_texture.loadFromFile(path);
-			m_boundingBoxPoints = getBoundingBoxPoints((sf::Vector2f(m_texture.getSize()) / 2.f) * 0.95f);
+			m_boundingBoxPoints = getBoundingBoxPoints(sf::Vector2f(m_texture.getSize().x * relativeBoundingBoxSize.x , m_texture.getSize().y * relativeBoundingBoxSize.y)* 0.5f);
 		}
 
-		ObjectAsset::~ObjectAsset()
+		ObjectSource::~ObjectSource()
 		{
 		}
 
-		void ObjectAsset::getLinePoints(size_t pointsCount, sf::Vector2f offset, float distance, bool x, std::vector<sf::Vector2f> &l_points)
+		void ObjectSource::getLinePoints(size_t pointsCount, sf::Vector2f offset, float distance, bool x, std::vector<sf::Vector2f> &l_points)
 		{
 			float l_base = 0.f;
 			for (size_t i = 0; i <= pointsCount; i++)
@@ -34,7 +31,7 @@ namespace gp
 			}
 		}
 
-		std::vector<sf::Vector2f> ObjectAsset::getBoundingBoxPoints(sf::Vector2f size)
+		std::vector<sf::Vector2f> ObjectSource::getBoundingBoxPoints(sf::Vector2f size)
 		{
 			std::vector<sf::Vector2f> l_points;
 			size_t l_pointsCountx = (size.x *2.f) / g_CHUNK_TEXTURE_SIZE;

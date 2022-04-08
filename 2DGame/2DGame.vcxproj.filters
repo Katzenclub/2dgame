@@ -69,7 +69,7 @@
     <ClCompile Include="World\ManagerWorld.cpp">
       <Filter>Quelldateien\World</Filter>
     </ClCompile>
-    <ClCompile Include="World\Block.cpp">
+    <ClCompile Include="World\BlockSource.cpp">
       <Filter>Quelldateien\World</Filter>
     </ClCompile>
     <ClCompile Include="Object\ManagerObject.cpp">
@@ -78,10 +78,10 @@
     <ClCompile Include="Util\Loader.cpp">
       <Filter>Quelldateien\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Object.cpp">
+    <ClCompile Include="Object\ObjectBase.cpp">
       <Filter>Quelldateien\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\ObjectAsset.cpp">
+    <ClCompile Include="Object\ObjectSource.cpp">
       <Filter>Quelldateien\Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\ManagerPlayer.cpp">
@@ -101,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="Projectile\ProjectileSource.cpp">
       <Filter>Quelldateien\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Source.cpp">
+      <Filter>Quelldateien\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,7 +132,7 @@
     <ClInclude Include="World\WorldConstants.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
-    <ClInclude Include="World\Block.h">
+    <ClInclude Include="World\BlockSource.h">
       <Filter>Quelldateien\World</Filter>
     </ClInclude>
     <ClInclude Include="Object\ManagerObject.h">
@@ -138,10 +141,10 @@
     <ClInclude Include="Util\Loader.h">
       <Filter>Quelldateien\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Object.h">
+    <ClInclude Include="Object\ObjectBase.h">
       <Filter>Quelldateien\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\ObjectAsset.h">
+    <ClInclude Include="Object\ObjectSource.h">
       <Filter>Quelldateien\Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\ManagerPlayer.h">
@@ -167,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Projectile\ProjectileSource.h">
       <Filter>Quelldateien\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Source.h">
+      <Filter>Quelldateien\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

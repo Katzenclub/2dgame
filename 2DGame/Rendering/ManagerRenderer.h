@@ -39,7 +39,11 @@ namespace gp
 			void renderObjects();
 			void renderProjectiles();
 			void renderDebug();
+
 			void fillVertexArrayBorders(sf::Vector2f positionOffset, sf::Vector2f texPos, int index);			
+      
+			sf::Vector2f roundVector(sf::Vector2f origin);			
+
 		};
 	}
 }

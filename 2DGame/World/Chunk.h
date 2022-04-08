@@ -4,7 +4,7 @@
 #include <fstream>
 #include "WorldConstants.h"
 #include "Noise.h"
-#include "../Object/Object.h"
+#include "../Object/ObjectBase.h"
 
 namespace gp
 {
@@ -22,7 +22,7 @@ namespace gp
 			Chunk(sf::Vector2i ID);
 			~Chunk();
 			uint16_t m_data[g_CHUNK_SIZE][g_CHUNK_SIZE]; // ~65000 max value
-			std::vector<gp::object::Object*> m_objects[g_CHUNK_SIZE][g_CHUNK_SIZE];
+			std::vector<gp::object::ObjectBase*> m_objects[g_CHUNK_SIZE][g_CHUNK_SIZE];
 			sf::Vector2i m_ID;
 
 			void load(std::ifstream& ifs);

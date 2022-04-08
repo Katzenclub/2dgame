@@ -14,10 +14,11 @@ namespace gp
 		{
 		}
 
-		gp::object::Object* ManagerObject::create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType)
+		gp::object::ObjectBase* ManagerObject::create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType)
 		{
-			auto l_object = new gp::object::Object(position, m_p_loader->m_listObjectAssets[assetID]->m_SizeTexture * scale, assetID, oType);
-			l_object->m_boundingBoxPoints = m_p_loader->m_listObjectAssets[assetID]->m_boundingBoxPoints;
+			auto l_p_source = m_p_loader->m_listObjectAssets[assetID];
+			auto l_object = new gp::object::ObjectBase(l_p_source,position, l_p_source->m_SizeTexture * scale, assetID, oType);
+			l_object->m_boundingBoxPoints = l_p_source->m_boundingBoxPoints;
 			m_listObjects.push_back(l_object);
 			return l_object;
 		}
@@ -44,6 +45,8 @@ namespace gp
 						it->m_speed = 0;
 					}
 				}
+				it->m_position.x = roundf(it->m_position.x);
+				it->m_position.y = roundf(it->m_position.y);
 			}
 
 			physics(deltaTime);
@@ -62,7 +65,7 @@ namespace gp
 
 		void ManagerObject::cleanup()
 		{
-			for (std::vector<gp::object::Object*>::iterator it = m_listObjects.begin(); it != m_listObjects.end(); ++it)
+			for (std::vector<gp::object::ObjectBase*>::iterator it = m_listObjects.begin(); it != m_listObjects.end(); ++it)
 			{
 				if ((*it)->m_HP <= 0.f && (*it)->m_oType != gp::object::oType::player)
 				{

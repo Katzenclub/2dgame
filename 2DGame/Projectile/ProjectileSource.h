@@ -1,19 +1,22 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
-
-#include "../Util/Utils.h"
+// Own
+#include "../Util/Source.h"
 
 namespace gp
 {
-	// Forward declaration to access other namespace
+	/**
+	 * @brief Forward declaration to access other namespace.
+	 */
 	namespace projectile { class ProjectileBase; }
 
 	namespace system
 	{
-		class ProjectileSource
+		class ProjectileSource : public Source
 		{
-			// To allow other classes to access the private member. (forward declaration)
+			/**
+			 * @brief To allow other classes to access the private member. (forward declaration).
+			 */
 			friend class gp::projectile::ProjectileBase;
 			friend class Loader;
 			friend class ManagerRenderer;
@@ -21,20 +24,10 @@ namespace gp
 		public:
 			ProjectileSource(std::string name, std::string path);
 			~ProjectileSource();
-		
+
 		private:
-
-			// Render Stuff
-			sf::Vector2f m_PositionTexture;
-			sf::Vector2f m_SizeTexture;
-
-			// Media Stuff
-			sf::Texture m_texture;
-
-			// Software Stuff
 			float m_lifeTimeMax;
 			float m_speed;
-			size_t m_ID;
 		};
 	}
 }

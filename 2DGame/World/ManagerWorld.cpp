@@ -181,7 +181,7 @@ namespace gp
 		 * @return true The object was removed sucessfully
 		 * @return false The position was invalid or the object was not found in the container
 		 */
-		bool ManagerWorld::removeFromContainer(sf::Vector2i blockPos, gp::object::Object* obj)
+		bool ManagerWorld::removeFromContainer(sf::Vector2i blockPos, gp::object::ObjectBase* obj)
 		{
 			sf::Vector2i l_chunkPos = convertBlockPosToChunkPos(blockPos);
 
@@ -212,7 +212,7 @@ namespace gp
 		 * @return true The object was sucessfully added
 		 * @return false The position was invalid
 		 */
-		bool ManagerWorld::addToContainer(sf::Vector2i blockPos, gp::object::Object* obj)
+		bool ManagerWorld::addToContainer(sf::Vector2i blockPos, gp::object::ObjectBase* obj)
 		{
 			sf::Vector2i l_chunkPos = convertBlockPosToChunkPos(blockPos);
 
@@ -232,7 +232,7 @@ namespace gp
 		 * @param blockPos Indexes of the block / the container to get
 		 * @return std::vector<gp::object::Object*>* 
 		 */
-		std::vector<gp::object::Object*>* ManagerWorld::getContainer(sf::Vector2i blockPos)
+		std::vector<gp::object::ObjectBase*>* ManagerWorld::getContainer(sf::Vector2i blockPos)
 		{
 			sf::Vector2i l_chunkPos = convertBlockPosToChunkPos(blockPos);
 

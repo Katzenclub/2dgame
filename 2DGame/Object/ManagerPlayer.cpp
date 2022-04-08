@@ -4,7 +4,7 @@ namespace gp
 {
 	namespace game
 	{
-		ManagerPlayer::ManagerPlayer(gp::object::Object* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles* MP, sf::View *view,sf::RenderWindow *rw) :
+		ManagerPlayer::ManagerPlayer(gp::object::ObjectBase* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles* MP, sf::View *view,sf::RenderWindow *rw) :
 			m_p_objectPlayer(objectPlayer),
 			m_p_MW(MW),
 			m_p_MP(MP),
@@ -81,22 +81,23 @@ namespace gp
 			{
 				
 				m_zoom = m_zoom - m_speedZoom * deltaTime;
-				if (m_zoom < 0.1f) 
+				if (m_zoom < 0.5f) 
 				{
-					m_zoom = 0.1f;
+					m_zoom = 0.5f;
 				}
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 			{
 				m_zoom = 1.f;
-			}		
+			}
 		}
 
 		void ManagerPlayer::update(float deltaTime)
 		{
-			m_p_view->setCenter(m_p_objectPlayer->m_position);
-			m_p_view->setSize(sf::Vector2f(m_p_rw->getSize()) * m_zoom);
+			m_p_view->setCenter(m_p_objectPlayer->m_position + sf::Vector2f(0.375f, 0.375f));
+			sf::Vector2i l_zoom = (sf::Vector2i) (sf::Vector2f(m_p_rw->getSize()) * (0.5f * floorf(m_zoom / 0.5f)));
+			m_p_view->setSize(floor(l_zoom.x), floor(l_zoom.y));
 		}
 	}
 }
