@@ -22,11 +22,10 @@
 
 # Build Guides
 ## Debian
-If not already installed please install with the following commands:
+If not already installed please install with the following command:
 
 ```
-sudo apt install cmake
-sudo apt install libsfml-dev
+sudo apt install cmake unzip libsfml-dev
 ```
 
 Build game with following command:
