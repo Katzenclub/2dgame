@@ -21,7 +21,8 @@ namespace gp
 			ObjectBase(gp::object::ObjectSource* source, sf::Vector2f position, sf::Vector2f size, unsigned int assetID, unsigned int oType);
 			~ObjectBase();
 
-			float m_HP = 100.f;
+			float m_health;
+			float damageCollision;
 
 			sf::Vector2f m_size;
 
@@ -51,6 +52,9 @@ namespace gp
 			std::vector<sf::Vector2f> m_boundingBoxPoints;
 
 			gp::object::ObjectSource* m_p_source;
+
+			float m_hitTimeMax = 2.5f;
+			float m_hitTimeCur = 0.f;
 
 		private:
 		};

@@ -14,6 +14,7 @@ namespace gp
 		{
 			m_p_VertexArray = new sf::VertexArray(sf::PrimitiveType::Quads, g_CHUNK_SIZE * g_CHUNK_SIZE * 4);
 			m_p_VertexArrayObjects = new sf::VertexArray(sf::PrimitiveType::Quads, 0);
+			m_p_VertexArrayProjectiles = new sf::VertexArray(sf::PrimitiveType::Quads, 0);
 		}
 
 		ManagerRenderer::~ManagerRenderer()
@@ -115,6 +116,28 @@ namespace gp
 				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(l_p_source->m_SizeTexture.x, 0);
 				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(l_p_source->m_SizeTexture.x, l_p_source->m_SizeTexture.y);
 				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(0, l_p_source->m_SizeTexture.y);
+
+				if (l_object->m_hitTimeCur > 0.f && l_object->m_oType == gp::object::oType::player)
+				{
+					for (int j = 0; j < 4; j++)
+					{
+						(*m_p_VertexArrayObjects)[l_index + j].color = sf::Color(
+							(((sinf((l_object->m_hitTimeCur / l_object->m_hitTimeMax) * 10.f) + 1.f) / 2.f) * 64 + 191) * (l_object->m_hitTimeCur / l_object->m_hitTimeMax) +
+							((1.f - (l_object->m_hitTimeCur / l_object->m_hitTimeMax)) * 255),
+							((1.f - (l_object->m_hitTimeCur / l_object->m_hitTimeMax)) * 255),
+							((1.f - (l_object->m_hitTimeCur / l_object->m_hitTimeMax)) * 255)
+							);
+					}
+					//std::cout << (l_object->m_hitTimeCur / l_object->m_hitTimeMax) * 255 << std::endl;
+
+				}
+				else
+				{
+					for (int j = 0; j < 4; j++)
+					{
+						(*m_p_VertexArrayObjects)[l_index + j].color = sf::Color::White;
+					}
+				}
 			}
 
 			sf::RenderStates l_states;
@@ -126,7 +149,7 @@ namespace gp
 		void ManagerRenderer::renderProjectiles()
 		{
 			size_t l_size = m_p_MP->m_listProjectiles.size();
-			m_p_VertexArrayObjects->resize(l_size * 4);
+			m_p_VertexArrayProjectiles->resize(l_size * 4);
 			for (size_t i = 0; i < l_size; i++)
 			{
 				auto l_object = m_p_MP->m_listProjectiles[i];
@@ -137,22 +160,22 @@ namespace gp
 				sf::Transform l_transform;
 				l_transform.rotate(gp::util::getDegAngle(gp::util::getDirectionNormalised(l_object->m_positionOld, l_object->m_position)));
 				
-				(*m_p_VertexArrayObjects)[l_index + 0].position = l_object->m_position + l_transform.transformPoint(sf::Vector2f(-l_size.x, -l_size.y));
-				(*m_p_VertexArrayObjects)[l_index + 1].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(l_size.x, -l_size.y));
-				(*m_p_VertexArrayObjects)[l_index + 2].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(l_size.x, l_size.y));
-				(*m_p_VertexArrayObjects)[l_index + 3].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(-l_size.x, l_size.y));
+				(*m_p_VertexArrayProjectiles)[l_index + 0].position = l_object->m_position + l_transform.transformPoint(sf::Vector2f(-l_size.x, -l_size.y));
+				(*m_p_VertexArrayProjectiles)[l_index + 1].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(l_size.x, -l_size.y));
+				(*m_p_VertexArrayProjectiles)[l_index + 2].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(l_size.x, l_size.y));
+				(*m_p_VertexArrayProjectiles)[l_index + 3].position = l_object->m_position + l_transform.transformPoint( sf::Vector2f(-l_size.x, l_size.y));
 
 				auto l_source = l_object->m_p_source;
-				(*m_p_VertexArrayObjects)[l_index + 0].texCoords = l_source->m_PositionTexture + sf::Vector2f(0.5f, 0.5f) + sf::Vector2f(0, 0);
-				(*m_p_VertexArrayObjects)[l_index + 1].texCoords = l_source->m_PositionTexture + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(l_source->m_SizeTexture.x, 0);
-				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_source->m_PositionTexture + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(l_source->m_SizeTexture.x, l_source->m_SizeTexture.y);
-				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_source->m_PositionTexture + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0, l_source->m_SizeTexture.y);
+				(*m_p_VertexArrayProjectiles)[l_index + 0].texCoords = l_source->m_PositionTexture + sf::Vector2f(0.5f, 0.5f) + sf::Vector2f(0, 0);
+				(*m_p_VertexArrayProjectiles)[l_index + 1].texCoords = l_source->m_PositionTexture + sf::Vector2f(-1.f, 0.5f) + sf::Vector2f(l_source->m_SizeTexture.x, 0);
+				(*m_p_VertexArrayProjectiles)[l_index + 2].texCoords = l_source->m_PositionTexture + sf::Vector2f(-1.f, -1.f) + sf::Vector2f(l_source->m_SizeTexture.x, l_source->m_SizeTexture.y);
+				(*m_p_VertexArrayProjectiles)[l_index + 3].texCoords = l_source->m_PositionTexture + sf::Vector2f(0.5f, -1.f) + sf::Vector2f(0, l_source->m_SizeTexture.y);
 			}
 
 			sf::RenderStates l_states;
 			l_states.texture = &m_p_loader->m_projectileAtlas;
 
-			m_p_rw->draw(*m_p_VertexArrayObjects, l_states);
+			m_p_rw->draw(*m_p_VertexArrayProjectiles, l_states);
 		}
 
 		sf::Vector2f ManagerRenderer::roundVector(sf::Vector2f origin) {

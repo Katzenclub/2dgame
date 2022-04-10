@@ -22,8 +22,10 @@ namespace gp
 			friend class ManagerRenderer;
 
 		public:
-			ProjectileSource(std::string name, std::string path);
+			ProjectileSource(std::string name, std::string path,float lifeTimeMax, float speed, float damage);
 			~ProjectileSource();
+
+			float m_damage;
 
 		private:
 			float m_lifeTimeMax;

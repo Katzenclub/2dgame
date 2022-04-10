@@ -12,12 +12,12 @@ namespace gp
 			m_listBlocks.push_back(new gp::world::BlockSource("Dirt", "data/assets/blocks/Dirt.png", { {"InflictBurning", 2}, {"InflictDrowning", 10} }));
 			m_textureAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listBlocks));
 
-			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png"));
+			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png", 5.f,1000.f,10.f));
 			m_projectileAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listProjectiles));
 
-			m_listObjectAssets.push_back(new gp::object::ObjectSource("Player", "data/assets/objects/Player.png", sf::Vector2f(0.5f, 0.95f)));
-			m_listObjectAssets.push_back(new gp::object::ObjectSource("Slime", "data/assets/objects/Slime.png"));
-			m_listObjectAssets.push_back(new gp::object::ObjectSource("SlimeMutant", "data/assets/objects/SlimeMutant.png"));
+			m_listObjectAssets.push_back(new gp::object::ObjectSource("Player", "data/assets/objects/Player.png",100.f, 0.f, sf::Vector2f(0.5f, 0.95f)));
+			m_listObjectAssets.push_back(new gp::object::ObjectSource("Slime", "data/assets/objects/Slime.png", 75.f,10.f));
+			m_listObjectAssets.push_back(new gp::object::ObjectSource("SlimeMutant", "data/assets/objects/SlimeMutant.png", 150.f, 10.f));
 			m_objectsAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listObjectAssets));
 			clock_t end_time = clock();
 			clock_t result = end_time - start_time;

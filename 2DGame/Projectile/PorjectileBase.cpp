@@ -12,6 +12,7 @@ namespace gp
 		{
 			m_speed = m_p_source->m_speed;
 			m_lifeTimeCur = m_p_source->m_lifeTimeMax;
+			m_damage = m_p_source->m_damage;
 			m_size = m_p_source->m_SizeTexture * scale;
 		}
 

@@ -31,6 +31,7 @@ namespace gp
 			gp::system::Loader* m_p_loader;
 			sf::View* m_p_view;
 			sf::VertexArray* m_p_VertexArrayObjects;
+			sf::VertexArray* m_p_VertexArrayProjectiles;
 			
 			void renderChunks(sf::Vector2f pos);	
 			void renderChunk(gp::world::Chunk *chunk);

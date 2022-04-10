@@ -4,9 +4,10 @@ namespace gp
 {
 	namespace object
 	{
-		ManagerObject::ManagerObject(gp::system::Loader* loader, gp::world::ManagerWorld* MW) :
+		ManagerObject::ManagerObject(gp::system::Loader* loader, gp::world::ManagerWorld* MW, sf::Vector2f spawnPoint) :
 			m_p_loader(loader),
-			m_pMW(MW)
+			m_pMW(MW),
+			m_spawnPoint(spawnPoint)
 		{
 		}
 
@@ -17,7 +18,7 @@ namespace gp
 		gp::object::ObjectBase* ManagerObject::create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType)
 		{
 			auto l_p_source = m_p_loader->m_listObjectAssets[assetID];
-			auto l_object = new gp::object::ObjectBase(l_p_source,position, l_p_source->m_SizeTexture * scale, assetID, oType);
+			auto l_object = new gp::object::ObjectBase(l_p_source, position, l_p_source->m_SizeTexture * scale, assetID, oType);
 			l_object->m_boundingBoxPoints = l_p_source->m_boundingBoxPoints;
 			m_listObjects.push_back(l_object);
 			return l_object;
@@ -29,7 +30,7 @@ namespace gp
 			for (auto it : m_listObjects)
 			{
 				l_rand++;
-				if (it->m_oType == gp::object::npc)
+				if (it->m_oType == gp::object::enemy)
 				{
 					if (it->m_speed == 0.f)
 					{
@@ -47,6 +48,15 @@ namespace gp
 				}
 				it->m_position.x = roundf(it->m_position.x);
 				it->m_position.y = roundf(it->m_position.y);
+
+				if (it->m_hitTimeCur > 0.f)
+				{
+					it->m_hitTimeCur -= deltaTime;
+					if (it->m_hitTimeCur < 0.f)
+					{
+						it->m_hitTimeCur = 0.f;
+					}
+				}	
 			}
 
 			physics(deltaTime);
@@ -59,7 +69,7 @@ namespace gp
 		{
 			for (auto it : m_listObjects)
 			{
-				it->m_HP = 0;
+				it->m_health = 0;
 			}
 		}
 
@@ -67,12 +77,26 @@ namespace gp
 		{
 			for (std::vector<gp::object::ObjectBase*>::iterator it = m_listObjects.begin(); it != m_listObjects.end(); ++it)
 			{
-				if ((*it)->m_HP <= 0.f && (*it)->m_oType != gp::object::oType::player)
+				if ((*it)->m_health <= 0.f)
 				{
-					m_pMW->removeFromContainer((*it)->m_blockPosCur, (*it));
-					delete (*it);
-					it = m_listObjects.erase(it);
-					it--;
+					if ((*it)->m_oType != gp::object::oType::player)
+					{
+						m_pMW->removeFromContainer((*it)->m_blockPosCur, (*it));
+						delete (*it);
+						it = m_listObjects.erase(it);
+						it--;
+					}
+					else if ((*it)->m_oType == gp::object::oType::player)
+					{
+						// Reset stats
+						(*it)->m_health = (*it)->m_p_source->m_health;
+						
+						// Reset transformations
+						(*it)->m_position = m_spawnPoint;
+						(*it)->m_positionOld = (*it)->m_position;
+
+						(*it)->m_hitTimeCur = 0.f;
+					}
 				}
 			}
 		}

@@ -14,7 +14,7 @@ namespace gp
 		class ManagerObject
 		{
 		public:
-			ManagerObject(gp::system::Loader *loader, gp::world::ManagerWorld* MW);
+			ManagerObject(gp::system::Loader *loader, gp::world::ManagerWorld* MW, sf::Vector2f spawnPoint);
 			~ManagerObject();
 
 			gp::object::ObjectBase* create(sf::Vector2f position, float scale, unsigned int assetID, unsigned int oType);
@@ -30,6 +30,7 @@ namespace gp
 		private:
 			gp::world::ManagerWorld* m_pMW;		
 			gp::system::Loader* m_p_loader;
+			sf::Vector2f m_spawnPoint;
 		};
 
 	}
