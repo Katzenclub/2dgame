@@ -13,6 +13,7 @@ namespace gp
 			m_p_view(view)
 		{
 			m_p_VertexArray = new sf::VertexArray(sf::PrimitiveType::Quads, g_CHUNK_SIZE * g_CHUNK_SIZE * 4);
+			m_p_VertexArrayBorders = new sf::VertexArray(sf::PrimitiveType::Quads, g_CHUNK_SIZE * g_CHUNK_SIZE * 4 * 8);
 			m_p_VertexArrayObjects = new sf::VertexArray(sf::PrimitiveType::Quads, 0);
 			m_p_VertexArrayProjectiles = new sf::VertexArray(sf::PrimitiveType::Quads, 0);
 		}
@@ -27,7 +28,7 @@ namespace gp
 			renderObjects();
 			renderProjectiles();
 			renderDebug();
-			//RENDER OBJECTS
+			// RENDER OBJECTS
 		}
 
 		void ManagerRenderer::renderChunks(sf::Vector2f pos)
@@ -41,31 +42,38 @@ namespace gp
 			int startX = l_PlayerChunkX - l_amountVisibleChunksX / 2;
 			int startY = l_PlayerChunkY - l_amountVisibleChunksY / 2;
 
-			if (startX < 0) {
+			if (startX < 0)
+			{
 				startX = 0;
 			}
-			if (startY < 0) {
+			if (startY < 0)
+			{
 				startY = 0;
 			}
 
 			int endX = l_PlayerChunkX + l_amountVisibleChunksX / 2 + 2;
 			int endY = l_PlayerChunkY + l_amountVisibleChunksY / 2 + 2;
 
-			if (endX > g_WORLD_SIZE_X) {
+			if (endX > g_WORLD_SIZE_X)
+			{
 				endX = g_WORLD_SIZE_X;
 			}
-			if (endY > g_WORLD_SIZE_Y) {
+			if (endY > g_WORLD_SIZE_Y)
+			{
 				endY = g_WORLD_SIZE_Y;
 			}
 
-			for (int x = startX; x < endX; x++) {
-				for (int y = startY; y < endY; y++) {
+			for (int x = startX; x < endX; x++)
+			{
+				for (int y = startY; y < endY; y++)
+				{
 					renderChunk(m_p_world->m_listChunks[x][y]);
+					renderBorders(m_p_world->m_listChunks[x][y]);
 				}
 			}
 		}
 
-		void ManagerRenderer::renderChunk(gp::world::Chunk* chunk)
+		void ManagerRenderer::renderChunk(gp::world::Chunk *chunk)
 		{
 			for (int y = 0; y < g_CHUNK_SIZE; y++)
 			{
@@ -93,6 +101,89 @@ namespace gp
 			l_states.texture = &m_p_loader->m_textureAtlas;
 
 			m_p_rw->draw(*m_p_VertexArray, l_states);
+		}
+
+		void ManagerRenderer::renderBorders(gp::world::Chunk *chunk)
+		{
+			m_p_VertexArrayBorders->clear();
+			//m_p_VertexArrayBorders->resize(g_CHUNK_SIZE * g_CHUNK_SIZE * 4 * 8); // 4=KantenDerRechtecke; 8=AlleBorders
+
+			for (int y = 0; y < g_CHUNK_SIZE; y++)
+			{
+				for (int x = 0; x < g_CHUNK_SIZE; x++)
+				{
+					int l_index = (y * g_CHUNK_SIZE + x) * 4 * 8; // 4=KantenDerRechtecke; 8=AlleBorders
+
+					int l_BlockID = chunk->m_data[x][y];
+					
+					if (l_BlockID == 0) {
+						continue;
+					}
+
+					int borderType = 0;
+					for (int xOffset = -1; xOffset <= 1; xOffset++)
+					{
+						for (int yOffset = -1; yOffset <= 1; yOffset++)
+						{
+							int l_comparisonBlockID = m_p_world->getBlockIDByBlockPos((chunk->m_ID * g_CHUNK_SIZE) + sf::Vector2i(x + xOffset, y + yOffset));
+							gp::world::Border *border = m_p_loader->m_managerBorder.m_listBorders[l_BlockID][borderType];
+
+							if (border == NULL || (xOffset == 0 && yOffset == 0) || l_comparisonBlockID == -1)
+							{
+								continue;
+							}
+
+							if (l_comparisonBlockID < l_BlockID)
+							{
+								int borderID = border->m_ID;
+								
+								sf::Vector2f l_positionOffset = sf::Vector2f(chunk->m_ID * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE);
+								l_positionOffset += sf::Vector2f((x + xOffset) * g_CHUNK_TEXTURE_SIZE, (y + yOffset) * g_CHUNK_TEXTURE_SIZE);
+
+								sf::Vector2f l_texPos = sf::Vector2f((borderID / g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE, (borderID % g_ATLAS_BLOCK_SIZE) * g_CHUNK_TEXTURE_SIZE);
+
+								fillVertexArrayBorders(l_positionOffset, l_texPos, l_index);
+							}
+							l_index += 4;
+							borderType++;
+						}
+					}
+				}
+			}
+
+			sf::RenderStates l_states;
+			l_states.texture = &m_p_loader->m_borderAtlas;
+
+			m_p_rw->draw(*m_p_VertexArrayBorders, l_states);
+		}
+
+		void ManagerRenderer::fillVertexArrayBorders(sf::Vector2f positionOffset, sf::Vector2f texPos, int index)
+		{
+			
+			m_p_VertexArrayBorders->append(
+				sf::Vertex(positionOffset, texPos)
+			);
+			m_p_VertexArrayBorders->append(
+				sf::Vertex(positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0),                    texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0))
+			);
+			m_p_VertexArrayBorders->append(
+				sf::Vertex(positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE), texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE))
+			);
+			m_p_VertexArrayBorders->append(
+				sf::Vertex(positionOffset + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE),                    texPos + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE))
+			);
+													  
+			/*
+			(*m_p_VertexArrayBorders)[index + 0].position = positionOffset;
+			(*m_p_VertexArrayBorders)[index + 1].position = positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
+			(*m_p_VertexArrayBorders)[index + 2].position = positionOffset + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
+			(*m_p_VertexArrayBorders)[index + 3].position = positionOffset + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
+
+			(*m_p_VertexArrayBorders)[index + 0].texCoords = texPos;
+			(*m_p_VertexArrayBorders)[index + 1].texCoords = texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, 0);
+			(*m_p_VertexArrayBorders)[index + 2].texCoords = texPos + sf::Vector2f(g_CHUNK_TEXTURE_SIZE, g_CHUNK_TEXTURE_SIZE);
+			(*m_p_VertexArrayBorders)[index + 3].texCoords = texPos + sf::Vector2f(0, g_CHUNK_TEXTURE_SIZE);
+			*/
 		}
 
 		void ManagerRenderer::renderObjects()
@@ -216,7 +307,6 @@ namespace gp
 							{
 								l_array[l_index + i].color = sf::Color(0, 0, 255, ((256 / l_intensity) - 1) * l_intensity);
 							}
-
 						}
 					}
 				}

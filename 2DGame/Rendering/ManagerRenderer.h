@@ -31,15 +31,20 @@ namespace gp
 			gp::system::Loader* m_p_loader;
 			sf::View* m_p_view;
 			sf::VertexArray* m_p_VertexArrayObjects;
+			sf::VertexArray* m_p_VertexArrayBorders;
 			sf::VertexArray* m_p_VertexArrayProjectiles;
 			
 			void renderChunks(sf::Vector2f pos);	
 			void renderChunk(gp::world::Chunk *chunk);
+			void renderBorders(gp::world::Chunk *chunk);
 			void renderObjects();
 			void renderProjectiles();
 			void renderDebug();
 
+			void fillVertexArrayBorders(sf::Vector2f positionOffset, sf::Vector2f texPos, int index);			
+      
 			sf::Vector2f roundVector(sf::Vector2f origin);			
+
 		};
 	}
 }
