@@ -24,8 +24,8 @@ namespace gp
 
 		void ManagerRenderer::render(sf::Vector2f pos)
 		{
-			renderChunks(pos);
 			renderObjects();
+			renderChunks(pos);
 			renderProjectiles();
 			renderDebug();
 			// RENDER OBJECTS
@@ -208,7 +208,7 @@ namespace gp
 				(*m_p_VertexArrayObjects)[l_index + 2].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(l_p_source->m_SizeTexture.x, l_p_source->m_SizeTexture.y);
 				(*m_p_VertexArrayObjects)[l_index + 3].texCoords = l_p_source->m_PositionTexture + sf::Vector2f(0, l_p_source->m_SizeTexture.y);
 
-				if (l_object->m_hitTimeCur > 0.f && l_object->m_oType == gp::object::oType::player)
+				if (l_object->m_hitTimeCur > 0.f /* && l_object->m_oType == gp::object::oType::player*/)
 				{
 					for (int j = 0; j < 4; j++)
 					{

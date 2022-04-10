@@ -53,7 +53,7 @@ namespace gp
 
 			gp::object::ObjectSource* m_p_source;
 
-			float m_hitTimeMax = 2.5f;
+			float m_hitTimeMax = 1.0f;
 			float m_hitTimeCur = 0.f;
 
 		private:

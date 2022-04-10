@@ -13,11 +13,9 @@ namespace gp
 			m_listBlocks.push_back(new gp::world::BlockSource("Stone", "data/assets/blocks/Stone.png", {{"InflictBurning", 5}, {"InflictDrowning", 10}}));
 			m_textureAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listBlocks));
 
-
 			addBlock("data/assets/blocks/Dirt", 1);
 			m_borderAtlas = createBorderAtlas();
 			
-			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png"));
 			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png", 5.f,1000.f,10.f));
 			m_projectileAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listProjectiles));
 

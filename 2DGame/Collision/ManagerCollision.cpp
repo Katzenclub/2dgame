@@ -101,10 +101,8 @@ namespace gp
 												object->m_health -= compObject->damageCollision;
 												object->m_hitTimeCur = object->m_hitTimeMax;
 											}
-											
 										}
 
-										
 										//checkPositionIterative(object);
 									}
 								}
