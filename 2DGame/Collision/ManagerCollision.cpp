@@ -93,6 +93,16 @@ namespace gp
 										object->m_position = object->m_position - l_direction * l_push;
 										object->m_position.x = roundf(object->m_position.x);
 										object->m_position.y = roundf(object->m_position.y);
+
+										if (object->m_oType == gp::object::oType::player && compObject->m_oType == gp::object::oType::enemy)
+										{
+											if (object->m_hitTimeCur <= 0.f)
+											{
+												object->m_health -= compObject->damageCollision;
+												object->m_hitTimeCur = object->m_hitTimeMax;
+											}
+										}
+
 										//checkPositionIterative(object);
 									}
 								}
@@ -169,8 +179,15 @@ namespace gp
 					// Reset Gravity when collide with bottom.
 					if (obj->m_position.y >= obj->m_positionOld.y)
 					{
+						if (obj->m_velocity.y > 20.f)
+						{
+							obj->m_health -= (obj->m_velocity.y - 20.f ) * 5.f;
+							obj->m_hitTimeCur = obj->m_hitTimeMax;
+						}
 						obj->m_velocity.y = 0;
 						obj->m_forceImpulse = sf::Vector2f(0.f, 0.f);
+						
+						
 					}
 					else if (obj->m_position.y <= obj->m_positionOld.y)
 					{
@@ -228,6 +245,8 @@ namespace gp
 									{
 										object->setImpulse(projectile->m_direction, projectile->m_speed);
 										projectile->m_lifeTimeCur = 0.f;
+										object->m_health -= projectile->m_damage;
+										object->m_hitTimeCur = object->m_hitTimeMax;
 									}
 								}
 							}

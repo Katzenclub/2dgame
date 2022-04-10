@@ -4,11 +4,12 @@ namespace gp
 {
 	namespace system
 	{
-		ProjectileSource::ProjectileSource(std::string name, std::string path) :
-			gp::system::Source(name, path)
+		ProjectileSource::ProjectileSource(std::string name, std::string path, float lifeTimeMax, float speed, float damage) :
+			gp::system::Source(name, path),
+			m_lifeTimeMax(lifeTimeMax),
+			m_speed(speed),
+			m_damage(damage)
 		{
-			m_lifeTimeMax = 5.f; // seconds
-			m_speed = 1000.f; // Pixel per seconds
 		}
 
 		ProjectileSource::~ProjectileSource()

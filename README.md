@@ -25,7 +25,7 @@
 If not already installed please install with the following command:
 
 ```
-sudo apt install cmake unzip libsfml-dev buil-essential
+sudo apt install cmake unzip libsfml-dev build-essential
 ```
 
 Build game with following command:

@@ -11,6 +11,9 @@ namespace gp
 			m_p_source(source),
 			m_oType(oType)
 		{
+			m_health = m_p_source->m_health;
+			damageCollision = m_p_source->m_damageCollision;
+
 			m_ID = gp::object::g_objectID++;
 		}
 

@@ -4,12 +4,13 @@ namespace gp
 {
 	namespace game
 	{
-		ManagerPlayer::ManagerPlayer(gp::object::ObjectBase* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles* MP, sf::View *view,sf::RenderWindow *rw) :
+		ManagerPlayer::ManagerPlayer(gp::object::ObjectBase* objectPlayer, gp::world::ManagerWorld* MW, gp::projectile::ManagerProjectiles* MP, sf::View *view,sf::RenderWindow *rw, sf::Vector2f spawnPoint) :
 			m_p_objectPlayer(objectPlayer),
 			m_p_MW(MW),
 			m_p_MP(MP),
 			m_p_view(view),
-			m_p_rw(rw)
+			m_p_rw(rw),
+			m_spawnPoint(spawnPoint)
 		{
 		}
 
@@ -38,8 +39,14 @@ namespace gp
 				}
 				else if(m_interactionMode == gp::game::interactionMode::shoot)
 				{
-					sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
-					m_p_MP->create(m_p_objectPlayer->m_ID,"Default", m_p_objectPlayer->m_position, gp::util::getDirectionNormalised(m_p_objectPlayer->m_position, l_positionWorld));
+					m_tmpTime = m_tmpTime + deltaTime;
+					if (m_tmpTime > 1.f / m_firerate)
+					{
+						m_tmpTime = 0.f;
+						sf::Vector2f l_positionWorld = m_p_rw->mapPixelToCoords(sf::Mouse::getPosition(*m_p_rw));
+						m_p_MP->create(m_p_objectPlayer->m_ID,"Default", m_p_objectPlayer->m_position, gp::util::getDirectionNormalised(m_p_objectPlayer->m_position, l_positionWorld));
+					}
+					
 				}
 			}
 
@@ -98,6 +105,11 @@ namespace gp
 			m_p_view->setCenter(m_p_objectPlayer->m_position + sf::Vector2f(0.375f, 0.375f));
 			sf::Vector2i l_zoom = (sf::Vector2i) (sf::Vector2f(m_p_rw->getSize()) * (0.5f * floorf(m_zoom / 0.5f)));
 			m_p_view->setSize(floor(l_zoom.x), floor(l_zoom.y));
+		}
+
+		void ManagerPlayer::respawn()
+		{
+			
 		}
 	}
 }

@@ -4,8 +4,10 @@ namespace gp
 {
 	namespace object
 	{
-		ObjectSource::ObjectSource(std::string name, std::string path, sf::Vector2f relativeBoundingBoxSize) :
-			gp::system::Source(name, path)			
+		ObjectSource::ObjectSource(std::string name, std::string path, float health, float damageCollision, sf::Vector2f relativeBoundingBoxSize) :
+			gp::system::Source(name, path),
+			m_health(health),
+			m_damageCollision(damageCollision)
 		{
 			m_boundingBoxPoints = getBoundingBoxPoints(sf::Vector2f(m_texture.getSize().x * relativeBoundingBoxSize.x , m_texture.getSize().y * relativeBoundingBoxSize.y)* 0.5f);
 		}

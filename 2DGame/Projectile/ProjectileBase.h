@@ -31,6 +31,7 @@ namespace gp
 			sf::Vector2f m_velocity;
 			float m_speed;
 			float m_lifeTimeCur;
+			float m_damage;
 
 			unsigned int m_IDOwner;
 		};

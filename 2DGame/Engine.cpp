@@ -11,10 +11,10 @@ namespace gp
 		sf::Vector2f m_positionSpawn = sf::Vector2f((g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE) / 2, g_WORLD_SIZE_X * g_CHUNK_SIZE * g_CHUNK_TEXTURE_SIZE * 0.2f);
 
 		m_p_managerWorld = new gp::world::ManagerWorld(m_p_view);
-		m_p_managerObject = new gp::object::ManagerObject(m_p_Loader, m_p_managerWorld);
+		m_p_managerObject = new gp::object::ManagerObject(m_p_Loader, m_p_managerWorld, m_positionSpawn);
 		m_p_managerProjectiles = new gp::projectile::ManagerProjectiles(m_p_Loader);
 		m_p_managerRenderer = new gp::system::ManagerRenderer(m_p_rw, m_p_managerWorld, m_p_managerObject, m_p_managerProjectiles, m_p_Loader, m_p_view);
-		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, 1.f, 0, gp::object::player), m_p_managerWorld,m_p_managerProjectiles, m_p_view, m_p_rw);
+		m_p_managerPlayer = new gp::game::ManagerPlayer(m_p_managerObject->create(m_positionSpawn, 1.f, 0, gp::object::player), m_p_managerWorld,m_p_managerProjectiles, m_p_view, m_p_rw, m_positionSpawn);
 		m_p_managerCollision = new gp::system::ManagerCollision(m_p_managerWorld, m_p_managerObject,m_p_managerProjectiles);
 	}
 
@@ -94,6 +94,9 @@ namespace gp
 		ImGui::Text("Place Selected Block: LMB");
 		ImGui::Text("Spawn Objects: RMB");
 
+
+		ImGui::Text("Player Health: %f / %f", m_p_managerPlayer->m_p_objectPlayer->m_health, m_p_managerPlayer->m_p_objectPlayer->m_p_source->m_health);
+		ImGui::Text("Player Invulnerable Time: %f / %f", m_p_managerPlayer->m_p_objectPlayer->m_hitTimeCur, m_p_managerPlayer->m_p_objectPlayer->m_hitTimeMax);
 		const char* items[] = { "Pickaxe", "Shoot" };
 		static const char* current_item = "Pickaxe";
 		if (ImGui::BeginCombo("##combo", current_item)) // The second parameter is the label previewed before opening the combo.
@@ -155,7 +158,7 @@ namespace gp
 				for (int i = 0; i < 1; i++)
 				{
 					srand(m_p_managerObject->m_clock.getElapsedTime().asMicroseconds() + i * 32);
-					m_p_managerObject->create(l_positionWorld, 1.f, rand() % (m_p_Loader->m_listObjectAssets.size() - 1) + 1, gp::object::oType::npc)->m_speed = rand() % 500;
+					m_p_managerObject->create(l_positionWorld, 1.f, rand() % (m_p_Loader->m_listObjectAssets.size() - 1) + 1, gp::object::oType::enemy)->m_speed = rand() % 500;
 				}
 			}
 		}

@@ -105,6 +105,12 @@
     <ClCompile Include="Util\Source.cpp">
       <Filter>Quelldateien\Util</Filter>
     </ClCompile>
+    <ClCompile Include="World\ManagerBorder.cpp">
+      <Filter>Quelldateien\World</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Border.cpp">
+      <Filter>Quelldateien\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
@@ -173,6 +179,12 @@
     </ClInclude>
     <ClInclude Include="Util\Source.h">
       <Filter>Quelldateien\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="World\ManagerBorder.h">
+      <Filter>Quelldateien\World</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Border.h">
+      <Filter>Quelldateien\World</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
