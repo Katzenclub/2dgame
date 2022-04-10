@@ -43,7 +43,7 @@ done
 mkdir -p Release
 cd Release
 cmake ../2DGame
-make
+make -j
 if [ "$?" -ne "0" ]; then
    exit 2
 fi
