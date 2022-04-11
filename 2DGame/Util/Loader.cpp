@@ -17,7 +17,7 @@ namespace gp
 			addBlock("data/assets/blocks/Stone64x64", 2);
 			m_borderAtlas = createBorderAtlas();
 			
-			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/default.png", 5.f,1000.f,10.f));
+			m_listProjectiles.push_back(new gp::system::ProjectileSource("Default", "data/assets/projectiles/Wool.png", 5.f,700.f,10.f));
 			m_projectileAtlas = createTextureAtlas(gp::system::Source::tranformToSource(m_listProjectiles));
 
 			m_listObjectAssets.push_back(new gp::object::ObjectSource("Player", "data/assets/objects/CatPlayer.png",100.f, 0.f, sf::Vector2f(0.5f, 0.95f)));
