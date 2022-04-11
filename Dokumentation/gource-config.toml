@@ -1,7 +1,7 @@
 [display]
 ### Display settings
-fullscreen=false
-viewport=1600x900
+fullscreen=true
+viewport=1920x1200
 screen=1
 multi-sampling=true
 no-vsync=true
@@ -31,17 +31,15 @@ hide=progress,mouse
 
 ### Highlighting
 highlight-colour=FFD700
-highlight-users=true
+highlight-users=false
 highlight-dirs=false
-
-highlight-user=JoshCode
 
 ## Misc
 camera-mode=overview
 key=true
 stop-at-end=true
 colour-images=true
-# user-image-dir=./.git/avatars
+user-image-dir=./Dokumentation/Avatars
 # default-user-image=./gource/default_avatar.png
 
 ### Captions
