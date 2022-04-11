@@ -24,8 +24,8 @@ namespace gp
 
 		void ManagerRenderer::render(sf::Vector2f pos)
 		{
-			renderObjects();
 			renderChunks(pos);
+			renderObjects();
 			renderProjectiles();
 			renderDebug();
 			// RENDER OBJECTS
